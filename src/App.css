@@ -1,0 +1,113 @@
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.container h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.field input {
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+.field input:focus {
+  border-color: #4caf50;
+}
+
+.field textarea {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  height: 200px;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.field textarea:focus {
+  border-color: #4caf50;
+}
+
+.progress-section {
+  margin-bottom: 1.5rem;
+}
+
+.progress-bar-bg {
+  height: 12px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #81c784;
+  border-radius: 6px;
+  transition: width 0.2s ease;
+}
+
+.progress-bar-fill.complete {
+  background-color: #2e7d32;
+}
+
+.char-count {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+  text-align: right;
+}
+
+.ready-badge {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.coach-button {
+  display: block;
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.coach-button:disabled {
+  background-color: #e0e0e0;
+  color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.coach-button:not(:disabled) {
+  background-color: #2e7d32;
+  color: white;
+}
+
+.coach-button:not(:disabled):hover {
+  background-color: #1b5e20;
+}
