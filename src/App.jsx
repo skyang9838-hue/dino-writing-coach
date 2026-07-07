@@ -1,46 +1,64 @@
 import { useState } from 'react'
 import './App.css'
+import { getCoachingFeedback, GeminiCoachingError, GeminiErrorType } from './geminiCoachService.js'
 
 const MIN_CHARS = 400
-
-const MOCK_FEEDBACK_SETS = [
-  (topic) => [
-    `'${topic}' 주제로 시작을 잘 했어요!`,
-    '문장 사이에 연결어를 조금 더 써보면 글이 더 매끄러워질 거예요.',
-    '마지막 문장에 자신의 생각을 한 줄 더 추가해보세요.',
-  ],
-  (topic) => [
-    `'${topic}'에 대한 경험이 잘 드러나 있어요.`,
-    '비슷한 단어가 반복되는 곳이 있는지 다시 읽어보세요.',
-    '읽는 사람이 그림을 떠올릴 수 있도록 예시를 더해보면 좋아요.',
-  ],
-  (topic) => [
-    '글의 시작과 끝이 자연스럽게 이어져요.',
-    `'${topic}' 주제에 어울리는 표현을 더 찾아볼까요?`,
-    '문단을 나누면 훨씬 읽기 편해질 거예요.',
-  ],
-]
+const API_KEY_STORAGE_KEY = 'dino-writing-coach:gemini-api-key'
 
 function App() {
   const [topic, setTopic] = useState('')
   const [writing, setWriting] = useState('')
   const [isCoaching, setIsCoaching] = useState(false)
   const [feedback, setFeedback] = useState(null)
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem(API_KEY_STORAGE_KEY) ?? '')
+  const [apiKeyInput, setApiKeyInput] = useState('')
+  const [isEditingKey, setIsEditingKey] = useState(false)
+  const [error, setError] = useState(null)
 
   const charCount = writing.length
   const isReady = charCount >= MIN_CHARS
   const progressPercent = Math.min((charCount / MIN_CHARS) * 100, 100)
+  const hasKey = apiKey.length > 0
+  const showKeyInput = !hasKey || isEditingKey
 
-  const handleCoachClick = () => {
+  const handleSaveKey = () => {
+    const trimmed = apiKeyInput.trim()
+    if (!trimmed) return
+    localStorage.setItem(API_KEY_STORAGE_KEY, trimmed)
+    setApiKey(trimmed)
+    setApiKeyInput('')
+    setIsEditingKey(false)
+    setError(null)
+  }
+
+  const handleChangeKeyClick = () => {
+    setApiKeyInput('')
+    setIsEditingKey(true)
+  }
+
+  const handleCancelEditKey = () => {
+    setIsEditingKey(false)
+    setApiKeyInput('')
+  }
+
+  const handleCoachClick = async () => {
     setIsCoaching(true)
     setFeedback(null)
+    setError(null)
 
-    setTimeout(() => {
-      const randomSet =
-        MOCK_FEEDBACK_SETS[Math.floor(Math.random() * MOCK_FEEDBACK_SETS.length)]
-      setFeedback(randomSet(topic))
+    try {
+      const result = await getCoachingFeedback(apiKey, topic, writing)
+      setFeedback(result)
+    } catch (err) {
+      if (err instanceof GeminiCoachingError && err.type === GeminiErrorType.AUTH) {
+        setError({ message: 'API 키가 올바르지 않아요. 키를 다시 확인해주세요.' })
+        setIsEditingKey(true)
+      } else {
+        setError({ message: '코칭을 받아오지 못했어요. 잠시 후 다시 시도해주세요.' })
+      }
+    } finally {
       setIsCoaching(false)
-    }, 1200)
+    }
   }
 
   return (
@@ -81,13 +99,51 @@ function App() {
         </p>
       </div>
 
-      <button
-        className={`coach-button ${isCoaching ? 'loading' : ''}`}
-        disabled={!isReady || isCoaching}
-        onClick={handleCoachClick}
-      >
-        {isCoaching ? '코칭 준비 중...' : '디노 코칭 받기'}
-      </button>
+      {showKeyInput ? (
+        <div className="api-key-row">
+          <input
+            type="password"
+            className="api-key-input"
+            placeholder="Gemini API 키를 입력하세요"
+            value={apiKeyInput}
+            onChange={(e) => setApiKeyInput(e.target.value)}
+          />
+          <button
+            className="api-key-save-button"
+            disabled={!apiKeyInput.trim()}
+            onClick={handleSaveKey}
+          >
+            저장
+          </button>
+          {hasKey && (
+            <button className="api-key-cancel-button" onClick={handleCancelEditKey}>
+              취소
+            </button>
+          )}
+        </div>
+      ) : (
+        <>
+          <button
+            className={`coach-button ${isCoaching ? 'loading' : ''}`}
+            disabled={!isReady || isCoaching}
+            onClick={handleCoachClick}
+          >
+            {isCoaching ? '코칭 준비 중...' : '디노 코칭 받기'}
+          </button>
+          <button className="change-key-link" disabled={isCoaching} onClick={handleChangeKeyClick}>
+            키 변경
+          </button>
+        </>
+      )}
+      {showKeyInput && (
+        <p className="api-key-hint">
+          <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">
+            Google AI Studio
+          </a>
+          에서 무료로 API 키를 발급받을 수 있어요.
+        </p>
+      )}
+      {error && <p className="error-message">{error.message}</p>}
 
       {feedback && (
         <div className="feedback-card">

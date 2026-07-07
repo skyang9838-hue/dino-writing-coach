@@ -148,3 +148,81 @@
 .feedback-card li:last-child {
   margin-bottom: 0;
 }
+
+.api-key-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: stretch;
+}
+
+.api-key-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+.api-key-input:focus {
+  border-color: #4caf50;
+}
+
+.api-key-save-button {
+  flex: 0 0 auto;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  background-color: #2e7d32;
+  color: white;
+  cursor: pointer;
+}
+
+.api-key-save-button:disabled {
+  background-color: #e0e0e0;
+  color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.api-key-cancel-button {
+  flex: 0 0 auto;
+  padding: 0.6rem 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  color: #666;
+  cursor: pointer;
+}
+
+.api-key-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.api-key-hint a {
+  color: #2e7d32;
+}
+
+.change-key-link {
+  display: block;
+  margin: 0.5rem auto 0;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.error-message {
+  margin-top: 0.8rem;
+  color: #c62828;
+  font-size: 0.9rem;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
