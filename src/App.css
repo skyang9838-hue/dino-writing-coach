@@ -233,6 +233,29 @@
   margin-top: 1rem;
 }
 
+.history-legend {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.diff-added {
+  color: #1565c0;
+  background-color: rgba(21, 101, 192, 0.09);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  border-radius: 3px;
+  padding: 0 0.1rem;
+}
+
+.diff-removed {
+  color: #c62828;
+  background-color: rgba(198, 40, 40, 0.08);
+  text-decoration: line-through;
+  border-radius: 3px;
+  padding: 0 0.1rem;
+}
+
 .history-item {
   padding: 1rem 1.2rem;
   border: 1.5px solid #e0e0e0;

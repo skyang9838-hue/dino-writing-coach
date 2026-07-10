@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import { diffWords } from 'diff'
 import './App.css'
 import { getCoachingFeedback, CoachingError, CoachingErrorType } from './geminiCoachService.js'
 import { loadSession, saveSession, clearSession } from './sessionStorage.js'
@@ -91,6 +92,23 @@ function App() {
 
   const roundLabel = (index) => (index === 0 ? '초안' : `${index}차 수정`)
 
+  const renderWritingDiff = (before, after) =>
+    diffWords(before, after).map((part, partIndex) => {
+      const lines = part.value.split('\n')
+      const content = lines.map((line, lineIndex) => (
+        <Fragment key={lineIndex}>
+          {lineIndex > 0 && <br />}
+          {line}
+        </Fragment>
+      ))
+      const className = part.added ? 'diff-added' : part.removed ? 'diff-removed' : undefined
+      return (
+        <span className={className} key={partIndex}>
+          {content}
+        </span>
+      )
+    })
+
   return (
     <div className="container">
       <h1>🦕 디노와 함께 글쓰기</h1>
@@ -178,12 +196,18 @@ function App() {
 
           {isHistoryOpen && (
             <div className="history-list">
+              <p className="history-legend">
+                <span className="diff-removed">빨강 취소선</span>은 지운 부분,{' '}
+                <span className="diff-added">파랑 밑줄</span>은 추가한 부분이에요.
+              </p>
               {rounds.map((round, index) => (
                 <div className="history-item" key={index}>
                   <p className="history-item-title">
                     {roundLabel(index)} · 도달도 {round.attainmentAfter}%
                   </p>
-                  <p className="history-item-writing">{round.writing}</p>
+                  <p className="history-item-writing">
+                    {index === 0 ? round.writing : renderWritingDiff(rounds[index - 1].writing, round.writing)}
+                  </p>
 
                   {index > 0 && (
                     <div className="history-mission-check">
