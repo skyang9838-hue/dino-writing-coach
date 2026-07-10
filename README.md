@@ -6,8 +6,9 @@
 
 - 글쓰기 주제 입력 + 글자 수 실시간 카운트 / 진행 바
 - 400자 달성 시 "디노 코칭 받기" 버튼 활성화
-- Gemini API 연동 코칭 피드백 (칭찬 1 + 개선 제안 2)
-- **BYOK(Bring Your Own Key)** 방식 — 각자 자신의 Gemini API 키를 브라우저 `localStorage`에만 저장해서 사용, 서버/프록시 불필요
+- Gemini API 연동 코칭 피드백 (잘한 점 1 + 보완할 점 2)
+- 수정할수록 오르는 **도달도** 시각화 (40%에서 시작, 보완점을 고칠 때마다 상승)
+- **API 키는 서버에만 저장** — Gemini API 키는 Vercel 서버리스 함수(`api/coach.js`)의 환경변수로만 존재하고 브라우저에는 절대 노출되지 않음
 
 ## 시작하기
 
@@ -16,7 +17,13 @@ npm install
 npm run dev
 ```
 
-앱 실행 후 [Google AI Studio](https://aistudio.google.com/apikey)에서 발급받은 Gemini API 키를 입력하면 코칭 기능을 사용할 수 있습니다.
+`/api/coach`까지 포함해서 로컬에서 테스트하려면 [Vercel CLI](https://vercel.com/docs/cli)로 실행해야 합니다:
+
+```bash
+npx vercel dev
+```
+
+이 경우 프로젝트 루트에 `.env` 파일을 만들고 `GEMINI_API_KEY=발급받은_키`를 넣어야 합니다 (`.env.example` 참고).
 
 ## 기술 스택
 
