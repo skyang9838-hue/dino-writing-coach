@@ -19,6 +19,7 @@ function App() {
   const [lastImprovements, setLastImprovements] = useState(savedSession?.lastImprovements ?? null)
   const [rounds, setRounds] = useState(savedSession?.rounds ?? [])
   const [error, setError] = useState(null)
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false)
 
   useEffect(() => {
     saveSession({ topic, writing, feedback, attainment, lastSubmittedWriting, lastImprovements, rounds })
@@ -85,7 +86,10 @@ function App() {
     setLastImprovements(null)
     setRounds([])
     setError(null)
+    setIsHistoryOpen(false)
   }
+
+  const roundLabel = (index) => (index === 0 ? '초안' : `${index}차 수정`)
 
   return (
     <div className="container">
@@ -139,7 +143,9 @@ function App() {
               style={{ width: `${Math.min(attainment, 100)}%` }}
             />
           </div>
-          <p className="attainment-label">도달도 {attainment}%</p>
+          <p className="attainment-label">
+            도달도 {attainment}% <span className="revision-count">· {rounds.length}회차</span>
+          </p>
         </div>
       )}
 
@@ -161,6 +167,48 @@ function App() {
             <li>✏️ {feedback.improvements[0]}</li>
             <li>✏️ {feedback.improvements[1]}</li>
           </ul>
+        </div>
+      )}
+
+      {rounds.length > 0 && (
+        <div className="history-section">
+          <button className="history-toggle" onClick={() => setIsHistoryOpen((prev) => !prev)}>
+            {isHistoryOpen ? '이전 버전 접기' : `이전 버전 다시 보기 (총 ${rounds.length}회)`}
+          </button>
+
+          {isHistoryOpen && (
+            <div className="history-list">
+              {rounds.map((round, index) => (
+                <div className="history-item" key={index}>
+                  <p className="history-item-title">
+                    {roundLabel(index)} · 도달도 {round.attainmentAfter}%
+                  </p>
+                  <p className="history-item-writing">{round.writing}</p>
+
+                  {index > 0 && (
+                    <div className="history-mission-check">
+                      <p className="history-subtitle">지난 미션 반영 확인</p>
+                      <ul>
+                        {rounds[index - 1].improvements.map((mission, missionIndex) => (
+                          <li key={missionIndex}>
+                            {round.addressed?.[missionIndex] ? '✅' : '❌'} {mission}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="history-mission-new">
+                    <p className="history-subtitle">👍 {round.strength}</p>
+                    <ul>
+                      <li>✏️ {round.improvements[0]}</li>
+                      <li>✏️ {round.improvements[1]}</li>
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
