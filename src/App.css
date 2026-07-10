@@ -87,6 +87,37 @@
   font-weight: 600;
 }
 
+.attainment-section {
+  margin: 0 0 1.5rem;
+}
+
+.attainment-bar-bg {
+  height: 14px;
+  background-color: #e0e0e0;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.attainment-bar-fill {
+  height: 100%;
+  background-color: #64b5f6;
+  border-radius: 7px;
+  transition: width 0.3s ease;
+}
+
+.attainment-bar-fill.full {
+  background-color: #1565c0;
+}
+
+.attainment-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1565c0;
+  margin: 0;
+  text-align: right;
+}
+
 .coach-button {
   display: block;
   width: 100%;
@@ -147,76 +178,6 @@
 
 .feedback-card li:last-child {
   margin-bottom: 0;
-}
-
-.api-key-row {
-  display: flex;
-  gap: 0.6rem;
-  align-items: stretch;
-}
-
-.api-key-input {
-  flex: 1 1 auto;
-  min-width: 0;
-  box-sizing: border-box;
-  padding: 0.6rem 0.8rem;
-  font-size: 1rem;
-  border: 1.5px solid #ccc;
-  border-radius: 8px;
-  outline: none;
-}
-
-.api-key-input:focus {
-  border-color: #4caf50;
-}
-
-.api-key-save-button {
-  flex: 0 0 auto;
-  padding: 0.6rem 1rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  background-color: #2e7d32;
-  color: white;
-  cursor: pointer;
-}
-
-.api-key-save-button:disabled {
-  background-color: #e0e0e0;
-  color: #9e9e9e;
-  cursor: not-allowed;
-}
-
-.api-key-cancel-button {
-  flex: 0 0 auto;
-  padding: 0.6rem 1rem;
-  border: 1.5px solid #ccc;
-  border-radius: 8px;
-  background-color: white;
-  color: #666;
-  cursor: pointer;
-}
-
-.api-key-hint {
-  margin: 0.5rem 0 0;
-  font-size: 0.8rem;
-  color: #888;
-}
-
-.api-key-hint a {
-  color: #2e7d32;
-}
-
-.change-key-link {
-  display: block;
-  margin: 0.5rem auto 0;
-  background: none;
-  border: none;
-  color: #666;
-  font-size: 0.85rem;
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 0.2rem;
 }
 
 .error-message {

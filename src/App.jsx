@@ -1,61 +1,53 @@
 import { useState } from 'react'
 import './App.css'
-import { getCoachingFeedback, GeminiCoachingError, GeminiErrorType } from './geminiCoachService.js'
+import { getCoachingFeedback, CoachingError, CoachingErrorType } from './geminiCoachService.js'
 
 const MIN_CHARS = 400
-const API_KEY_STORAGE_KEY = 'dino-writing-coach:gemini-api-key'
+const ATTAINMENT_START = 40
+const ATTAINMENT_PER_POINT = 10
 
 function App() {
   const [topic, setTopic] = useState('')
   const [writing, setWriting] = useState('')
   const [isCoaching, setIsCoaching] = useState(false)
   const [feedback, setFeedback] = useState(null)
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem(API_KEY_STORAGE_KEY) ?? '')
-  const [apiKeyInput, setApiKeyInput] = useState('')
-  const [isEditingKey, setIsEditingKey] = useState(false)
+  const [attainment, setAttainment] = useState(null)
+  const [lastSubmittedWriting, setLastSubmittedWriting] = useState(null)
+  const [lastImprovements, setLastImprovements] = useState(null)
   const [error, setError] = useState(null)
 
   const charCount = writing.length
+  const isFirstRound = feedback === null
   const isReady = charCount >= MIN_CHARS
   const progressPercent = Math.min((charCount / MIN_CHARS) * 100, 100)
-  const hasKey = apiKey.length > 0
-  const showKeyInput = !hasKey || isEditingKey
-
-  const handleSaveKey = () => {
-    const trimmed = apiKeyInput.trim()
-    if (!trimmed) return
-    localStorage.setItem(API_KEY_STORAGE_KEY, trimmed)
-    setApiKey(trimmed)
-    setApiKeyInput('')
-    setIsEditingKey(false)
-    setError(null)
-  }
-
-  const handleChangeKeyClick = () => {
-    setApiKeyInput('')
-    setIsEditingKey(true)
-  }
-
-  const handleCancelEditKey = () => {
-    setIsEditingKey(false)
-    setApiKeyInput('')
-  }
+  const canCoach = isFirstRound ? isReady : true
 
   const handleCoachClick = async () => {
     setIsCoaching(true)
-    setFeedback(null)
     setError(null)
 
     try {
-      const result = await getCoachingFeedback(apiKey, topic, writing)
-      setFeedback(result)
+      const result = await getCoachingFeedback({
+        topic,
+        writing,
+        previousWriting: lastSubmittedWriting,
+        previousImprovements: lastImprovements,
+      })
+
+      setAttainment((prev) => {
+        if (!result.addressed) return ATTAINMENT_START
+        const fixedCount = result.addressed.filter(Boolean).length
+        return (prev ?? ATTAINMENT_START) + fixedCount * ATTAINMENT_PER_POINT
+      })
+      setFeedback({ strength: result.strength, improvements: result.improvements })
+      setLastSubmittedWriting(writing)
+      setLastImprovements(result.improvements)
     } catch (err) {
-      if (err instanceof GeminiCoachingError && err.type === GeminiErrorType.AUTH) {
-        setError({ message: 'API 키가 올바르지 않아요. 키를 다시 확인해주세요.' })
-        setIsEditingKey(true)
-      } else {
-        setError({ message: '코칭을 받아오지 못했어요. 잠시 후 다시 시도해주세요.' })
-      }
+      const message =
+        err instanceof CoachingError && err.type === CoachingErrorType.NETWORK
+          ? '네트워크 오류가 발생했어요. 다시 시도해주세요.'
+          : '코칭을 받아오지 못했어요. 잠시 후 다시 시도해주세요.'
+      setError({ message })
     } finally {
       setIsCoaching(false)
     }
@@ -99,59 +91,35 @@ function App() {
         </p>
       </div>
 
-      {showKeyInput ? (
-        <div className="api-key-row">
-          <input
-            type="password"
-            className="api-key-input"
-            placeholder="Gemini API 키를 입력하세요"
-            value={apiKeyInput}
-            onChange={(e) => setApiKeyInput(e.target.value)}
-          />
-          <button
-            className="api-key-save-button"
-            disabled={!apiKeyInput.trim()}
-            onClick={handleSaveKey}
-          >
-            저장
-          </button>
-          {hasKey && (
-            <button className="api-key-cancel-button" onClick={handleCancelEditKey}>
-              취소
-            </button>
-          )}
+      {attainment !== null && (
+        <div className="attainment-section">
+          <div className="attainment-bar-bg">
+            <div
+              className={`attainment-bar-fill ${attainment >= 100 ? 'full' : ''}`}
+              style={{ width: `${Math.min(attainment, 100)}%` }}
+            />
+          </div>
+          <p className="attainment-label">도달도 {attainment}%</p>
         </div>
-      ) : (
-        <>
-          <button
-            className={`coach-button ${isCoaching ? 'loading' : ''}`}
-            disabled={!isReady || isCoaching}
-            onClick={handleCoachClick}
-          >
-            {isCoaching ? '코칭 준비 중...' : '디노 코칭 받기'}
-          </button>
-          <button className="change-key-link" disabled={isCoaching} onClick={handleChangeKeyClick}>
-            키 변경
-          </button>
-        </>
       )}
-      {showKeyInput && (
-        <p className="api-key-hint">
-          <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">
-            Google AI Studio
-          </a>
-          에서 무료로 API 키를 발급받을 수 있어요.
-        </p>
-      )}
+
+      <button
+        className={`coach-button ${isCoaching ? 'loading' : ''}`}
+        disabled={!canCoach || isCoaching}
+        onClick={handleCoachClick}
+      >
+        {isCoaching ? '코칭 준비 중...' : isFirstRound ? '디노 코칭 받기' : '다시 코칭 받기'}
+      </button>
+
       {error && <p className="error-message">{error.message}</p>}
 
       {feedback && (
         <div className="feedback-card">
           <p className="feedback-title">🦕 디노의 코칭</p>
           <ul>
-            {feedback.map((line, index) => (
-              <li key={index}>{line}</li>
-            ))}
+            <li>👍 {feedback.strength}</li>
+            <li>✏️ {feedback.improvements[0]}</li>
+            <li>✏️ {feedback.improvements[1]}</li>
           </ul>
         </div>
       )}
