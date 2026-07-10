@@ -1,26 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { getCoachingFeedback, CoachingError, CoachingErrorType } from './geminiCoachService.js'
+import { loadSession, saveSession, clearSession } from './sessionStorage.js'
 
 const MIN_CHARS = 400
 const ATTAINMENT_START = 40
 const ATTAINMENT_PER_POINT = 10
 
+const savedSession = loadSession()
+
 function App() {
-  const [topic, setTopic] = useState('')
-  const [writing, setWriting] = useState('')
+  const [topic, setTopic] = useState(savedSession?.topic ?? '')
+  const [writing, setWriting] = useState(savedSession?.writing ?? '')
   const [isCoaching, setIsCoaching] = useState(false)
-  const [feedback, setFeedback] = useState(null)
-  const [attainment, setAttainment] = useState(null)
-  const [lastSubmittedWriting, setLastSubmittedWriting] = useState(null)
-  const [lastImprovements, setLastImprovements] = useState(null)
+  const [feedback, setFeedback] = useState(savedSession?.feedback ?? null)
+  const [attainment, setAttainment] = useState(savedSession?.attainment ?? null)
+  const [lastSubmittedWriting, setLastSubmittedWriting] = useState(savedSession?.lastSubmittedWriting ?? null)
+  const [lastImprovements, setLastImprovements] = useState(savedSession?.lastImprovements ?? null)
+  const [rounds, setRounds] = useState(savedSession?.rounds ?? [])
   const [error, setError] = useState(null)
+
+  useEffect(() => {
+    saveSession({ topic, writing, feedback, attainment, lastSubmittedWriting, lastImprovements, rounds })
+  }, [topic, writing, feedback, attainment, lastSubmittedWriting, lastImprovements, rounds])
 
   const charCount = writing.length
   const isFirstRound = feedback === null
   const isReady = charCount >= MIN_CHARS
   const progressPercent = Math.min((charCount / MIN_CHARS) * 100, 100)
   const canCoach = isFirstRound ? isReady : true
+  const hasContent = topic.length > 0 || writing.length > 0 || rounds.length > 0
 
   const handleCoachClick = async () => {
     setIsCoaching(true)
@@ -34,14 +43,26 @@ function App() {
         previousImprovements: lastImprovements,
       })
 
-      setAttainment((prev) => {
+      const nextAttainment = (() => {
         if (!result.addressed) return ATTAINMENT_START
         const fixedCount = result.addressed.filter(Boolean).length
-        return (prev ?? ATTAINMENT_START) + fixedCount * ATTAINMENT_PER_POINT
-      })
+        return (attainment ?? ATTAINMENT_START) + fixedCount * ATTAINMENT_PER_POINT
+      })()
+
+      setAttainment(nextAttainment)
       setFeedback({ strength: result.strength, improvements: result.improvements })
       setLastSubmittedWriting(writing)
       setLastImprovements(result.improvements)
+      setRounds((prev) => [
+        ...prev,
+        {
+          writing,
+          strength: result.strength,
+          improvements: result.improvements,
+          addressed: result.addressed ?? null,
+          attainmentAfter: nextAttainment,
+        },
+      ])
     } catch (err) {
       const message =
         err instanceof CoachingError && err.type === CoachingErrorType.NETWORK
@@ -53,9 +74,28 @@ function App() {
     }
   }
 
+  const handleNewWritingClick = () => {
+    if (!window.confirm('정말 새 글을 시작할까요? 지금까지 쓴 내용이 모두 사라져요.')) return
+    clearSession()
+    setTopic('')
+    setWriting('')
+    setFeedback(null)
+    setAttainment(null)
+    setLastSubmittedWriting(null)
+    setLastImprovements(null)
+    setRounds([])
+    setError(null)
+  }
+
   return (
     <div className="container">
       <h1>🦕 디노와 함께 글쓰기</h1>
+
+      {hasContent && (
+        <button className="new-writing-link" onClick={handleNewWritingClick}>
+          새 글 시작
+        </button>
+      )}
 
       <div className="field">
         <label htmlFor="topic">오늘의 글쓰기 주제</label>
