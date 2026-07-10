@@ -1,93 +1,70 @@
-import { Fragment, useEffect, useState } from 'react'
+'use client'
+
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { diffWords } from 'diff'
-import './App.css'
-import { getCoachingFeedback, CoachingError, CoachingErrorType } from './geminiCoachService.js'
-import { loadSession, saveSession, clearSession } from './sessionStorage.js'
+import { requestCoaching, saveDraft, submitWriting } from '../lib/actions.js'
 
-const MIN_CHARS = 400
-const ATTAINMENT_START = 40
-const ATTAINMENT_PER_POINT = 10
+const AUTOSAVE_DELAY_MS = 800
 
-const savedSession = loadSession()
-
-function App() {
-  const [topic, setTopic] = useState(savedSession?.topic ?? '')
-  const [writing, setWriting] = useState(savedSession?.writing ?? '')
+export function WritingScreen({ submissionId, studentName, activity, initial }) {
+  const [writing, setWriting] = useState(initial.writing)
   const [isCoaching, setIsCoaching] = useState(false)
-  const [feedback, setFeedback] = useState(savedSession?.feedback ?? null)
-  const [attainment, setAttainment] = useState(savedSession?.attainment ?? null)
-  const [lastSubmittedWriting, setLastSubmittedWriting] = useState(savedSession?.lastSubmittedWriting ?? null)
-  const [lastImprovements, setLastImprovements] = useState(savedSession?.lastImprovements ?? null)
-  const [rounds, setRounds] = useState(savedSession?.rounds ?? [])
+  const [feedback, setFeedback] = useState(initial.feedback)
+  const [attainment, setAttainment] = useState(initial.attainment)
+  const [rounds, setRounds] = useState(initial.rounds)
   const [error, setError] = useState(null)
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
-
+  const [status, setStatus] = useState(initial.status)
+  const [submittedAt, setSubmittedAt] = useState(initial.submittedAt)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  // Rendered only after mount: toLocaleString('ko-KR') can format AM/PM
+  // differently between Node's ICU and the browser's, which would otherwise
+  // cause a hydration mismatch.
+  const [submittedAtLabel, setSubmittedAtLabel] = useState(null)
   useEffect(() => {
-    saveSession({ topic, writing, feedback, attainment, lastSubmittedWriting, lastImprovements, rounds })
-  }, [topic, writing, feedback, attainment, lastSubmittedWriting, lastImprovements, rounds])
+    setSubmittedAtLabel(submittedAt ? new Date(submittedAt).toLocaleString('ko-KR') : null)
+  }, [submittedAt])
+
+  const skipNextAutosave = useRef(true)
+  useEffect(() => {
+    if (skipNextAutosave.current) {
+      skipNextAutosave.current = false
+      return
+    }
+    const timer = setTimeout(() => {
+      saveDraft(submissionId, writing)
+    }, AUTOSAVE_DELAY_MS)
+    return () => clearTimeout(timer)
+  }, [writing, submissionId])
 
   const charCount = writing.length
   const isFirstRound = feedback === null
-  const isReady = charCount >= MIN_CHARS
-  const progressPercent = Math.min((charCount / MIN_CHARS) * 100, 100)
+  const isReady = charCount >= activity.targetLength
+  const progressPercent = Math.min((charCount / activity.targetLength) * 100, 100)
   const canCoach = isFirstRound ? isReady : true
-  const hasContent = topic.length > 0 || writing.length > 0 || rounds.length > 0
 
   const handleCoachClick = async () => {
     setIsCoaching(true)
     setError(null)
 
-    try {
-      const result = await getCoachingFeedback({
-        topic,
-        writing,
-        previousWriting: lastSubmittedWriting,
-        previousImprovements: lastImprovements,
-      })
+    const result = await requestCoaching(submissionId, writing)
 
-      const nextAttainment = (() => {
-        if (!result.addressed) return ATTAINMENT_START
-        const fixedCount = result.addressed.filter(Boolean).length
-        return (attainment ?? ATTAINMENT_START) + fixedCount * ATTAINMENT_PER_POINT
-      })()
-
-      setAttainment(nextAttainment)
-      setFeedback({ strength: result.strength, improvements: result.improvements })
-      setLastSubmittedWriting(writing)
-      setLastImprovements(result.improvements)
-      setRounds((prev) => [
-        ...prev,
-        {
-          writing,
-          strength: result.strength,
-          improvements: result.improvements,
-          addressed: result.addressed ?? null,
-          attainmentAfter: nextAttainment,
-        },
-      ])
-    } catch (err) {
-      const message =
-        err instanceof CoachingError && err.type === CoachingErrorType.NETWORK
-          ? '네트워크 오류가 발생했어요. 다시 시도해주세요.'
-          : '코칭을 받아오지 못했어요. 잠시 후 다시 시도해주세요.'
-      setError({ message })
-    } finally {
-      setIsCoaching(false)
+    if (result.error) {
+      setError({ message: result.error })
+    } else {
+      setFeedback(result.feedback)
+      setAttainment(result.attainment)
+      setRounds(result.rounds)
     }
+    setIsCoaching(false)
   }
 
-  const handleNewWritingClick = () => {
-    if (!window.confirm('정말 새 글을 시작할까요? 지금까지 쓴 내용이 모두 사라져요.')) return
-    clearSession()
-    setTopic('')
-    setWriting('')
-    setFeedback(null)
-    setAttainment(null)
-    setLastSubmittedWriting(null)
-    setLastImprovements(null)
-    setRounds([])
-    setError(null)
-    setIsHistoryOpen(false)
+  const handleSubmitClick = async () => {
+    setIsSubmitting(true)
+    const result = await submitWriting(submissionId, writing)
+    setStatus('submitted')
+    setSubmittedAt(result.submittedAt)
+    setIsSubmitting(false)
   }
 
   const roundLabel = (index) => (index === 0 ? '초안' : `${index}차 수정`)
@@ -112,23 +89,11 @@ function App() {
   return (
     <div className="container">
       <h1>🦕 디노와 함께 글쓰기</h1>
+      <p className="page-subtitle">
+        {studentName} · {activity.topic}
+      </p>
 
-      {hasContent && (
-        <button className="new-writing-link" onClick={handleNewWritingClick}>
-          새 글 시작
-        </button>
-      )}
-
-      <div className="field">
-        <label htmlFor="topic">오늘의 글쓰기 주제</label>
-        <input
-          id="topic"
-          type="text"
-          placeholder="글쓰기 주제를 입력하세요"
-          value={topic}
-          onChange={(e) => setTopic(e.target.value)}
-        />
-      </div>
+      {status === 'submitted' && <span className="submitted-badge">✅ 제출 완료</span>}
 
       <div className="field">
         <label htmlFor="writing">내 글쓰기</label>
@@ -148,7 +113,7 @@ function App() {
           />
         </div>
         <p className="char-count">
-          {charCount} / {MIN_CHARS}자
+          {charCount} / {activity.targetLength}자
           {isReady && <span className="ready-badge"> ✅ 준비 완료!</span>}
         </p>
       </div>
@@ -174,6 +139,15 @@ function App() {
       >
         {isCoaching ? '코칭 준비 중...' : isFirstRound ? '디노 코칭 받기' : '다시 코칭 받기'}
       </button>
+
+      <button className="submit-button" disabled={isSubmitting} onClick={handleSubmitClick}>
+        {isSubmitting ? '제출하는 중...' : status === 'submitted' ? '다시 제출하기' : '제출하기'}
+      </button>
+      {submittedAtLabel && (
+        <p className="char-count" style={{ textAlign: 'center', marginTop: '0.4rem' }}>
+          마지막 제출: {submittedAtLabel}
+        </p>
+      )}
 
       {error && <p className="error-message">{error.message}</p>}
 
@@ -238,5 +212,3 @@ function App() {
     </div>
   )
 }
-
-export default App

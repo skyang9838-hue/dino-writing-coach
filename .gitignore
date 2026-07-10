@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.next
+generated
 
 # Editor directories and files
 .vscode/*
@@ -22,6 +24,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local AI tooling state (Claude Code settings, auto-installed agent skills)
+.claude
+.agents
+skills-lock.json
 
 # Environment variables
 .env
