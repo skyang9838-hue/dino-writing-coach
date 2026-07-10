@@ -3,10 +3,18 @@
 > 이 문서는 세션이 끝날 때마다 갱신되는 "현재 상태 스냅샷"입니다. 다음 세션은 이 문서에서 시작하세요.
 
 **마지막 갱신:** 2026-07-10
-**최신 커밋:** `f1b4bf4` chore: 미사용 에셋 삭제
+**최신 커밋:** `4740632` chore: vercel link 시 .gitignore에 .env* 패턴 추가
 **GitHub 저장소:** https://github.com/skyang9838-hue/dino-writing-coach (public)
+**배포 주소:** https://dino-writing-coach.vercel.app (Vercel, `charmdaraes-projects/dino-writing-coach`, GitHub push마다 자동 배포)
 
 ## 완료된 기능
+
+**6단계 — Vercel 배포**
+- `vercel link`로 GitHub 저장소와 Vercel 프로젝트(`charmdaraes-projects/dino-writing-coach`) 연결. 이후 `master`에 push하면 자동 배포.
+- `GEMINI_API_KEY`를 Vercel 환경변수(development/production)에 등록.
+- `vercel dev`로 로컬 서버리스 함수 + Playwright로 1회차(도달도 40%)/2회차(도달도 60%, +20% 반영) 전 과정 실제 Gemini 응답으로 검증 완료.
+- `vercel --prod`로 프로덕션 배포 완료, `/api/coach` 실제 호출 확인.
+- **알려진 제약:** 현재 Gemini API 키가 무료 등급이라 **분당 20회 요청** 제한이 있음. 학급 인원이 많으면 동시 사용 시 일부 요청이 429(요청 초과)로 실패할 수 있음 — 실사용 전 Google Cloud 결제 계정 연결(유료 등급 전환) 검토 필요.
 
 **5단계 — 교실용 MVP 재구성 (BYOK 제거 + 도달도 시각화)**
 - API 키 입력 UI를 완전히 제거하고, Vercel 서버리스 함수(`api/coach.js`)가 `GEMINI_API_KEY` 환경변수로 Gemini를 호출하는 구조로 전환. 브라우저에는 키가 전혀 노출되지 않음.
@@ -44,7 +52,7 @@
 1. **데이터 저장 (localStorage)** — 새로고침해도 주제/글쓰기 내용이 유지되도록
 2. **디노 캐릭터 이미지/애니메이션 적용** — (5단계에서 `hero.png`, `icons.svg`는 미사용 상태로 삭제됨, 다시 도입 시 새로 준비 필요)
 3. **라우팅** — 화면이 여러 개로 늘어날 경우에만 필요 (현재는 불필요할 수 있음)
-4. **Vercel 배포** — `vercel link` → 대시보드에서 `GEMINI_API_KEY` 환경변수 설정 → git push로 자동 배포 (`docs/superpowers/specs/2026-07-09-classroom-mvp-design.md`의 "로컬 개발 / 배포" 참고)
+4. **Gemini API 유료 등급 전환 검토** — 무료 등급 분당 20회 제한이 실사용(학급 동시 접속)에 충분한지 확인, 부족하면 Google Cloud 결제 계정 연결
 
 ## 주의할 점 / 기술 부채
 
@@ -56,7 +64,7 @@
 ```
 dino-writing-coach 프로젝트를 이어서 작업합니다.
 docs/PROJECT_STATUS.md에서 현재 상태와 TODO를 확인해줘.
-오늘은 [데이터 저장 / 디노 캐릭터 적용 / 라우팅 / Vercel 배포] 중에서
+오늘은 [데이터 저장 / 디노 캐릭터 적용 / 라우팅 / Gemini 유료 전환 검토] 중에서
 [여기에 하나 선택 또는 "우선순위대로 제안해줘"]를 진행하고 싶어.
 아직 코드는 수정하지 말고 계획부터 세워줘.
 ```
