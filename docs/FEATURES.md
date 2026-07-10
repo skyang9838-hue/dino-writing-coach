@@ -3,7 +3,7 @@
 > 이 문서는 "지금 이 순간 앱이 실제로 무엇을 하는지"를 코드 기준으로 정리한 스펙입니다.
 > 작업 흐름/이력은 [`PROJECT_STATUS.md`](PROJECT_STATUS.md)를 참고하세요. 이 문서는 오직 **기능 상태**만 다룹니다.
 
-**기준 커밋:** `d924767` (2026-07-10)
+**기준 커밋:** `b7b711b` (2026-07-10)
 **배포 주소:** https://dino-writing-coach.vercel.app
 
 ---
@@ -115,10 +115,23 @@
 
 ---
 
-## 8. 알려진 제약 / 미구현 영역
+## 9. 자동 저장 / 새로고침 복구 (`src/sessionStorage.js`)
+
+- localStorage 키 `dino-writing-coach:session` 하나에 세션 전체를 JSON으로 저장
+- 저장 항목: `topic`, `writing`, `feedback`, `attainment`, `lastSubmittedWriting`, `lastImprovements`, `rounds`
+- `rounds`는 코칭을 받을 때마다 한 항목씩 누적되는 배열 — 각 항목은 `{ writing, strength, improvements, addressed, attainmentAfter }`. 아직 화면에 노출하는 UI는 없지만(퇴고 히스토리 기능은 다음 작업), 데이터는 이미 이 시점부터 계속 쌓이는 중
+- `topic`/`writing`/`feedback`/`attainment`/`lastSubmittedWriting`/`lastImprovements`/`rounds` 중 하나라도 바뀔 때마다 `useEffect`로 자동 저장(디바운스 없음)
+- 앱 최초 로드 시 저장된 값이 있으면 그대로 복구 — 새로고침해도 글, 도달도, 마지막 피드백, 버튼 라벨("다시 코칭 받기" 등) 전부 유지됨
+- **"새 글 시작" 버튼**: `topic`/`writing`/`rounds` 중 하나라도 내용이 있을 때만 제목 아래에 표시됨. 클릭 시 확인창(`window.confirm`) 후 localStorage 삭제 + 모든 state를 초기값으로 리셋
+- localStorage를 못 쓰는 환경(프라이빗 모드 등)에서는 저장이 조용히 실패하고 앱은 계속 정상 동작(매 새로고침마다 초기화될 뿐 에러는 안 남)
+- **실제 확인된 동작** (Playwright, 2026-07-10): 글쓰기 도중 새로고침 → 복구 확인. 코칭 1회차(40%) 후 새로고침 → 피드백/도달도 복구 확인. 복구된 상태에서 2회차 진행 → 60%로 정상 증가, `rounds` 배열에 2개 누적 확인. "새 글 시작" → 초기화 + 새로고침해도 다시 안 나타남 확인.
+
+---
+
+## 10. 알려진 제약 / 미구현 영역
 
 - **Gemini 무료 등급 쿼터**: 분당 20회 요청 제한. 학급 인원이 많고 동시에 몰리면 일부 요청이 429로 실패할 수 있음(사용자에게는 위 7번의 일반 재시도 메시지로만 보임, 429 전용 안내는 없음)
-- **새로고침 시 데이터 유지 안 됨**: `topic`/`writing`/`attainment` 등 모든 state가 브라우저 새로고침과 함께 사라짐 (localStorage 저장 미구현)
+- **퇴고 히스토리 열람 UI 없음**: `rounds` 데이터는 쌓이고 있지만 "이전 버전 다시 보기" 같은 화면은 아직 없음 (다음 작업 예정)
 - **디노 캐릭터 이미지/애니메이션 없음**: 관련 에셋(`hero.png`, `icons.svg`)은 미사용 상태로 이미 삭제됨
 - **다중 화면/라우팅 없음**: 현재 단일 화면 구조
 - **테스트 프레임워크 없음**: 정식 유닛/E2E 테스트 스위트가 프로젝트에 상주하지 않음. 검증은 매번 임시 스크립트(mock fetch 검증, Playwright 스크래치패드)로 하고 삭제하는 방식이 관례
