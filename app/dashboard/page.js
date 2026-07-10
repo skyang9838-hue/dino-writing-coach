@@ -14,7 +14,7 @@ export default async function DashboardPage() {
   })
 
   return (
-    <div className="container">
+    <div className="container-wide">
       <div className="top-bar">
         <h1 style={{ fontSize: '1.4rem', margin: 0 }}>🦕 내 활동</h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

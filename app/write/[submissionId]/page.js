@@ -20,8 +20,6 @@ export default async function WritePage({ params }) {
         feedback: submission.feedback,
         attainment: submission.attainment,
         rounds: submission.rounds,
-        status: submission.status,
-        submittedAt: submission.submittedAt ? submission.submittedAt.toISOString() : null,
       }}
     />
   )

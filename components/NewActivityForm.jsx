@@ -34,7 +34,7 @@ export function NewActivityForm() {
   }
 
   return (
-    <form action={createActivity}>
+    <form action={createActivity} className="form-narrow">
       <div className="field">
         <label>학년</label>
         <ChipGroup name="grade" options={GRADES.map((g) => g.value)} value={grade} onChange={handleGradeChange} />

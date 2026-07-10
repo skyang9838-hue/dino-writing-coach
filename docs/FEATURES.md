@@ -3,7 +3,7 @@
 > 이 문서는 "지금 이 순간 앱이 실제로 무엇을 하는지"를 코드 기준으로 정리한 스펙입니다.
 > 작업 흐름/이력은 [`PROJECT_STATUS.md`](PROJECT_STATUS.md)를 참고하세요. 이 문서는 오직 **기능 상태**만 다룹니다.
 
-**기준:** 2026-07-10, Phase 1(Next.js/DB/인증 전환) 완료 시점 — 브랜치 `worktree-nextjs-classroom-mvp`
+**기준:** 2026-07-10, Phase 1(Next.js/DB/인증 전환) + Phase 2(교사 학생별 성장 과정 보기) + 제출하기 기능 제거 + 교사 화면 넓은 레이아웃(성장 과정 페이지는 카드 3개 기준으로 별도 확장) 완료 시점 — 브랜치 `worktree-nextjs-classroom-mvp`
 **배포 주소:** https://dino-writing-coach.vercel.app (이 브랜치 병합 전이라 아직 이전 Vite 버전이 배포되어 있음)
 
 ---
@@ -19,7 +19,7 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 | `/dashboard/new` | 교사 | 활동 생성 |
 | `/dashboard/[activityId]` | 교사 | 활동 상세 (참여 코드/QR, 참여 학생 목록) |
 | `/join/[joinCode]` | 학생 | 이름 입력 후 입장 |
-| `/write/[submissionId]` | 학생 | 글쓰기·코칭·제출 화면 |
+| `/write/[submissionId]` | 학생 | 글쓰기·코칭 화면 |
 
 ---
 
@@ -38,7 +38,7 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 - **Activity**: `teacherId`, `title`(자동 생성, 아래 3번 참고), `topic`(= 교사가 입력한 소재), `grade`(학년군), `genre`(글의 종류), `targetLength`(정수, 교사가 정하는 목표 글자 수), `joinCode`(고유, 6자리).
 - **Submission**: 학생 1명의 활동 참여 기록. `activityId` + `studentName`이 고유 조합(같은 이름으로 재입장하면 기존 기록으로 복귀).
   - `writing`, `feedback`(json), `attainment`, `lastSubmittedWriting`, `lastImprovements`(json), `rounds`(json 배열) — 이전 버전의 localStorage 세션 구조를 그대로 컬럼화.
-  - `status`(`draft`|`submitted`), `submittedWriting`, `submittedAt` — 신규. 제출은 상태 전환일 뿐 잠금이 아니다: 제출 후에도 계속 수정·재코칭·재제출 가능.
+  - "제출하기" 개념은 넣었다가 제거함(아래 6번 항목 참고) — `status`/`submittedWriting`/`submittedAt` 컬럼은 존재하지 않음.
 
 ---
 
@@ -61,7 +61,18 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 - 소유자 확인: 로그인한 교사의 활동이 아니면 404.
 - 제목 아래 소재/목표 글자 수/학년/글의 종류를 한 줄로 표시.
 - 참여 코드, 참여 링크(`/join/{joinCode}`), 그리고 그 링크의 **QR코드**(`qrcode.react`)를 표시 — 학생이 코드를 타이핑하지 않고 스캔만으로 입장할 수 있게 하기 위함.
-- 참여 학생 목록: 이름, 제출 상태(작성 중/제출 완료), 도달도, 코칭 받은 횟수. (학생별 초안↔최종본 diff 열람은 Phase 2 예정 — 이 목록은 그 전 단계로 최소 구현된 것.)
+- 참여 학생 목록: 이름, 도달도, 코칭 받은 횟수. 각 항목은 `/dashboard/[activityId]/students/[submissionId]`(성장 과정 보기)로 가는 링크.
+
+---
+
+## 4-1. 교사 — 학생별 성장 과정 보기 (`/dashboard/[activityId]/students/[submissionId]`, PRD 2.6)
+
+- 소유자 확인: 로그인한 교사가 만든 활동의 학생이 아니면 404.
+- 학생 이름, 도달도, 코칭 라운드 수를 헤더로 표시.
+- 코칭을 한 번이라도 받았으면 `components/RevisionHistory.jsx`로 라운드별 히스토리(초안/N차 수정, 이전 라운드 대비 `diffWords` 강조, 지난 미션 반영 ✅/❌, 그 라운드의 코칭 내용)를 **토글 없이 항상 펼친 상태**로 표시. 아직 코칭을 안 받았으면 "아직 코칭을 받지 않았어요" 안내와 함께 현재까지 쓴 글만 보여줌.
+- `RevisionHistory`는 원래 `components/WritingScreen.jsx`(학생 화면)에 있던 히스토리 렌더링을 그대로 추출한 컴포넌트 — 학생 화면은 여전히 토글(`이전 버전 다시 보기`)로 감싸서 사용하고, 교사 화면은 토글 없이 바로 노출한다는 점만 다름. 카드 내용/diff 로직은 100% 동일하게 재사용됨.
+- **레이아웃**: `RevisionHistory`의 `layout` prop으로 구분 — 학생 화면은 기본값 `vertical`(라운드 카드가 세로로 쌓임, 기존과 동일), 교사 성장 과정 페이지는 `layout="horizontal"`로 호출해 라운드 카드가 **가로로 나란히 배치**되고 카드가 많으면 가로 스크롤됨(초안부터 최근 라운드까지 한눈에 비교하기 쉽도록, 사용자 피드백으로 추가). 카드 폭은 420px 고정. 글 본문은 **잘리거나 내부 스크롤되지 않고 전체가 그대로 표시**되며, 카드 간 높이 차이는 `.history-items`의 flexbox 기본 동작(`align-items: stretch`)이 그 줄에서 가장 긴 카드에 맞춰 자동으로 맞춰줌.
+- **화면 폭**: 교사 화면은 학생용 좁은 폭(`.container`, 700px)과 별도로 두 단계 더 넓은 컨테이너를 씀 — 대시보드/활동생성/활동상세는 `.container-wide`(1100px), 카드 비교가 핵심인 성장 과정 페이지만 더 넓은 `.container-widest`(1440px, 카드 3개가 한 화면에 들어오도록). 데스크톱에서 여유 있게 보려는 사용자 피드백. 활동 생성 폼과 참여 코드/QR 카드는 넓은 컨테이너 안에서도 각각 `max-width`를 둬 과하게 늘어나지 않게 함.
 
 ---
 
@@ -74,7 +85,7 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 
 ---
 
-## 6. 학생 — 글쓰기·코칭·제출 (`/write/[submissionId]`, `components/WritingScreen.jsx`)
+## 6. 학생 — 글쓰기·코칭 (`/write/[submissionId]`, `components/WritingScreen.jsx`)
 
 기존 단일 화면 앱의 핵심 로직(글자 수 진행 바, 도달도 게이지, 코칭 흐름, 퇴고 히스토리, diff 강조)을 그대로 옮기고, 저장 위치만 localStorage → DB로 바꿨다.
 
@@ -92,13 +103,12 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 - 1회차 진입 시 목표 글자 수 미달이면 서버에서도 방어적으로 거부(클라이언트 버튼 비활성화와 별개의 서버측 검증).
 - 결과는 Submission 행에 즉시 반영(feedback/attainment/rounds 갱신) — 별도 API 라우트 없이 Server Action이 DB에 직접 기록.
 
-### 제출 (Server Action `submitWriting`, PRD 1.6 신규 기능)
-- "제출하기" 버튼 클릭 시 현재 글을 `submittedWriting`으로 스냅샷하고 `submittedAt` 기록, `status`를 `submitted`로 변경.
-- 제출 후에도 화면은 잠기지 않음 — 계속 수정, 재코칭, 재제출 가능("다시 제출하기"로 라벨만 바뀜).
-
 ### 자동 저장
 - `writing` 변경 800ms 후 debounce로 `saveDraft` Server Action 호출(첫 렌더링 시에는 저장하지 않도록 skip 처리).
-- 코칭/제출 시점에도 그 시점의 `writing`이 함께 저장됨.
+- 코칭 시점에도 그 시점의 `writing`이 함께 저장됨.
+
+### 제출하기 기능은 넣었다가 제거함 (PRD 1.6)
+- Phase 1에서 "제출하기" 버튼(상태 draft/submitted, 제출 시각/스냅샷 기록)을 구현했었으나, Phase 2에서 교사가 언제든 성장 과정 화면(4-1번 항목)으로 모든 학생의 글을 볼 수 있게 되면서 "제출"이라는 별도 이벤트의 실익이 없다고 판단해 통째로 제거함(버튼, 서버 액션, DB 컬럼 모두 삭제). 학생은 그냥 계속 쓰고 코칭받으면 되고, 교사는 아무 때나 들여다보면 된다.
 
 ### 퇴고 히스토리 & diff 강조
 - 로직/마크업 100% 동일하게 이식: 라운드별 "초안/N차 수정" 카드, 지난 미션 반영 여부 ✅/❌, `diffWords` 기반 추가(파랑 밑줄)/삭제(빨강 취소선) 강조.
@@ -119,6 +129,7 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 - **루브릭 업로드/파싱, 피드백 우선순위 선택 없음** — Phase 3 예정
 - **성취기준 선택/AI 기반 활동 자동 생성 없음(의도적 제외)** — 학년/글의 종류는 칩으로 고를 수 있지만, 전체 2022 교육과정 성취기준 데이터를 구조화하는 건 범위가 너무 커서 하지 않기로 결정. AI가 활동 제목/소재를 대신 생성하는 기능도 의도적으로 넣지 않음(AI는 학생 코칭에만 사용).
 - **무의미한 글(자모 반복/욕설/복붙) 감지 가드 없음** — Phase 4 예정
-- **학생별 초안↔최종본 diff를 교사가 보는 전용 화면 없음** — 활동 상세에 참여 학생 목록은 있지만, 각 학생 글의 diff를 교사 화면에서 열람하는 기능은 Phase 2 예정
+- **참여 학생 목록 필터/정렬 없음** — 이름순 등 정렬이나 검색 기능은 아직 없음
+- **"제출" 개념 자체가 없음(의도적 제거)** — Phase 1에서 구현했다가 Phase 2 이후 제거함(6번 항목 참고). 학생은 언제든 계속 쓰고 코칭받을 뿐, 별도의 제출 이벤트는 없음.
 - **100% 이후 특별 연출 없음** (이전과 동일)
 - **정식 UI/E2E 테스트 스위트 없음** — Vitest 유닛테스트는 이번에 도입됐지만(순수 로직 한정), UI 흐름 검증은 여전히 임시 Playwright 스크립트 관례. 특히 **Google OAuth 로그인 흐름은 자동화하지 않음**(구글의 자동화 방지 정책 때문에 실용적이지 않음) — 사용자가 수동으로 검증.

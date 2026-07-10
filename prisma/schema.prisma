@@ -80,9 +80,6 @@ model Submission {
   lastSubmittedWriting String?   @db.Text
   lastImprovements     Json?
   rounds               Json      @default("[]")
-  status               String    @default("draft")
-  submittedWriting     String?   @db.Text
-  submittedAt          DateTime?
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 

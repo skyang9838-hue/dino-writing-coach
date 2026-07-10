@@ -7,7 +7,7 @@ export default async function NewActivityPage() {
   if (!session?.user?.id) redirect('/login')
 
   return (
-    <div className="container">
+    <div className="container-wide">
       <h1 style={{ fontSize: '1.4rem' }}>새 활동 만들기</h1>
       <NewActivityForm />
     </div>

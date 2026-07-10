@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { headers } from 'next/headers'
 import { auth } from '../../../auth.js'
@@ -22,7 +23,7 @@ export default async function ActivityDetailPage({ params }) {
   const joinUrl = `${protocol}://${host}/join/${activity.joinCode}`
 
   return (
-    <div className="container">
+    <div className="container-wide">
       <h1 style={{ fontSize: '1.4rem' }}>{activity.title}</h1>
       <p className="page-subtitle">
         {activity.topic} · 목표 {activity.targetLength}자 · {activity.grade} · {activity.genre}
@@ -42,14 +43,17 @@ export default async function ActivityDetailPage({ params }) {
         <p className="empty-state">아직 참여한 학생이 없어요.</p>
       ) : (
         activity.submissions.map((submission) => (
-          <div key={submission.id} className="activity-card">
+          <Link
+            key={submission.id}
+            href={`/dashboard/${activity.id}/students/${submission.id}`}
+            className="activity-card"
+          >
             <h3>{submission.studentName}</h3>
             <p>
-              {submission.status === 'submitted' ? '제출 완료' : '작성 중'} · 도달도{' '}
-              {submission.attainment ?? '-'}
+              도달도 {submission.attainment ?? '-'}
               {submission.attainment !== null ? '%' : ''} · {submission.rounds.length}회 코칭
             </p>
-          </div>
+          </Link>
         ))
       )}
     </div>
