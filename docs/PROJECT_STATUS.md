@@ -4,11 +4,17 @@
 > 기능 자체의 구체적인 구현 스펙은 [`FEATURES.md`](FEATURES.md)를 참고하세요.
 
 **마지막 갱신:** 2026-07-10
-**최신 커밋:** `fda9722` feat: 퇴고 히스토리(이전 버전 다시 보기) UI 추가
+**최신 커밋:** `9d3279c` feat: 퇴고 히스토리에 수정된 부분 색상 강조(diff) 추가
 **GitHub 저장소:** https://github.com/skyang9838-hue/dino-writing-coach (public)
 **배포 주소:** https://dino-writing-coach.vercel.app (Vercel, `charmdaraes-projects/dino-writing-coach`, GitHub push마다 자동 배포)
 
 ## 완료된 기능
+
+**9단계 — 퇴고 히스토리 변경 부분 색상 강조 (diff)**
+- 히스토리에서 각 라운드 글을 직전 라운드와 단어 단위로 비교(`diff` 패키지, `diffWords`)해 추가=파랑 밑줄, 삭제=빨강 취소선으로 표시.
+- 구현 전 Artifact로 단어 단위 vs 글자 단위 프로토타입을 실제 학생 글 샘플로 비교 — 조사/어미 변화도 단어 단위가 깔끔하게 처리하는 것을 확인하고 단어 단위로 결정.
+- 색상 하나에만 의존하지 않도록 밑줄/취소선 병행(색맹 학생 고려).
+- Playwright로 실제 어미 변화 케이스 검증 완료.
 
 **8단계 — 퇴고 히스토리 ("이전 버전 다시 보기")**
 - 코칭받을 때마다 쌓이는 `rounds` 배열(7단계에서 이미 저장 중이던 데이터)을 화면에 펼쳐 보여주는 히스토리 UI 추가.
