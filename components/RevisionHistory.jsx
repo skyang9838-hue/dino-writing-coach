@@ -7,6 +7,7 @@ const roundLabel = (index) => (index === 0 ? '초안' : `${index}차 수정`)
 
 const FLAG_REASON_LABELS = {
   nonsense: '무의미한 글로 판단되어 도달도가 0%로 처리됐어요.',
+  profanity: '선생님이 부적절한 표현으로 판단해 반려했어요. (도달도는 변동 없어요)',
 }
 const flagReasonLabel = (reason) => FLAG_REASON_LABELS[reason] ?? '이 글은 검토가 필요해 도달도가 0%로 처리됐어요.'
 
@@ -47,7 +48,8 @@ export function RevisionHistory({ rounds, layout = 'vertical' }) {
           return (
             <div className="history-item" key={index}>
               <p className="history-item-title">
-                {roundLabel(index)} · 도달도 {round.attainmentAfter}%
+                {roundLabel(index)}
+                {round.attainmentAfter !== null ? ` · 도달도 ${round.attainmentAfter}%` : ''}
               </p>
               <p className="history-item-writing">
                 {previousRound ? renderWritingDiff(previousRound.writing, round.writing) : round.writing}

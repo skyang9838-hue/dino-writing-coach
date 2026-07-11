@@ -48,7 +48,10 @@ export default async function ActivityDetailPage({ params }) {
             href={`/dashboard/${activity.id}/students/${submission.id}`}
             className="activity-card"
           >
-            <h3>{submission.studentName}</h3>
+            <h3>
+              {submission.studentName}
+              {submission.feedback?.pending && <span className="pending-badge"> ⏳ 검토 필요</span>}
+            </h3>
             <p>
               도달도 {submission.attainment ?? '-'}
               {submission.attainment !== null ? '%' : ''} · {submission.rounds.length}회 코칭

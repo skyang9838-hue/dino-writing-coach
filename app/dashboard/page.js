@@ -13,6 +13,14 @@ export default async function DashboardPage() {
     include: { _count: { select: { submissions: true } } },
   })
 
+  const pendingReviews = await prisma.submission.findMany({
+    where: {
+      activity: { teacherId: session.user.id },
+      feedback: { path: ['pending'], equals: true },
+    },
+    select: { id: true, studentName: true, activityId: true },
+  })
+
   return (
     <div className="container-wide">
       <div className="top-bar">
@@ -31,6 +39,21 @@ export default async function DashboardPage() {
           </form>
         </div>
       </div>
+
+      {pendingReviews.length > 0 && (
+        <div className="pending-banner">
+          <p className="pending-banner-title">⏳ 검토가 필요한 글이 {pendingReviews.length}개 있어요</p>
+          <ul>
+            {pendingReviews.map((submission) => (
+              <li key={submission.id}>
+                <Link href={`/dashboard/${submission.activityId}/students/${submission.id}`}>
+                  {submission.studentName} 학생 확인하기 →
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <Link href="/dashboard/new" className="button-primary" style={{ marginBottom: '1.5rem', display: 'block' }}>
         + 새 활동 만들기

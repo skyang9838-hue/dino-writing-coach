@@ -322,6 +322,101 @@ a {
   border-radius: 999px;
 }
 
+.pending-card {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.4rem;
+  background-color: #fff8e1;
+  border: 1.5px solid #ffca28;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.pending-title {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+  color: #8d6e00;
+}
+
+.pending-card p:last-child {
+  margin: 0;
+  line-height: 1.5;
+  color: #444;
+}
+
+.pending-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #8d6e00;
+}
+
+.pending-banner {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.4rem;
+  background-color: #fff8e1;
+  border: 1.5px solid #ffca28;
+  border-radius: 10px;
+}
+
+.pending-banner-title {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+  color: #8d6e00;
+}
+
+.pending-banner ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.review-panel {
+  margin: 1rem 0 1.5rem;
+  padding: 1.2rem 1.4rem;
+  background-color: #fff8e1;
+  border: 1.5px solid #ffca28;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.review-panel-title {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+  color: #8d6e00;
+}
+
+.review-panel-writing {
+  margin: 0 0 1rem;
+  padding: 0.6rem 0.8rem;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  white-space: pre-wrap;
+}
+
+.review-panel-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.chip-approve {
+  border-color: #2e7d32;
+  color: #2e7d32;
+}
+
+.chip-approve:hover {
+  background-color: #2e7d32;
+  color: white;
+}
+
+.chip-reject {
+  border-color: #c62828;
+  color: #c62828;
+}
+
+.chip-reject:hover {
+  background-color: #c62828;
+  color: white;
+}
+
 .history-section {
   margin-top: 1.5rem;
 }
