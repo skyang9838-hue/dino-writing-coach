@@ -6,6 +6,10 @@ import { RevisionHistory } from './RevisionHistory.jsx'
 
 const AUTOSAVE_DELAY_MS = 800
 
+const FLAG_MESSAGES = {
+  nonsense: '이 글은 의미가 통하는 문장으로 보기 어려워요. 같은 글자나 자음/모음을 반복하지 말고, 완성된 문장으로 다시 써 보세요.',
+}
+
 export function WritingScreen({ submissionId, studentName, activity, initial }) {
   const [writing, setWriting] = useState(initial.writing)
   const [isCoaching, setIsCoaching] = useState(false)
@@ -104,14 +108,21 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
       {error && <p className="error-message">{error.message}</p>}
 
       {feedback && (
-        <div className="feedback-card">
-          <p className="feedback-title">🦕 디노의 코칭</p>
-          <ul>
-            <li>👍 {feedback.strength}</li>
-            <li>✏️ {feedback.improvements[0]}</li>
-            <li>✏️ {feedback.improvements[1]}</li>
-          </ul>
-        </div>
+        feedback.flagged ? (
+          <div className="warning-card">
+            <p className="warning-title">⚠️ 다시 확인해주세요</p>
+            <p>{FLAG_MESSAGES[feedback.reason] ?? '이 글은 검토가 필요해요. 다시 써 보세요.'}</p>
+          </div>
+        ) : (
+          <div className="feedback-card">
+            <p className="feedback-title">🦕 디노의 코칭</p>
+            <ul>
+              <li>👍 {feedback.strength}</li>
+              <li>✏️ {feedback.improvements[0]}</li>
+              <li>✏️ {feedback.improvements[1]}</li>
+            </ul>
+          </div>
+        )
       )}
 
       {rounds.length > 0 && (

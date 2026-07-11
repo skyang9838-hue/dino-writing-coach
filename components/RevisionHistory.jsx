@@ -5,6 +5,11 @@ import { diffWords } from 'diff'
 
 const roundLabel = (index) => (index === 0 ? '초안' : `${index}차 수정`)
 
+const FLAG_REASON_LABELS = {
+  nonsense: '무의미한 글로 판단되어 도달도가 0%로 처리됐어요.',
+}
+const flagReasonLabel = (reason) => FLAG_REASON_LABELS[reason] ?? '이 글은 검토가 필요해 도달도가 0%로 처리됐어요.'
+
 const renderWritingDiff = (before, after) =>
   diffWords(before, after).map((part, partIndex) => {
     const lines = part.value.split('\n')
@@ -37,37 +42,46 @@ export function RevisionHistory({ rounds, layout = 'vertical' }) {
         <span className="diff-added">파랑 밑줄</span>은 추가한 부분이에요.
       </p>
       <div className="history-items">
-        {rounds.map((round, index) => (
-          <div className="history-item" key={index}>
-            <p className="history-item-title">
-              {roundLabel(index)} · 도달도 {round.attainmentAfter}%
-            </p>
-            <p className="history-item-writing">
-              {index === 0 ? round.writing : renderWritingDiff(rounds[index - 1].writing, round.writing)}
-            </p>
+        {rounds.map((round, index) => {
+          const previousRound = index > 0 ? rounds[index - 1] : null
+          return (
+            <div className="history-item" key={index}>
+              <p className="history-item-title">
+                {roundLabel(index)} · 도달도 {round.attainmentAfter}%
+              </p>
+              <p className="history-item-writing">
+                {previousRound ? renderWritingDiff(previousRound.writing, round.writing) : round.writing}
+              </p>
 
-            {index > 0 && (
-              <div className="history-mission-check">
-                <p className="history-subtitle">지난 미션 반영 확인</p>
-                <ul>
-                  {rounds[index - 1].improvements.map((mission, missionIndex) => (
-                    <li key={missionIndex}>
-                      {round.addressed?.[missionIndex] ? '✅' : '❌'} {mission}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+              {round.flagged ? (
+                <p className="history-flagged-badge">⚠️ {flagReasonLabel(round.flagReason)}</p>
+              ) : (
+                <>
+                  {previousRound && !previousRound.flagged && (
+                    <div className="history-mission-check">
+                      <p className="history-subtitle">지난 미션 반영 확인</p>
+                      <ul>
+                        {previousRound.improvements.map((mission, missionIndex) => (
+                          <li key={missionIndex}>
+                            {round.addressed?.[missionIndex] ? '✅' : '❌'} {mission}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-            <div className="history-mission-new">
-              <p className="history-subtitle">👍 {round.strength}</p>
-              <ul>
-                <li>✏️ {round.improvements[0]}</li>
-                <li>✏️ {round.improvements[1]}</li>
-              </ul>
+                  <div className="history-mission-new">
+                    <p className="history-subtitle">👍 {round.strength}</p>
+                    <ul>
+                      <li>✏️ {round.improvements[0]}</li>
+                      <li>✏️ {round.improvements[1]}</li>
+                    </ul>
+                  </div>
+                </>
+              )}
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

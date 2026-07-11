@@ -289,6 +289,39 @@ a {
   overflow-wrap: anywhere;
 }
 
+.warning-card {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.4rem;
+  background-color: #fdecea;
+  border: 1.5px solid #ef9a9a;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.warning-title {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+  color: #c62828;
+}
+
+.warning-card p:last-child {
+  margin: 0;
+  line-height: 1.5;
+  color: #444;
+}
+
+.history-flagged-badge {
+  display: inline-block;
+  margin: 0 0 0.8rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #c62828;
+  background-color: #fdecea;
+  border: 1px solid #ef9a9a;
+  border-radius: 999px;
+}
+
 .history-section {
   margin-top: 1.5rem;
 }
