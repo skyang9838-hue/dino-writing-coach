@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { auth, signIn } from '../../auth.js'
+import { devLogin } from '../../lib/devLogin.js'
 
 export default async function LoginPage() {
   const session = await auth()
@@ -19,6 +20,14 @@ export default async function LoginPage() {
           Google 계정으로 로그인
         </button>
       </form>
+
+      {process.env.NODE_ENV !== 'production' && (
+        <form action={devLogin} style={{ marginTop: '0.8rem' }}>
+          <button type="submit" className="button-secondary">
+            🧪 테스트 교사로 로그인 (로컬 전용)
+          </button>
+        </form>
+      )}
     </div>
   )
 }
