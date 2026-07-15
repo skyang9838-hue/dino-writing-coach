@@ -51,75 +51,81 @@ export function NewActivityForm() {
         <input type="hidden" name="unitId" value={selectedUnitId} />
       </div>
 
-      <div className="field">
-        <label htmlFor="topic">오늘의 주제 (선택)</label>
-        <p className="field-hint">비워두면 학생이 자유롭게 주제를 정합니다.</p>
-        <input
-          id="topic"
-          name="topic"
-          type="text"
-          placeholder="예: 우리 학교를 더 좋게 만드는 방법"
-          maxLength={TOPIC_MAX}
-          value={topic}
-          onChange={(e) => setTopic(e.target.value)}
-        />
-        <p className="field-counter">
-          {topic.length} / {TOPIC_MAX}
-        </p>
-      </div>
+      <div className="field-split">
+        <div className="field-split-col">
+          <div className="field">
+            <label htmlFor="topic">오늘의 주제 (선택)</label>
+            <p className="field-hint">비워두면 학생이 자유롭게 주제를 정합니다.</p>
+            <input
+              id="topic"
+              name="topic"
+              type="text"
+              placeholder="예: 우리 학교를 더 좋게 만드는 방법"
+              maxLength={TOPIC_MAX}
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
+            />
+            <p className="field-counter">
+              {topic.length} / {TOPIC_MAX}
+            </p>
+          </div>
 
-      <div className="field">
-        <label htmlFor="instructions">학생에게 안내할 말 (선택)</label>
-        <p className="field-hint">비워두면 별도의 안내 없이 글쓰기를 시작합니다.</p>
-        <textarea
-          id="instructions"
-          name="instructions"
-          placeholder="예: 자신의 주장과 근거를 2가지 이상 써보세요."
-          maxLength={INSTRUCTIONS_MAX}
-          value={instructions}
-          onChange={(e) => setInstructions(e.target.value)}
-          style={{ height: '90px' }}
-        />
-        <p className="field-counter">
-          {instructions.length} / {INSTRUCTIONS_MAX}
-        </p>
-      </div>
-
-      <div className="field">
-        <label htmlFor="targetLength">목표 글자 수</label>
-        <p className="field-hint">권장 글자 수는 활동에 따라 추천된 값이에요. 필요에 따라 변경할 수 있어요.</p>
-        <div className="length-grid">
-          {PRESET_LENGTHS.map((length) => (
-            <button
-              key={length}
-              type="button"
-              className={`length-option ${!isCustomLength && targetLength === length ? 'length-option-selected' : ''}`}
-              aria-pressed={!isCustomLength && targetLength === length}
-              onClick={() => handlePresetLength(length)}
-            >
-              {length}자
-            </button>
-          ))}
-          <button
-            type="button"
-            className={`length-option ${isCustomLength ? 'length-option-selected' : ''}`}
-            aria-pressed={isCustomLength}
-            onClick={() => setIsCustomLength(true)}
-          >
-            직접 입력
-          </button>
+          <div className="field">
+            <label htmlFor="instructions">학생에게 안내할 말 (선택)</label>
+            <p className="field-hint">비워두면 별도의 안내 없이 글쓰기를 시작합니다.</p>
+            <textarea
+              id="instructions"
+              name="instructions"
+              placeholder="예: 자신의 주장과 근거를 2가지 이상 써보세요."
+              maxLength={INSTRUCTIONS_MAX}
+              value={instructions}
+              onChange={(e) => setInstructions(e.target.value)}
+              style={{ height: '90px' }}
+            />
+            <p className="field-counter">
+              {instructions.length} / {INSTRUCTIONS_MAX}
+            </p>
+          </div>
         </div>
-        {isCustomLength && (
-          <input
-            id="targetLength"
-            type="number"
-            min="1"
-            placeholder="목표 글자 수를 입력하세요"
-            value={targetLength}
-            onChange={(e) => setTargetLength(Number(e.target.value))}
-          />
-        )}
-        <input type="hidden" name="targetLength" value={targetLength} />
+
+        <div className="field-split-col">
+          <div className="field">
+            <label htmlFor="targetLength">목표 글자 수</label>
+            <p className="field-hint">권장 글자 수는 활동에 따라 추천된 값이에요. 필요에 따라 변경할 수 있어요.</p>
+            <div className="length-grid">
+              {PRESET_LENGTHS.map((length) => (
+                <button
+                  key={length}
+                  type="button"
+                  className={`length-option ${!isCustomLength && targetLength === length ? 'length-option-selected' : ''}`}
+                  aria-pressed={!isCustomLength && targetLength === length}
+                  onClick={() => handlePresetLength(length)}
+                >
+                  {length}자
+                </button>
+              ))}
+              <button
+                type="button"
+                className={`length-option ${isCustomLength ? 'length-option-selected' : ''}`}
+                aria-pressed={isCustomLength}
+                onClick={() => setIsCustomLength(true)}
+              >
+                직접 입력
+              </button>
+            </div>
+            {isCustomLength && (
+              <input
+                id="targetLength"
+                type="number"
+                min="1"
+                placeholder="목표 글자 수를 입력하세요"
+                value={targetLength}
+                onChange={(e) => setTargetLength(Number(e.target.value))}
+              />
+            )}
+            <input type="hidden" name="targetLength" value={targetLength} />
+          </div>
+        </div>
       </div>
 
       <button type="submit" className="button-primary">

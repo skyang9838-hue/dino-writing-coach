@@ -181,16 +181,28 @@ a {
   line-height: 1.4;
 }
 
-.length-grid {
+.field-split {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
 }
 
-@media (max-width: 480px) {
-  .length-grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 720px) {
+  .field-split {
+    grid-template-columns: 1fr;
   }
+}
+
+.field-split-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.length-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
 }
 
 .length-option {
