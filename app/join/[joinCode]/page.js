@@ -13,7 +13,8 @@ export default async function JoinPage({ params }) {
     <div className="container">
       <h1>🦕 디노와 함께 글쓰기</h1>
       <p className="page-subtitle">
-        {activity.title} · {activity.topic}
+        {activity.title}
+        {activity.topic ? ` · ${activity.topic}` : ''}
       </p>
       <JoinForm joinCode={joinCode.toUpperCase()} />
     </div>

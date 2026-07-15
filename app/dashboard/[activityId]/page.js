@@ -26,7 +26,7 @@ export default async function ActivityDetailPage({ params }) {
     <div className="container-wide">
       <h1 style={{ fontSize: '1.4rem' }}>{activity.title}</h1>
       <p className="page-subtitle">
-        {activity.topic} · 목표 {activity.targetLength}자 · {activity.grade} · {activity.genre}
+        {activity.topic ? `${activity.topic} · ` : ''}목표 {activity.targetLength}자 · {activity.grade} · {activity.genre}
       </p>
 
       <div className="join-info-card">

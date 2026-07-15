@@ -14,7 +14,11 @@ export default async function WritePage({ params }) {
     <WritingScreen
       submissionId={submission.id}
       studentName={submission.studentName}
-      activity={{ topic: submission.activity.topic, targetLength: submission.activity.targetLength }}
+      activity={{
+        topic: submission.activity.topic,
+        instructions: submission.activity.instructions,
+        targetLength: submission.activity.targetLength,
+      }}
       initial={{
         writing: submission.writing,
         feedback: submission.feedback,
