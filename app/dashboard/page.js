@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { auth } from '../../auth.js'
 import { prisma } from '../../lib/prisma.js'
 import { TeacherHeader } from '../../components/TeacherHeader.jsx'
+import { NewActivityForm } from '../../components/NewActivityForm.jsx'
 import { getGenreIcon } from '../../lib/curriculum.js'
 
 export default async function DashboardPage() {
@@ -42,9 +43,9 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      <Link href="/dashboard/new" className="button-primary" style={{ marginBottom: '1.5rem', display: 'block' }}>
+      <a href="#new-activity" className="button-primary" style={{ marginBottom: '1.5rem', display: 'block' }}>
         + 새 활동 만들기
-      </Link>
+      </a>
 
       {activities.length === 0 ? (
         <p className="empty-state">아직 만든 활동이 없어요. 위 버튼으로 첫 활동을 만들어보세요.</p>
@@ -63,6 +64,14 @@ export default async function DashboardPage() {
           </Link>
         ))
       )}
+
+      <section id="new-activity" className="dashboard-new-section">
+        <h2 style={{ fontSize: '1.2rem', marginBottom: '0.3rem' }}>🦕 새 활동 만들기</h2>
+        <p className="field-hint" style={{ marginBottom: '1.2rem' }}>
+          교육과정에 맞는 글쓰기 활동을 선택하고 설정해 보세요.
+        </p>
+        <NewActivityForm />
+      </section>
     </div>
   )
 }

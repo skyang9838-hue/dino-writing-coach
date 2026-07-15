@@ -10,13 +10,12 @@
 
 ## 0. 전체 구조
 
-Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고, 인증된 교사만 대시보드에 접근할 수 있다. 학생은 계정 없이 교사가 발급한 참여 코드/링크로만 접근한다. 교사용 4개 화면(대시보드/활동 생성/활동 상세/성장 과정)은 모두 `components/TeacherHeader.jsx`(아이콘+제목/이메일+로그아웃)를 공유해 헤더가 동일하게 보인다.
+Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고, 인증된 교사만 대시보드에 접근할 수 있다. 학생은 계정 없이 교사가 발급한 참여 코드/링크로만 접근한다. 교사용 화면(대시보드/활동 상세/성장 과정)은 모두 `components/TeacherHeader.jsx`(아이콘+제목/이메일+로그아웃)를 공유해 헤더가 동일하게 보인다.
 
 | 경로 | 대상 | 설명 |
 |---|---|---|
 | `/login` | 교사 | Google 로그인 |
-| `/dashboard` | 교사 | 내 활동 목록 |
-| `/dashboard/new` | 교사 | 활동 생성 |
+| `/dashboard` | 교사 | 내 활동 목록 + 활동 생성 폼(같은 화면 하단에 인라인) |
 | `/dashboard/[activityId]` | 교사 | 활동 상세 (참여 코드/QR, 참여 학생 목록) |
 | `/join/[joinCode]` | 학생 | 이름 입력 후 입장 |
 | `/write/[submissionId]` | 학생 | 글쓰기·코칭 화면 |
@@ -42,7 +41,9 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 
 ---
 
-## 3. 교사 — 활동 생성 (`/dashboard/new`, `components/NewActivityForm.jsx`, `lib/actions.js`의 `createActivity`)
+## 3. 교사 — 활동 생성 (`/dashboard` 하단 인라인 섹션, `components/NewActivityForm.jsx`, `lib/actions.js`의 `createActivity`)
+
+원래는 `/dashboard/new`라는 별도 페이지였으나, "목록을 보려고 굳이 페이지를 오갈 필요가 있냐"는 피드백으로 별도 라우트를 없애고 `/dashboard`의 활동 목록 바로 아래에 같은 폼을 인라인으로 배치했다(목록 위 "+ 새 활동 만들기" 버튼은 그 자리로 스크롤만 이동하는 앵커 링크). `createActivity`는 그대로 성공 시 새 활동의 상세 페이지로 리다이렉트한다.
 
 교사가 글쓰기 활동을 만들 수 있는 차시 자체가 많지 않다는 점을 고려해, 입력 항목을 최소화한다. 처음엔 학년/글의 종류를 칩으로 고르는 방식이었으나, 디자인 레퍼런스(`design-reference/디노 교사화면.png`)를 반영해 **실제 교육과정 단원 카드**를 고르는 방식으로 교체됐다. **AI가 활동 내용을 자동 생성하는 기능은 없다** — AI는 오직 학생 코칭 피드백에만 쓰인다(의도적 결정).
 
