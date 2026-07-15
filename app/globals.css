@@ -887,8 +887,10 @@ a {
 
 .top-bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
 
@@ -908,13 +910,17 @@ a {
 }
 
 .activity-card {
-  display: block;
-  padding: 1.2rem 1.4rem;
-  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 0.9rem;
+  background-color: white;
   border: 1.5px solid #e0e0e0;
-  border-radius: 10px;
+  border-radius: 14px;
   text-decoration: none;
   color: inherit;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .activity-card:hover {
@@ -922,14 +928,38 @@ a {
   background-color: #f9fdf9;
 }
 
+.activity-card-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  background-color: #f1f8f2;
+  border-radius: 12px;
+}
+
+.activity-card-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .activity-card h3 {
   margin: 0 0 0.3rem;
+  font-size: 1.05rem;
 }
 
 .activity-card p {
   margin: 0;
   color: #666;
   font-size: 0.9rem;
+}
+
+.activity-card-chevron {
+  flex-shrink: 0;
+  color: #bbb;
+  font-size: 1.3rem;
 }
 
 .empty-state {
@@ -942,8 +972,9 @@ a {
   max-width: 420px;
   margin: 1.5rem auto;
   padding: 1.5rem;
+  background-color: white;
   border: 1.5px solid #e0e0e0;
-  border-radius: 10px;
+  border-radius: 14px;
   text-align: center;
 }
 

@@ -4,6 +4,8 @@ import { headers } from 'next/headers'
 import { auth } from '../../../auth.js'
 import { prisma } from '../../../lib/prisma.js'
 import { JoinQrCode } from '../../../components/JoinQrCode.jsx'
+import { TeacherHeader } from '../../../components/TeacherHeader.jsx'
+import { getGenreIcon } from '../../../lib/curriculum.js'
 
 export default async function ActivityDetailPage({ params }) {
   const session = await auth()
@@ -24,13 +26,18 @@ export default async function ActivityDetailPage({ params }) {
 
   return (
     <div className="container-wide">
-      <h1 style={{ fontSize: '1.4rem' }}>{activity.title}</h1>
-      <p className="page-subtitle">
-        {activity.topic ? `${activity.topic} · ` : ''}목표 {activity.targetLength}자 · {activity.grade} · {activity.genre}
-      </p>
+      <Link href="/dashboard" className="new-writing-link">
+        ← 내 활동으로
+      </Link>
+      <TeacherHeader
+        icon={getGenreIcon(activity.genre)}
+        title={activity.title}
+        subtitle={`${activity.topic ? `${activity.topic} · ` : ''}목표 ${activity.targetLength}자 · ${activity.grade} · ${activity.genre}`}
+        email={session.user.email}
+      />
 
       <div className="join-info-card">
-        <p style={{ margin: 0, color: '#666' }}>참여 코드</p>
+        <p className="topic-card-label">🔑 참여 코드</p>
         <p className="join-code">{activity.joinCode}</p>
         <a className="join-link" href={joinUrl}>
           {joinUrl}
@@ -48,14 +55,18 @@ export default async function ActivityDetailPage({ params }) {
             href={`/dashboard/${activity.id}/students/${submission.id}`}
             className="activity-card"
           >
-            <h3>
-              {submission.studentName}
-              {submission.feedback?.pending && <span className="pending-badge"> ⏳ 검토 필요</span>}
-            </h3>
-            <p>
-              도달도 {submission.attainment ?? '-'}
-              {submission.attainment !== null ? '%' : ''} · {submission.rounds.length}회 코칭
-            </p>
+            <span className="activity-card-icon">🙋</span>
+            <span className="activity-card-body">
+              <h3>
+                {submission.studentName}
+                {submission.feedback?.pending && <span className="pending-badge"> ⏳ 검토 필요</span>}
+              </h3>
+              <p>
+                도달도 {submission.attainment ?? '-'}
+                {submission.attainment !== null ? '%' : ''} · {submission.rounds.length}회 코칭
+              </p>
+            </span>
+            <span className="activity-card-chevron">›</span>
           </Link>
         ))
       )}

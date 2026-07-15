@@ -4,6 +4,7 @@ import { auth } from '../../../../../auth.js'
 import { prisma } from '../../../../../lib/prisma.js'
 import { RevisionHistory } from '../../../../../components/RevisionHistory.jsx'
 import { ProfanityReviewPanel } from '../../../../../components/ProfanityReviewPanel.jsx'
+import { TeacherHeader } from '../../../../../components/TeacherHeader.jsx'
 
 export default async function StudentGrowthPage({ params }) {
   const session = await auth()
@@ -25,11 +26,12 @@ export default async function StudentGrowthPage({ params }) {
         ← 활동으로 돌아가기
       </Link>
 
-      <h1 style={{ fontSize: '1.4rem' }}>{submission.studentName}</h1>
-      <p className="page-subtitle">
-        {submission.attainment !== null && `도달도 ${submission.attainment}% · `}
-        {submission.rounds.length}회 코칭
-      </p>
+      <TeacherHeader
+        icon="🙋"
+        title={submission.studentName}
+        subtitle={`${submission.attainment !== null ? `도달도 ${submission.attainment}% · ` : ''}${submission.rounds.length}회 코칭`}
+        email={session.user.email}
+      />
 
       {submission.feedback?.pending && (
         <ProfanityReviewPanel submissionId={submission.id} writing={submission.writing} />
