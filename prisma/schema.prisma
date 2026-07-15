@@ -59,7 +59,9 @@ model Activity {
   teacherId    String
   teacher      User         @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   title        String
-  topic        String
+  topic        String?
+  instructions String?
+  unitId       String?
   grade        String       @default("초3-4학년군")
   genre        String       @default("일기")
   targetLength Int

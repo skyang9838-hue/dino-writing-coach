@@ -66,7 +66,7 @@ export default async function DashboardPage() {
           <Link key={activity.id} href={`/dashboard/${activity.id}`} className="activity-card">
             <h3>{activity.title}</h3>
             <p>
-              {activity.topic} · 목표 {activity.targetLength}자 · 참여 학생 {activity._count.submissions}명
+              {activity.topic || '자유 주제'} · 목표 {activity.targetLength}자 · 참여 학생 {activity._count.submissions}명
             </p>
           </Link>
         ))

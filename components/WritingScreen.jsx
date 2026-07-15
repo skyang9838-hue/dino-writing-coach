@@ -59,8 +59,13 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
     <div className="container">
       <h1>🦕 디노와 함께 글쓰기</h1>
       <p className="page-subtitle">
-        {studentName} · {activity.topic}
+        {studentName}
+        {activity.topic ? ` · ${activity.topic}` : ''}
       </p>
+
+      {activity.instructions && (
+        <p className="instructions-banner">📣 {activity.instructions}</p>
+      )}
 
       <div className="field">
         <label htmlFor="writing">내 글쓰기</label>

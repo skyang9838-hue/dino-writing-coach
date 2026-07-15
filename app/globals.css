@@ -57,6 +57,26 @@ a {
   margin: 0 auto;
 }
 
+/* Wider variant for forms that need room for a card grid (e.g. curriculum
+   unit picker) but should still stay narrower than the full container. */
+.form-narrow-wide {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.field-hint {
+  margin: -0.2rem 0 0;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.field-counter {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #888;
+  text-align: right;
+}
+
 .page-subtitle {
   text-align: center;
   color: #666;
@@ -87,6 +107,122 @@ a {
   background-color: #2e7d32;
   border-color: #2e7d32;
   color: white;
+}
+
+.unit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+}
+
+@media (max-width: 720px) {
+  .unit-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.unit-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  background-color: white;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.unit-card:hover {
+  border-color: #4caf50;
+}
+
+.unit-card-selected {
+  background-color: #f1f8f2;
+  border-color: #2e7d32;
+}
+
+.unit-card-check {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  font-size: 0.8rem;
+  color: white;
+  background-color: #2e7d32;
+  border-radius: 999px;
+}
+
+.unit-card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+}
+
+.unit-card-number {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.unit-card-title {
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.unit-card-desc {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.length-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+@media (max-width: 480px) {
+  .length-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.length-option {
+  padding: 0.7rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  color: #444;
+  cursor: pointer;
+}
+
+.length-option:hover {
+  border-color: #4caf50;
+}
+
+.length-option-selected {
+  background-color: #2e7d32;
+  border-color: #2e7d32;
+  color: white;
+}
+
+.instructions-banner {
+  margin: 0 0 1.2rem;
+  padding: 0.8rem 1rem;
+  background-color: #f1f8f2;
+  border: 1.5px solid #a5d6a7;
+  border-radius: 10px;
+  color: #2e7d32;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .new-writing-link {
