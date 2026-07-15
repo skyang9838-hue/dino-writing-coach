@@ -22,8 +22,10 @@ a {
 }
 
 /* Same as .container but roomier — for teacher-facing pages viewed on a
-   desktop (dashboard, activity detail, student growth view). Student-facing
-   screens (join/write) stay on the narrower .container. */
+   desktop (dashboard, activity detail, student growth view). Also used by
+   the student write screen (`/write`), whose two-column workspace needs
+   more than 700px; the student join screen (a single name field) stays on
+   the narrower .container. */
 .container-wide {
   width: 100%;
   max-width: 1100px;
@@ -291,34 +293,193 @@ a {
   border-color: #4caf50;
 }
 
-.progress-section {
+.revision-count {
+  font-weight: 400;
+  color: #888;
+}
+
+/* Student write screen (`/write/[submissionId]`) */
+
+.write-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.progress-bar-bg {
+.write-header h1 {
+  font-size: 1.6rem;
+  margin: 0;
+  text-align: left;
+}
+
+.write-header .page-subtitle {
+  margin: 0.2rem 0 0;
+  text-align: left;
+}
+
+.student-badge {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: #2e7d32;
+  background-color: #f1f8f2;
+  border: 1.5px solid #a5d6a7;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.topic-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2.5rem;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.5rem;
+  background-color: white;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 14px;
+}
+
+.topic-card-label {
+  margin: 0 0 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.topic-card-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.topic-card-progress {
+  flex: 1 1 260px;
+  min-width: 240px;
+}
+
+.topic-card-progress-label {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.attainment-track {
+  position: relative;
+  padding-top: 3rem;
+}
+
+.attainment-track-bg {
   height: 12px;
   background-color: #e0e0e0;
   border-radius: 6px;
   overflow: hidden;
-  margin-bottom: 0.4rem;
 }
 
-.progress-bar-fill {
+.attainment-track-fill {
   height: 100%;
-  background-color: #81c784;
+  background-color: #64b5f6;
   border-radius: 6px;
-  transition: width 0.2s ease;
+  transition: width 0.3s ease;
 }
 
-.progress-bar-fill.complete {
-  background-color: #2e7d32;
+.attainment-track-fill.full {
+  background-color: #1565c0;
 }
 
-.char-count {
-  font-size: 0.9rem;
-  color: #666;
-  margin: 0;
+.attainment-track-value {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1565c0;
   text-align: right;
+}
+
+.attainment-mascot-wrap {
+  position: absolute;
+  bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  transition: left 0.3s ease;
+  pointer-events: none;
+}
+
+.attainment-mascot {
+  display: block;
+  width: 44px;
+  height: auto;
+}
+
+.attainment-speech-bubble {
+  margin-bottom: 0.3rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  background-color: white;
+  border: 1.5px solid #ccc;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.write-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .write-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+.write-panel,
+.feedback-panel {
+  padding: 1.2rem 1.4rem;
+  background-color: white;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 14px;
+}
+
+.write-panel-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.write-panel-header h3,
+.feedback-panel h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.write-panel textarea {
+  height: 420px;
+}
+
+.write-panel-footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.write-panel-footer .char-count {
+  font-size: 0.85rem;
+  color: #666;
 }
 
 .ready-badge {
@@ -326,40 +487,88 @@ a {
   font-weight: 600;
 }
 
-.attainment-section {
-  margin: 0 0 1.5rem;
+.feedback-panel h3 {
+  margin-bottom: 1rem;
 }
 
-.attainment-bar-bg {
-  height: 14px;
-  background-color: #e0e0e0;
-  border-radius: 7px;
-  overflow: hidden;
-  margin-bottom: 0.4rem;
-}
-
-.attainment-bar-fill {
-  height: 100%;
-  background-color: #64b5f6;
-  border-radius: 7px;
-  transition: width 0.3s ease;
-}
-
-.attainment-bar-fill.full {
-  background-color: #1565c0;
-}
-
-.attainment-label {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #1565c0;
-  margin: 0;
-  text-align: right;
-}
-
-.revision-count {
-  font-weight: 400;
+.feedback-empty {
+  padding: 2rem 0;
   color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.feedback-good {
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+  background-color: #f1f8f2;
+  border: 1.5px solid #a5d6a7;
+  border-radius: 10px;
+}
+
+.feedback-good-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.feedback-good p:last-child {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.feedback-missions {
+  padding: 0.9rem 1rem;
+  background-color: #f5f3ff;
+  border: 1.5px solid #c4b5fd;
+  border-radius: 10px;
+}
+
+.feedback-missions-title {
+  margin: 0 0 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #6d28d9;
+}
+
+.feedback-mission {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.feedback-mission + .feedback-mission {
+  margin-top: 0.9rem;
+}
+
+.feedback-mission-number {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: white;
+  background-color: #7c3aed;
+  border-radius: 999px;
+}
+
+.feedback-mission-text {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.coach-button-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.coach-button-wrap .coach-button {
+  width: 100%;
+  max-width: 420px;
 }
 
 .coach-button,
@@ -416,35 +625,6 @@ a {
   background-color: #9e9e9e;
   color: white;
   cursor: wait;
-}
-
-.feedback-card {
-  margin-top: 1.5rem;
-  padding: 1.2rem 1.4rem;
-  background-color: #f1f8f2;
-  border: 1.5px solid #a5d6a7;
-  border-radius: 10px;
-  text-align: left;
-}
-
-.feedback-title {
-  margin: 0 0 0.6rem;
-  font-weight: 700;
-  color: #2e7d32;
-}
-
-.feedback-card ul {
-  margin: 0;
-  padding-left: 1.2rem;
-}
-
-.feedback-card li {
-  margin-bottom: 0.4rem;
-  line-height: 1.5;
-}
-
-.feedback-card li:last-child {
-  margin-bottom: 0;
 }
 
 .error-message {
