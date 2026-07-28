@@ -32,13 +32,22 @@ a {
 }
 
 /* Same as .container but roomier — for teacher-facing pages viewed on a
-   desktop (dashboard, activity detail, student growth view). Also used by
-   the student write screen (`/write`), whose two-column workspace needs
-   more than 700px; the student join screen (a single name field) stays on
-   the narrower .container. */
+   desktop (dashboard, activity detail, student growth view). The student
+   join screen (a single name field) stays on the narrower .container; the
+   write screen uses the wider .container-write below. */
 .container-wide {
   width: 100%;
   max-width: 1100px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* The student write screen only — its two-column workspace needs more room
+   than the 1100px teacher pages so the writing area doesn't get cramped. */
+.container-write {
+  width: 100%;
+  max-width: 1280px;
   box-sizing: border-box;
   margin: 0 auto;
   padding: 2rem 1.5rem;
@@ -60,6 +69,10 @@ a {
 .container h1:not([class]),
 .container-wide h1:not([class]),
 .container-widest h1:not([class]) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   font-size: 2rem;
   margin-bottom: 0.6rem;
   text-align: center;
@@ -69,6 +82,9 @@ a {
    (/login, /join) keep their own centered 2rem h1 above. .page-title needs an
    explicit text-align because the .container* h1 rule centers bare h1s. */
 .page-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin: 0;
   font-size: 1.4rem;
   font-weight: 700;
@@ -80,6 +96,27 @@ a {
   font-size: 1.2rem;
   font-weight: 700;
   color: #222;
+}
+
+/* Mascot images (components/DinoIcon.jsx). The headings and buttons that hold
+   one are flex rows (see .page-title / .write-header h1 / .button-primary), so
+   the image gets its own box instead of overflowing a text line box. */
+.dino-icon {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+}
+
+.dino-icon-sm {
+  height: 1.7rem;
+}
+
+.dino-icon-md {
+  height: 2.6rem;
+}
+
+.dino-icon-lg {
+  height: 3.4rem;
 }
 
 /* Keeps forms at a comfortable reading/input width even inside .container-wide. */
@@ -399,6 +436,9 @@ a {
 }
 
 .write-header h1 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.6rem;
   margin: 0;
   text-align: left;
@@ -425,7 +465,9 @@ a {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem 2.5rem;
+  /* Wide column gap: at 0% the mascot sits at the far left of the track and
+     hangs half its width past it, so it needs clearance from the topic text. */
+  gap: 1.5rem 4rem;
   padding: 1.4rem 1.6rem;
   margin-bottom: 1.5rem;
   background-color: white;
@@ -520,9 +562,11 @@ a {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
+/* The writing side gets the larger share — it's where the student actually
+   works; the feedback panel is read-only. */
 .write-workspace {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 6fr 4fr;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
   align-items: start;
@@ -691,7 +735,10 @@ a {
 
 .coach-button,
 .button-primary {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   width: 100%;
   padding: 0.9rem;
   font-size: 1.1rem;
@@ -1100,10 +1147,15 @@ a {
   padding: 2rem 0;
 }
 
-.dashboard-new-section {
+/* Separates the activity list from the create-activity form above it. */
+.dashboard-list-section {
   margin-top: 2.5rem;
   padding-top: 2rem;
   border-top: 1.5px solid #e0e0e0;
+}
+
+.dashboard-list-section .section-heading {
+  margin-bottom: 1rem;
 }
 
 .join-info-card {

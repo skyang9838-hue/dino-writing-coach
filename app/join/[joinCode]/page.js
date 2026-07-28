@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { prisma } from '../../../lib/prisma.js'
 import { JoinForm } from '../../../components/JoinForm.jsx'
+import { DinoIcon } from '../../../components/DinoIcon.jsx'
 
 export default async function JoinPage({ params }) {
   const { joinCode } = await params
@@ -11,7 +12,9 @@ export default async function JoinPage({ params }) {
 
   return (
     <div className="container">
-      <h1>🦕 디노와 함께 글쓰기</h1>
+      <h1>
+        <DinoIcon pose="wave" size="lg" /> 디노와 함께 글쓰기
+      </h1>
       <p className="page-subtitle">이름을 입력하고 오늘의 글쓰기를 시작해요.</p>
 
       <div className="topic-card">

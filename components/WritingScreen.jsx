@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { requestCoaching, saveDraft } from '../lib/actions.js'
 import { getMascotState } from '../lib/mascot.js'
 import { RevisionHistory } from './RevisionHistory.jsx'
+import { DinoIcon } from './DinoIcon.jsx'
 
 const AUTOSAVE_DELAY_MS = 800
 
@@ -57,10 +58,12 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
   }
 
   return (
-    <div className="container-wide">
+    <div className="container-write">
       <header className="write-header">
         <div>
-          <h1>🦕 디노 글쓰기 코치</h1>
+          <h1>
+            <DinoIcon pose="writing" /> 디노 글쓰기 코치
+          </h1>
           <p className="page-subtitle">함께 쓰고, 함께 성장해요!</p>
         </div>
         <span className="student-badge">{studentName}</span>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { GRADE6_SEMESTER1_UNITS, LENGTH_OPTIONS } from '../lib/curriculum.js'
 import { createActivity } from '../lib/actions.js'
+import { DinoIcon } from './DinoIcon.jsx'
 
 const TOPIC_MAX = 50
 const INSTRUCTIONS_MAX = 100
@@ -166,7 +167,7 @@ export function NewActivityForm() {
 
       <div className="form-submit-row">
         <button type="submit" className="button-primary">
-          🦕 활동 만들기
+          <DinoIcon pose="wave" size="sm" /> 활동 만들기
         </button>
         <p className="form-submit-hint">✨ 선택한 활동으로 학생들이 글쓰기를 시작할 수 있어요!</p>
       </div>

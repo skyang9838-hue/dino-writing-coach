@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { auth, signIn } from '../../auth.js'
 import { devLogin } from '../../lib/devLogin.js'
+import { DinoIcon } from '../../components/DinoIcon.jsx'
 
 export default async function LoginPage() {
   const session = await auth()
@@ -8,7 +9,9 @@ export default async function LoginPage() {
 
   return (
     <div className="container">
-      <h1>🦕 디노 글쓰기 코치</h1>
+      <h1>
+        <DinoIcon pose="wave" size="lg" /> 디노 글쓰기 코치
+      </h1>
       <p className="page-subtitle">교사 로그인</p>
       <form
         action={async () => {

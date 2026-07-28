@@ -26,7 +26,11 @@ export default async function DashboardPage() {
 
   return (
     <div className="container-wide">
-      <TeacherHeader title="내 활동" email={session.user.email} />
+      <TeacherHeader
+        title="새 활동 만들기"
+        subtitle="교육과정에 맞는 글쓰기 활동을 선택하고 설정해 보세요."
+        email={session.user.email}
+      />
 
       {pendingReviews.length > 0 && (
         <div className="pending-banner">
@@ -43,36 +47,27 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      <a href="#new-activity" className="button-primary" style={{ marginBottom: '1.5rem', display: 'block' }}>
-        + 새 활동 만들기
-      </a>
+      <NewActivityForm />
 
-      {activities.length === 0 ? (
-        <p className="empty-state">아직 만든 활동이 없어요. 위 버튼으로 첫 활동을 만들어보세요.</p>
-      ) : (
-        activities.map((activity) => (
-          <Link key={activity.id} href={`/dashboard/${activity.id}`} className="activity-card">
-            <span className="activity-card-icon">{getGenreIcon(activity.genre)}</span>
-            <span className="activity-card-body">
-              <h3>{activity.title}</h3>
-              <p>
-                {activity.topic || '자유 주제'} · 목표 {activity.targetLength}자 · 참여 학생{' '}
-                {activity._count.submissions}명
-              </p>
-            </span>
-            <span className="activity-card-chevron">›</span>
-          </Link>
-        ))
-      )}
-
-      <section id="new-activity" className="dashboard-new-section">
-        <h2 className="section-heading" style={{ marginBottom: '0.3rem' }}>
-          🦕 새 활동 만들기
-        </h2>
-        <p className="field-hint" style={{ marginBottom: '1.2rem' }}>
-          교육과정에 맞는 글쓰기 활동을 선택하고 설정해 보세요.
-        </p>
-        <NewActivityForm />
+      <section className="dashboard-list-section">
+        <h2 className="section-heading">📋 내 활동</h2>
+        {activities.length === 0 ? (
+          <p className="empty-state">아직 만든 활동이 없어요. 위에서 단원을 골라 첫 활동을 만들어보세요.</p>
+        ) : (
+          activities.map((activity) => (
+            <Link key={activity.id} href={`/dashboard/${activity.id}`} className="activity-card">
+              <span className="activity-card-icon">{getGenreIcon(activity.genre)}</span>
+              <span className="activity-card-body">
+                <h3>{activity.title}</h3>
+                <p>
+                  {activity.topic || '자유 주제'} · 목표 {activity.targetLength}자 · 참여 학생{' '}
+                  {activity._count.submissions}명
+                </p>
+              </span>
+              <span className="activity-card-chevron">›</span>
+            </Link>
+          ))
+        )}
       </section>
     </div>
   )
