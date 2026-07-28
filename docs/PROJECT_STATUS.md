@@ -3,7 +3,7 @@
 > 이 문서는 세션이 끝날 때마다 갱신되는 "현재 상태 스냅샷"입니다. 다음 세션은 이 문서에서 시작하세요.
 > 기능 자체의 구체적인 구현 스펙은 [`FEATURES.md`](FEATURES.md)를 참고하세요.
 
-**마지막 갱신:** 2026-07-15 (다른 세션에서 진행된 단원 카드/마스코트 리디자인 커밋 4건이 문서화되지 않은 채 origin에 push·배포까지 끝나 있던 것을 발견 → 이어서 이번 세션이 나머지 교사/학생 화면 디자인을 통일하고, 두 작업을 함께 문서에 반영)
+**마지막 갱신:** 2026-07-28 (전역 폰트를 Pretendard로 전환하고 교사/학생 화면 타이포그래피를 공통 클래스로 통일 — 아래 "타이포그래피 통일 + Pretendard 적용" 항목 참고)
 **최신 커밋:** 기능/코드 기준 최신은 `b1a4f97`이며, 이 문서 갱신을 담은 커밋이 그 위에 하나 더 있음 (**주의: 이번 세션 커밋 2건은 아직 GitHub에 push 안 됨** — origin은 `950e4f3`까지만 반영됨. `git log origin/master..HEAD`로 확인)
 **GitHub 저장소:** https://github.com/skyang9838-hue/dino-writing-coach (public)
 **배포 주소:** https://dino-writing-coach.vercel.app (Next.js 교실 플랫폼 버전 배포 중 — `950e4f3`까지 반영, 그 이후 로컬 커밋은 미배포)
@@ -185,6 +185,35 @@ Phase 3 상세 프롬프트를 기다리는 동안, 다른 세션에서 `design-
 - devLogin(`lib/devLogin.js`) + Playwright로 대시보드 → 새 활동 만들기 → 활동 상세(QR) → 학생 참여 → 성장 과정까지 전 화면을 스크린샷으로 직접 검증.
 
 **활동 생성 페이지 이동 제거 (같은 세션 후속)** — 대시보드 스크린샷을 보던 사용자가 "새 활동 만들기 때문에 페이지를 꼭 옮겨야 하냐"고 문제 제기. `/dashboard/new` 라우트를 없애고 활동 목록 바로 아래에 `NewActivityForm`을 인라인으로 배치, 상단 버튼은 그 자리로 스크롤하는 앵커 링크(`#new-activity`)로 변경. `createActivity`의 리다이렉트 동작은 그대로라 생성 후에는 여전히 새 활동 상세 페이지로 이동함.
+
+## 타이포그래피 통일 + Pretendard 적용 (2026-07-28)
+
+교사 화면 두 곳(새 활동 만들기 / 활동 상세)의 제목 크기가 인라인 스타일로 제각각(1.2rem vs 1.1rem)인 것을 발견해 시작. 전체 6개 화면을 감사한 뒤 앱 전역 규칙으로 정리했다. 설계는 `docs/superpowers/specs/2026-07-28-teacher-typography-unification-design.md`, 계획은 `docs/superpowers/plans/2026-07-28-teacher-typography-unification.md`.
+
+**폰트 — Pretendard 전환 (`2753190`)**
+- `next/font/local`로 `pretendard` npm 패키지의 Variable woff2를 self-host, `--font-pretendard` CSS 변수로 노출.
+- **중요:** `input`/`textarea`/`select`/`button`은 `body`의 `font-family`를 상속하지 않는다(브라우저 시스템 폰트 사용). 전역 `font-family: inherit` 규칙을 추가하지 않으면 입력칸과 버튼만 다른 폰트로 남는다. 앞으로 폰트를 바꿀 때도 이 규칙이 있어야 한다.
+
+**공통 타이포 클래스**
+- `.page-title`(1.4rem/700/#222), `.section-heading`(1.2rem/700/#222) 신설. `TeacherHeader`·대시보드·활동 상세의 인라인 `fontSize`를 전부 교체.
+- **주의:** `.container* h1` 규칙(2rem 중앙정렬)이 `.page-title`보다 특이성이 높아 덮어쓰고 있었다. 컨테이너 규칙을 `h1:not([class])`로 좁혀 해결 — 진입 화면(`/login`, `/join`)의 2rem h1은 그대로 유지된다.
+- 폼 라벨(1rem/600)과 강조 라벨(`.topic-card-label` 0.85rem/700/초록)은 역할이 달라 **의도적으로 다르게 유지**.
+
+**감사 중 발견한 실제 버그 2건 (둘 다 수정 완료)**
+- `.char-count`가 `.write-panel-footer .char-count`로 스코프돼 있는데 실제 요소는 `.write-panel-header` 안에 있어 규칙이 전혀 적용되지 않고 있었음.
+- `.write-panel textarea`에 `height`만 지정돼 있어 테두리·패딩 없이 `cols` 기반 좁은 너비(약 470px 대신 200px)로 렌더링되고 있었음. `.field textarea`가 멀쩡했던 건 `.field`가 flex 컬럼이라 늘어났기 때문. 너비/테두리/패딩을 명시해 해결.
+
+**레퍼런스 정합 (`design-reference/디노 교사화면.png`)**
+- 단원 카드: 아이콘 2rem→3rem, 제목 1.05rem + 2줄 높이 예약(설명 시작 위치 정렬), 테두리 연하게 + 미세 그림자, `word-break: keep-all`로 한글 단어 중간 줄바꿈 방지.
+- 설정 영역(주제/안내말/글자 수)을 `.settings-card` 하나로 묶고, 목표 글자 수에 드롭다운 추가 + 프리셋 3열, 라벨에 아이콘 추가.
+- 제출 버튼을 520px 중앙 정렬 + 하단 안내 문구, 헤더의 이메일/로그아웃을 테두리 있는 칩·버튼으로.
+
+**범위 밖으로 남긴 것**
+- 레퍼런스 학생 화면의 도달도 눈금(50% 분량 충족 / 70% 1차 피드백 …)은 **구현하지 않음**. 실제 `lib/attainment.js` 공식은 40%에서 시작해 보완점 개수×10%라 레퍼런스의 눈금 값과 맞지 않는다. 눈금을 넣으려면 점수 공식 자체를 정하는 결정이 먼저 필요하다.
+- 아이콘 렌더링 3패턴(`unit-card-icon` 단독 / `activity-card-icon` 배경박스 / `TeacherHeader` 인라인)은 문맥이 달라 통일하지 않음.
+- 레퍼런스의 3D 스타일 이모지는 폰트(Windows는 평면 Segoe 이모지) 문제라 이미지 에셋 없이는 재현 불가.
+
+**검증:** Vitest 61개 통과, 프로덕션 빌드 통과, oxlint 통과. devLogin + Playwright로 로그인/대시보드/새 활동/활동 상세/성장 과정/참여/글쓰기 7개 화면 스크린샷 촬영 후 레퍼런스와 비교, 계산된 스타일(`getComputedStyle`)로 `.page-title` 22.4px·`.section-heading` 19.2px·카드 14px·Pretendard 실제 로드까지 직접 확인.
 
 ## Phase 2 이후 로드맵 (다음에 할 일, 실사용 피드백 이후)
 
