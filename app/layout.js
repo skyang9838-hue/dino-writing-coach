@@ -13,7 +13,8 @@ const pretendard = localFont({
 })
 
 export const metadata = {
-  title: '🦕 디노 글쓰기 코치',
+  // No 🦕 here — app/icon.png already puts the mascot on the browser tab.
+  title: '디노 글쓰기 코치',
   description: '초등학생을 위한 과정 중심 AI 글쓰기 코치',
 }
 
