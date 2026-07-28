@@ -29,6 +29,7 @@ generated
 .claude
 .agents
 skills-lock.json
+.superpowers
 
 # Environment variables
 .env
