@@ -8,7 +8,7 @@ export function TeacherHeader({ icon = '🦕', title, subtitle, email }) {
   return (
     <div className="top-bar">
       <div>
-        <h1 style={{ fontSize: '1.4rem', margin: 0 }}>
+        <h1 className="page-title">
           {icon} {title}
         </h1>
         {subtitle && (

@@ -26,10 +26,22 @@ export function NewActivityForm() {
     setTargetLength(length)
   }
 
+  const recommendedLength =
+    GRADE6_SEMESTER1_UNITS.find((unit) => unit.id === selectedUnitId)?.recommendedLength
+  // The dropdown offers every value the quick-pick buttons do, plus the finer
+  // steps from LENGTH_OPTIONS and whatever the chosen unit recommends.
+  const lengthChoices = [
+    ...new Set([...LENGTH_OPTIONS, ...PRESET_LENGTHS, recommendedLength]),
+  ]
+    .filter(Boolean)
+    .sort((a, b) => a - b)
+
   return (
     <form action={createActivity} className="form-narrow-wide">
       <div className="field">
-        <label>📖 6학년 1학기 국어 활동 선택</label>
+        <h3 className="section-heading section-heading-icon">
+          <span aria-hidden="true">📖</span> 6학년 1학기 국어 활동 선택
+        </h3>
         <p className="field-hint">진행할 활동을 선택하면 기본 정보가 자동으로 설정돼요.</p>
         <div className="unit-grid">
           {GRADE6_SEMESTER1_UNITS.map((unit) => (
@@ -51,10 +63,12 @@ export function NewActivityForm() {
         <input type="hidden" name="unitId" value={selectedUnitId} />
       </div>
 
-      <div className="field-split">
+      <div className="field-split settings-card">
         <div className="field-split-col">
           <div className="field">
-            <label htmlFor="topic">오늘의 주제 (선택)</label>
+            <label htmlFor="topic">
+              <span aria-hidden="true">📝</span> 오늘의 주제 (선택)
+            </label>
             <p className="field-hint">비워두면 학생이 자유롭게 주제를 정합니다.</p>
             <input
               id="topic"
@@ -71,7 +85,9 @@ export function NewActivityForm() {
           </div>
 
           <div className="field">
-            <label htmlFor="instructions">학생에게 안내할 말 (선택)</label>
+            <label htmlFor="instructions">
+              <span aria-hidden="true">💬</span> 학생에게 안내할 말 (선택)
+            </label>
             <p className="field-hint">비워두면 별도의 안내 없이 글쓰기를 시작합니다.</p>
             <textarea
               id="instructions"
@@ -90,8 +106,28 @@ export function NewActivityForm() {
 
         <div className="field-split-col">
           <div className="field">
-            <label htmlFor="targetLength">목표 글자 수</label>
+            <label htmlFor="targetLength">
+              <span aria-hidden="true">📄</span> 목표 글자 수
+            </label>
             <p className="field-hint">권장 글자 수는 활동에 따라 추천된 값이에요. 필요에 따라 변경할 수 있어요.</p>
+            <select
+              className="length-select"
+              value={isCustomLength ? 'custom' : targetLength}
+              onChange={(e) => {
+                if (e.target.value === 'custom') {
+                  setIsCustomLength(true)
+                } else {
+                  handlePresetLength(Number(e.target.value))
+                }
+              }}
+            >
+              {lengthChoices.map((length) => (
+                <option key={length} value={length}>
+                  {length}자{length === recommendedLength ? ' (권장)' : ''}
+                </option>
+              ))}
+              <option value="custom">직접 입력</option>
+            </select>
             <div className="length-grid">
               {PRESET_LENGTHS.map((length) => (
                 <button
@@ -128,9 +164,12 @@ export function NewActivityForm() {
         </div>
       </div>
 
-      <button type="submit" className="button-primary">
-        🦕 활동 만들기
-      </button>
+      <div className="form-submit-row">
+        <button type="submit" className="button-primary">
+          🦕 활동 만들기
+        </button>
+        <p className="form-submit-hint">✨ 선택한 활동으로 학생들이 글쓰기를 시작할 수 있어요!</p>
+      </div>
     </form>
   )
 }

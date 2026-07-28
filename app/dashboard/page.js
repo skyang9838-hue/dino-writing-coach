@@ -66,7 +66,9 @@ export default async function DashboardPage() {
       )}
 
       <section id="new-activity" className="dashboard-new-section">
-        <h2 style={{ fontSize: '1.2rem', marginBottom: '0.3rem' }}>🦕 새 활동 만들기</h2>
+        <h2 className="section-heading" style={{ marginBottom: '0.3rem' }}>
+          🦕 새 활동 만들기
+        </h2>
         <p className="field-hint" style={{ marginBottom: '1.2rem' }}>
           교육과정에 맞는 글쓰기 활동을 선택하고 설정해 보세요.
         </p>

@@ -45,7 +45,7 @@ export default async function ActivityDetailPage({ params }) {
         <JoinQrCode url={joinUrl} />
       </div>
 
-      <h2 style={{ fontSize: '1.1rem' }}>참여 학생 ({activity.submissions.length}명)</h2>
+      <h2 className="section-heading">참여 학생 ({activity.submissions.length}명)</h2>
       {activity.submissions.length === 0 ? (
         <p className="empty-state">아직 참여한 학생이 없어요.</p>
       ) : (

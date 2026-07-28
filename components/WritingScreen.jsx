@@ -101,7 +101,9 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
         <div className="write-panel">
           <div className="write-panel-header">
             <h3>✏️ 내가 쓴 글</h3>
-            <span className="char-count">글자 수 {charCount}자</span>
+            <span className="char-count">
+              글자 수 <strong>{charCount.toLocaleString()}</strong>자
+            </span>
           </div>
           <textarea
             id="writing"
@@ -112,7 +114,8 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
           <p className="write-panel-footer">
             <span>글은 자동으로 저장돼요.</span>
             <span>
-              {charCount} / {activity.targetLength}자
+              <strong className="char-count-value">{charCount.toLocaleString()}</strong> /{' '}
+              {activity.targetLength.toLocaleString()}자
               {isReady && <span className="ready-badge"> ✅ 준비 완료!</span>}
             </span>
           </p>
