@@ -222,5 +222,123 @@
     "allowedMissionCriterionSets": [
       [["new-fact", "fact-detail"], ["closing"]]
     ]
+  },
+  {
+    "id": "dev-unchanged-revision",
+    "writing": "나는 우체부가 편지를 나누는 방법을 알아보려고 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다.",
+    "previousWriting": "나는 우체부가 편지를 나누는 방법을 알아보려고 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다.",
+    "previousMissions": [
+      {
+        "id": "old-closing",
+        "rubricIds": ["structure"],
+        "criterionIds": ["closing"],
+        "title": "면담 뒤 생각 덧붙이기",
+        "instruction": "글 끝에 면담 뒤 새로 든 생각을 한 문장 덧붙여 보세요.",
+        "criterion": "글 끝에 면담 뒤 든 생각이 추가되었는가"
+      }
+    ],
+    "priorRounds": [
+      {
+        "writing": "나는 우체부가 편지를 나누는 방법을 알아보려고 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다.",
+        "strength": "면담 목적과 대상을 분명히 밝혔어요.",
+        "assessments": [
+          { "rubricId": "purpose-and-subject", "criterionId": "purpose", "status": "met" },
+          { "rubricId": "purpose-and-subject", "criterionId": "interviewee", "status": "met" },
+          { "rubricId": "information", "criterionId": "new-fact", "status": "met" },
+          { "rubricId": "information", "criterionId": "fact-detail", "status": "met" },
+          { "rubricId": "structure", "criterionId": "opening", "status": "partial" },
+          { "rubricId": "structure", "criterionId": "body", "status": "met" },
+          { "rubricId": "structure", "criterionId": "closing", "status": "unmet" }
+        ],
+        "missions": [
+          {
+            "id": "old-closing",
+            "rubricIds": ["structure"],
+            "criterionIds": ["closing"],
+            "title": "면담 뒤 생각 덧붙이기",
+            "instruction": "글 끝에 면담 뒤 새로 든 생각을 한 문장 덧붙여 보세요.",
+            "criterion": "글 끝에 면담 뒤 든 생각이 추가되었는가"
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "met" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "partial" },
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "unmet" }
+      ]
+    },
+    "expectedPriorMissionStatuses": [
+      { "missionId": "old-closing", "status": "not-done" }
+    ],
+    "allowedMissionCriterionSets": [
+      [["closing"]]
+    ]
+  },
+  {
+    "id": "dev-minimally-changed-revision",
+    "writing": "나는 우편 배달에 관해 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다. 면담 뒤에는 편지 한 통을 배달하는 데에도 꼼꼼한 준비가 필요하다는 것을 느꼈다.",
+    "previousWriting": "나는 우편 배달에 관해 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다.",
+    "previousMissions": [
+      {
+        "id": "old-closing",
+        "rubricIds": ["structure"],
+        "criterionIds": ["closing"],
+        "title": "면담 뒤 생각 덧붙이기",
+        "instruction": "글 끝에 면담 뒤 새로 든 생각을 한 문장 덧붙여 보세요.",
+        "criterion": "글 끝에 면담 뒤 든 생각이 추가되었는가"
+      }
+    ],
+    "priorRounds": [
+      {
+        "writing": "나는 우편 배달에 관해 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다.",
+        "strength": "면담 대상을 분명히 밝혔어요.",
+        "assessments": [
+          { "rubricId": "purpose-and-subject", "criterionId": "purpose", "status": "partial" },
+          { "rubricId": "purpose-and-subject", "criterionId": "interviewee", "status": "met" },
+          { "rubricId": "information", "criterionId": "new-fact", "status": "met" },
+          { "rubricId": "information", "criterionId": "fact-detail", "status": "met" },
+          { "rubricId": "structure", "criterionId": "opening", "status": "partial" },
+          { "rubricId": "structure", "criterionId": "body", "status": "met" },
+          { "rubricId": "structure", "criterionId": "closing", "status": "unmet" }
+        ],
+        "missions": [
+          {
+            "id": "old-closing",
+            "rubricIds": ["structure"],
+            "criterionIds": ["closing"],
+            "title": "면담 뒤 생각 덧붙이기",
+            "instruction": "글 끝에 면담 뒤 새로 든 생각을 한 문장 덧붙여 보세요.",
+            "criterion": "글 끝에 면담 뒤 든 생각이 추가되었는가"
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "partial" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "partial" },
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "met" }
+      ]
+    },
+    "expectedPriorMissionStatuses": [
+      { "missionId": "old-closing", "status": "done" }
+    ],
+    "allowedMissionCriterionSets": [
+      [["fact-detail"], ["purpose"]],
+      [["purpose"], ["opening"]],
+      [["purpose"]]
+    ]
   }
 ]

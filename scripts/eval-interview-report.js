@@ -3,6 +3,7 @@ import path from 'node:path'
 import process from 'node:process'
 import dotenv from 'dotenv'
 import { getInterviewReportFeedback } from '../lib/coaching.js'
+import { summarizeWritingChanges } from '../lib/interviewRound.js'
 import {
   aggregateEvalResults,
   evaluateThresholds,
@@ -37,6 +38,10 @@ for (const fixture of fixtures) {
       const result = await getInterviewReportFeedback({
         topic: '면담 보고서 쓰기',
         writing: fixture.writing,
+        previousWriting: fixture.previousWriting,
+        previousMissions: fixture.previousMissions,
+        priorRounds: fixture.priorRounds,
+        changes: summarizeWritingChanges(fixture.previousWriting, fixture.writing),
       })
       const assessment = scoreAssessmentCase(fixture.expected, {
         meaningless: result.meaningless,
