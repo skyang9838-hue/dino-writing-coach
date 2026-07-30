@@ -1,0 +1,150 @@
+[
+  {
+    "id": "validation-complete-sea-diver",
+    "writing": "나는 해녀가 바다에서 어떻게 안전을 지키는지 알아보려고 제주도에 사는 해녀 박영희 할머니를 면담했다. 면담 전에는 해녀가 사용하는 도구 사진을 찾아보고 궁금한 점을 적었다.\n박 할머니는 물에 들어가기 전에 파도와 바람의 방향을 살핀다고 했다. 해녀들은 혼자 멀리 가지 않고 서로의 위치를 확인하며, 숨이 차기 전에 물 위로 올라오는 약속을 지킨다는 사실을 알게 되었다.\n나는 오랜 경험만 믿는 것이 아니라 함께 정한 안전 약속을 지키는 일이 중요하다는 것을 느꼈다.",
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "met" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "met" },
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "met" }
+      ]
+    },
+    "allowedMissionCriterionSets": [[]]
+  },
+  {
+    "id": "validation-missing-subject",
+    "writing": "나는 반려동물을 건강하게 돌보는 방법을 알아보기 위해 면담을 했다. 예방 접종은 병을 막기 위해 정해진 때에 해야 하고, 먹이를 갑자기 바꾸면 배탈이 날 수 있다는 이야기를 들었다. 동물을 키우는 데 책임이 필요하다고 느꼈다.",
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "met" },
+        { "criterionId": "interviewee", "status": "unmet" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "partial" },
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "met" }
+      ]
+    },
+    "allowedMissionCriterionSets": [
+      [["interviewee"], ["opening"]]
+    ]
+  },
+  {
+    "id": "validation-list-only",
+    "writing": "나는 경찰관인 옆집 아저씨에게 경찰관의 하루를 알아보려고 면담했다. 경찰관은 순찰을 한다. 신고를 받는다. 보고서를 쓴다. 사람들을 돕는다. 면담을 해서 재미있었다.",
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "met" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "partial" },
+        { "criterionId": "opening", "status": "partial" },
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "partial" }
+      ]
+    },
+    "allowedMissionCriterionSets": [
+      [["fact-detail"], ["closing"]]
+    ]
+  },
+  {
+    "id": "validation-reflection-first",
+    "writing": "나는 여러 사람의 도움으로 버스가 안전하게 운행된다는 점이 놀라웠다. 정비사는 출발 전날 브레이크와 타이어를 확인하고 이상한 소리가 나면 운행 전에 부품을 바꾼다고 했다. 나는 버스 정비 과정을 알아보려고 정비사인 이웃 김철수 님을 면담했고 질문지를 준비했다.",
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "met" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "partial" },
+        { "criterionId": "body", "status": "partial" },
+        { "criterionId": "closing", "status": "partial" }
+      ]
+    },
+    "allowedMissionCriterionSets": [
+      [["opening"], ["body"]]
+    ]
+  },
+  {
+    "id": "validation-purpose-topic-only",
+    "writing": "오늘은 전통시장에 관한 면담 보고서이다. 시장 상인인 외삼촌은 새벽에 물건을 받아 진열한다고 했다. 채소는 시들지 않도록 햇빛이 덜 드는 곳에 놓는다고 했다. 외삼촌이 부지런하다고 느꼈다.",
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "partial" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "partial" },
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "partial" }
+      ]
+    },
+    "allowedMissionCriterionSets": [
+      [["purpose"], ["closing"]]
+    ]
+  },
+  {
+    "id": "validation-no-reflection",
+    "writing": "나는 운동화가 수선되는 과정을 알아보려고 수선 가게 주인 이정호 님을 면담했다. 가게에 가기 전에 낡은 운동화 사진을 준비했다.\n이정호 님은 밑창을 떼어 낸 뒤 남은 접착제를 깨끗이 닦아야 새 밑창이 잘 붙는다고 했다. 접착제를 바른 뒤에는 기계로 눌러 하루 동안 말린다는 사실도 알게 되었다.",
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "met" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "met" },
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "unmet" }
+      ]
+    },
+    "allowedMissionCriterionSets": [
+      [["closing"]]
+    ]
+  },
+  {
+    "id": "validation-meaningless-spacing",
+    "writing": "면 담 을 했 다 면 담 을 했 다 면 담 을 했 다 12345 12345 12345 ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅅ",
+    "expected": {
+      "meaningless": true,
+      "criteria": [
+        { "criterionId": "purpose", "status": "unmet" },
+        { "criterionId": "interviewee", "status": "unmet" },
+        { "criterionId": "new-fact", "status": "unmet" },
+        { "criterionId": "fact-detail", "status": "unmet" },
+        { "criterionId": "opening", "status": "unmet" },
+        { "criterionId": "body", "status": "unmet" },
+        { "criterionId": "closing", "status": "unmet" }
+      ]
+    },
+    "allowedMissionCriterionSets": []
+  },
+  {
+    "id": "validation-minimal-meaningful",
+    "writing": "나는 학교 지킴이 선생님이 하는 일을 알고 싶어 면담했다. 선생님은 아침마다 학교 주변을 살핀다고 했다. 위험한 곳이 없는지 보는 일이라고 했다. 우리를 지켜 주셔서 감사했다.",
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "met" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "partial" },
+        { "criterionId": "body", "status": "partial" },
+        { "criterionId": "closing", "status": "partial" }
+      ]
+    },
+    "allowedMissionCriterionSets": [
+      [["opening"], ["body"]]
+    ]
+  }
+]
