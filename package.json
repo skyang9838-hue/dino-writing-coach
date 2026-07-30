@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "oxlint",
     "test": "vitest run",
+    "eval": "node scripts/eval-interview-report.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {

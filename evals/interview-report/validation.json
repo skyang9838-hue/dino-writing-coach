@@ -70,7 +70,8 @@
       ]
     },
     "allowedMissionCriterionSets": [
-      [["opening"], ["body"]]
+      [["opening"], ["body"]],
+      [["closing"], ["body"]]
     ]
   },
   {
@@ -139,12 +140,13 @@
         { "criterionId": "new-fact", "status": "met" },
         { "criterionId": "fact-detail", "status": "met" },
         { "criterionId": "opening", "status": "partial" },
-        { "criterionId": "body", "status": "partial" },
-        { "criterionId": "closing", "status": "partial" }
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "met" }
       ]
     },
     "allowedMissionCriterionSets": [
-      [["opening"], ["body"]]
+      [["opening"]],
+      [["body"]]
     ]
   }
 ]

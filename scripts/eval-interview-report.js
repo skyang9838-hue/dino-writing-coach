@@ -1,0 +1,103 @@
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import process from 'node:process'
+import dotenv from 'dotenv'
+import { getInterviewReportFeedback } from '../lib/coaching.js'
+import {
+  aggregateEvalResults,
+  evaluateThresholds,
+  parseEvalArgs,
+  scoreAssessmentCase,
+  scoreMissionCase,
+} from '../lib/interviewEval.js'
+
+dotenv.config({ path: '.env.local', quiet: true })
+dotenv.config({ quiet: true })
+
+const options = parseEvalArgs(process.argv.slice(2))
+if (!process.env.GEMINI_API_KEY) {
+  throw new Error('GEMINI_API_KEY가 없어 실제 Gemini 평가를 실행할 수 없습니다.')
+}
+
+const fixturePath = path.resolve('evals', 'interview-report', `${options.set}.json`)
+const fixtures = JSON.parse(await fs.readFile(fixturePath, 'utf8'))
+const results = []
+
+function assessmentSignature(result) {
+  return [
+    String(result.meaningless),
+    ...result.assessments.map((assessment) => `${assessment.criterionId}:${assessment.status}`),
+  ].join('|')
+}
+
+for (const fixture of fixtures) {
+  for (let run = 1; run <= options.runs; run += 1) {
+    process.stdout.write(`[${fixture.id}] ${run}/${options.runs} `)
+    try {
+      const result = await getInterviewReportFeedback({
+        topic: '면담 보고서 쓰기',
+        writing: fixture.writing,
+      })
+      const assessment = scoreAssessmentCase(fixture.expected, {
+        meaningless: result.meaningless,
+        criteria: result.assessments,
+      })
+      const missionViolations = result.meaningless ? [] : scoreMissionCase(fixture, result)
+      results.push({
+        caseId: fixture.id,
+        run,
+        assessment,
+        signature: assessmentSignature(result),
+        missionViolations,
+        actual: result,
+      })
+      const caseAgreement = assessment.total ? assessment.matches / assessment.total : 0
+      process.stdout.write(`판정 ${(caseAgreement * 100).toFixed(1)}%`)
+      if (missionViolations.length) {
+        process.stdout.write(` · 미션 위반 ${missionViolations.join(', ')}`)
+      }
+      process.stdout.write('\n')
+    } catch (error) {
+      results.push({
+        caseId: fixture.id,
+        run,
+        assessment: {
+          matches: 0,
+          total: fixture.expected.criteria.length,
+          meaninglessMatch: false,
+          hallucinatedMet: 0,
+          contradictions: 0,
+          schemaValid: false,
+        },
+        signature: `error:${error.message}`,
+        missionViolations: ['Gemini 호출 또는 응답 검증 실패'],
+        error: error.message,
+      })
+      process.stdout.write(`실패: ${error.message}\n`)
+    }
+  }
+}
+
+const metrics = aggregateEvalResults(results)
+const failures = evaluateThresholds(metrics, options)
+const percent = (value) => `${(value * 100).toFixed(1)}%`
+
+console.log('\n=== 면담 보고서 Gemini 평가 ===')
+console.log(`평가셋: ${options.set} · 사례: ${fixtures.length} · 반복: ${options.runs}`)
+console.log(`판정 일치율: ${percent(metrics.agreement)}`)
+console.log(`JSON 스키마 성공률: ${percent(metrics.schemaRate)}`)
+console.log(`판정 안정성: ${percent(metrics.stability)}`)
+console.log(`무의미 글 판별: ${percent(metrics.meaninglessRate)}`)
+console.log(`글에 없는 충족 추측: ${metrics.hallucinatedMet}`)
+console.log(`논리 모순: ${metrics.contradictions}`)
+console.log(`수정미션 위반: ${metrics.missionViolations}`)
+console.log(failures.length ? `실패 조건: ${failures.join(', ')}` : '모든 종료 조건 통과')
+
+const reportDir = path.resolve('.eval-results', 'interview-report')
+await fs.mkdir(reportDir, { recursive: true })
+const timestamp = new Date().toISOString().replaceAll(':', '-')
+const reportPath = path.join(reportDir, `${timestamp}-${options.set}.json`)
+await fs.writeFile(reportPath, JSON.stringify({ options, metrics, failures, results }, null, 2))
+console.log(`상세 결과: ${reportPath}`)
+
+if (failures.length) process.exitCode = 1

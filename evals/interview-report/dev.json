@@ -22,7 +22,7 @@
     "expected": {
       "meaningless": false,
       "criteria": [
-        { "criterionId": "purpose", "status": "partial" },
+        { "criterionId": "purpose", "status": "unmet" },
         { "criterionId": "interviewee", "status": "met" },
         { "criterionId": "new-fact", "status": "met" },
         { "criterionId": "fact-detail", "status": "met" },
@@ -44,14 +44,16 @@
         { "criterionId": "purpose", "status": "met" },
         { "criterionId": "interviewee", "status": "met" },
         { "criterionId": "new-fact", "status": "met" },
-        { "criterionId": "fact-detail", "status": "partial" },
+        { "criterionId": "fact-detail", "status": "met" },
         { "criterionId": "opening", "status": "partial" },
         { "criterionId": "body", "status": "met" },
-        { "criterionId": "closing", "status": "met" }
+        { "criterionId": "closing", "status": "partial" }
       ]
     },
     "allowedMissionCriterionSets": [
-      [["fact-detail"], ["opening"]]
+      [["fact-detail"], ["closing"]],
+      [["closing"], ["opening"]],
+      [["closing"]]
     ]
   },
   {
@@ -89,7 +91,8 @@
       ]
     },
     "allowedMissionCriterionSets": [
-      [["opening"], ["body"]]
+      [["opening"], ["body"]],
+      [["opening"]]
     ]
   },
   {
@@ -136,15 +139,15 @@
       "criteria": [
         { "criterionId": "purpose", "status": "met" },
         { "criterionId": "interviewee", "status": "partial" },
-        { "criterionId": "new-fact", "status": "partial" },
-        { "criterionId": "fact-detail", "status": "unmet" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "partial" },
         { "criterionId": "opening", "status": "partial" },
-        { "criterionId": "body", "status": "partial" },
+        { "criterionId": "body", "status": "met" },
         { "criterionId": "closing", "status": "partial" }
       ]
     },
     "allowedMissionCriterionSets": [
-      [["new-fact", "fact-detail"], ["interviewee"]]
+      [["fact-detail"], ["interviewee"]]
     ]
   },
   {
@@ -187,17 +190,18 @@
     "expected": {
       "meaningless": false,
       "criteria": [
-        { "criterionId": "purpose", "status": "partial" },
+        { "criterionId": "purpose", "status": "met" },
         { "criterionId": "interviewee", "status": "met" },
         { "criterionId": "new-fact", "status": "met" },
         { "criterionId": "fact-detail", "status": "met" },
         { "criterionId": "opening", "status": "partial" },
-        { "criterionId": "body", "status": "partial" },
-        { "criterionId": "closing", "status": "partial" }
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "met" }
       ]
     },
     "allowedMissionCriterionSets": [
-      [["purpose"], ["opening"]]
+      [["opening"]],
+      [["fact-detail"], ["closing"]]
     ]
   },
   {
