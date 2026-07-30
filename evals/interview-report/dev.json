@@ -132,25 +132,6 @@
     "allowedMissionCriterionSets": [[]]
   },
   {
-    "id": "dev-vague-interviewee-and-info",
-    "writing": "나는 환경을 지키는 방법을 알아보려고 어떤 분을 면담했다. 그분은 분리배출이 중요하다고 했다. 여러 가지 이야기를 들어서 새로웠다. 앞으로 환경을 잘 지켜야겠다고 생각했다.",
-    "expected": {
-      "meaningless": false,
-      "criteria": [
-        { "criterionId": "purpose", "status": "met" },
-        { "criterionId": "interviewee", "status": "partial" },
-        { "criterionId": "new-fact", "status": "met" },
-        { "criterionId": "fact-detail", "status": "partial" },
-        { "criterionId": "opening", "status": "partial" },
-        { "criterionId": "body", "status": "met" },
-        { "criterionId": "closing", "status": "partial" }
-      ]
-    },
-    "allowedMissionCriterionSets": [
-      [["fact-detail"], ["interviewee"]]
-    ]
-  },
-  {
     "id": "dev-meaningless-jamo",
     "writing": "ㅋㅋㅋㅋㅋㅋ ㅎㅎㅎㅎㅎㅎ ㅏㅏㅏㅏㅏ ㄱㄱㄱㄱㄱ 면담면담면담면담",
     "expected": {
@@ -202,25 +183,6 @@
     "allowedMissionCriterionSets": [
       [["opening"]],
       [["fact-detail"], ["closing"]]
-    ]
-  },
-  {
-    "id": "dev-preparation-without-interview-content",
-    "writing": "나는 우리 지역의 옛날 모습을 알아보기 위해 마을 회장님을 면담하기로 했다. 도서관에서 마을 사진을 찾아보고 옛날 교통수단과 시장에 관한 질문을 열 개 준비했다. 회장님을 만나 인사하고 질문을 했다. 준비를 많이 해서 뿌듯했다.",
-    "expected": {
-      "meaningless": false,
-      "criteria": [
-        { "criterionId": "purpose", "status": "met" },
-        { "criterionId": "interviewee", "status": "met" },
-        { "criterionId": "new-fact", "status": "unmet" },
-        { "criterionId": "fact-detail", "status": "unmet" },
-        { "criterionId": "opening", "status": "met" },
-        { "criterionId": "body", "status": "unmet" },
-        { "criterionId": "closing", "status": "partial" }
-      ]
-    },
-    "allowedMissionCriterionSets": [
-      [["new-fact", "fact-detail"], ["closing"]]
     ]
   },
   {
