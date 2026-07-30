@@ -30,6 +30,7 @@ generated
 .agents
 skills-lock.json
 .superpowers
+.worktrees
 
 # Environment variables
 .env
