@@ -302,5 +302,24 @@
       [["purpose"], ["opening"]],
       [["purpose"]]
     ]
+  },
+  {
+    "id": "dev-all-met-library-interview",
+    "writing": "나는 도서관에서 새 책을 고르는 방법을 알아보려고 사서 선생님을 면담했다. 면담 전 도서관 누리집에서 새 책 목록을 살펴보고 궁금한 점을 세 가지 적었다.\n사서 선생님은 이용자들이 자주 신청한 주제를 먼저 살피고, 기존 책과 내용이 겹치지 않는지도 확인한다고 했다. 그 뒤 여러 출판사의 책을 비교해 학교 수업과 학생들의 관심에 맞는 책을 고른다는 사실을 새롭게 알게 되었다.\n면담을 하고 나니 도서관의 책 한 권도 여러 사람의 필요를 살펴 신중하게 고른다는 점이 인상 깊었다. 앞으로 읽고 싶은 책이 생기면 신청함을 이용해 보고 싶다.",
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "met" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "met" },
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "met" }
+      ]
+    },
+    "allowedMissionCriterionSets": [
+      [["new-fact"], ["fact-detail"]]
+    ]
   }
 ]

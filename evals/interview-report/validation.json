@@ -148,5 +148,24 @@
       [["opening"]],
       [["body"]]
     ]
+  },
+  {
+    "id": "validation-all-met-bus-driver-interview",
+    "writing": "나는 시내버스가 안전하게 운행되는 과정을 알아보기 위해 버스 기사인 박지훈 님을 면담했다. 만나기 전 버스 노선도를 살펴보고 안전 운전에 관해 물을 질문을 준비했다.\n박지훈 님은 출발하기 전에 타이어와 출입문이 제대로 움직이는지 확인한다고 했다. 운행 중에는 정류장에 가까워질 때 미리 속도를 줄이고, 승객이 자리에 앉거나 손잡이를 잡은 것을 확인한 뒤 출발한다는 사실도 알게 되었다.\n이번 면담으로 버스의 안전은 기사님의 반복적인 확인에서 시작된다는 점을 깨달았다. 앞으로 버스를 탈 때 서두르지 않고 손잡이를 먼저 잡아야겠다고 생각했다.",
+    "expected": {
+      "meaningless": false,
+      "criteria": [
+        { "criterionId": "purpose", "status": "met" },
+        { "criterionId": "interviewee", "status": "met" },
+        { "criterionId": "new-fact", "status": "met" },
+        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "opening", "status": "met" },
+        { "criterionId": "body", "status": "met" },
+        { "criterionId": "closing", "status": "met" }
+      ]
+    },
+    "allowedMissionCriterionSets": [
+      [["new-fact"], ["fact-detail"]]
+    ]
   }
 ]
