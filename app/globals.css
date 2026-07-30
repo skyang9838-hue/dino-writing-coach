@@ -732,16 +732,6 @@ a {
   color: #5b21b6;
 }
 
-.feedback-complete {
-  padding: 1rem;
-  color: #166534;
-  font-weight: 700;
-  line-height: 1.5;
-  background: #f0fdf4;
-  border: 1.5px solid #86efac;
-  border-radius: 10px;
-}
-
 .coach-button-wrap {
   display: flex;
   justify-content: center;

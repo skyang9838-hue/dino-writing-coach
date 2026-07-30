@@ -151,26 +151,20 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
                 <p className="feedback-good-title">👍 좋은 점</p>
                 <p>{feedback.strength}</p>
               </div>
-              {feedback.complete ? (
-                <div className="feedback-complete">
-                  🎉 면담 보고서가 루브릭의 기준을 모두 갖췄어요!
-                </div>
-              ) : (
-                <div className="feedback-missions">
-                  <p className="feedback-missions-title">
-                    🎯 수정 미션 ({visibleMissions.length}가지)
-                  </p>
-                  {visibleMissions.map((mission, index) => (
-                    <div className="feedback-mission" key={`${mission.title ?? 'legacy'}-${index}`}>
-                      <span className="feedback-mission-number">{index + 1}</span>
-                      <div className="feedback-mission-content">
-                        {mission.title && <p className="feedback-mission-name">{mission.title}</p>}
-                        <p className="feedback-mission-text">{mission.instruction}</p>
-                      </div>
+              <div className="feedback-missions">
+                <p className="feedback-missions-title">
+                  🎯 수정 미션 ({visibleMissions.length}가지)
+                </p>
+                {visibleMissions.map((mission, index) => (
+                  <div className="feedback-mission" key={`${mission.title ?? 'legacy'}-${index}`}>
+                    <span className="feedback-mission-number">{index + 1}</span>
+                    <div className="feedback-mission-content">
+                      {mission.title && <p className="feedback-mission-name">{mission.title}</p>}
+                      <p className="feedback-mission-text">{mission.instruction}</p>
                     </div>
-                  ))}
-                </div>
-              )}
+                  </div>
+                ))}
+              </div>
             </>
           )}
         </div>

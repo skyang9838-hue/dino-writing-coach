@@ -93,7 +93,6 @@ export function RevisionHistory({ rounds, layout = 'vertical' }) {
                           {mission.instruction}
                         </li>
                       ))}
-                      {round.complete && <li>🎉 루브릭의 기준을 모두 갖췄어요.</li>}
                     </ul>
                   </div>
                 </>
