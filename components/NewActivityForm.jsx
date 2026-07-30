@@ -41,7 +41,7 @@ export function NewActivityForm() {
     <form action={createActivity} className="form-narrow-wide">
       <div className="field">
         <h3 className="section-heading section-heading-icon">
-          <span aria-hidden="true">📖</span> 6학년 1학기 국어 활동 선택
+          <span aria-hidden="true">📖</span> 6학년 국어 활동 선택
         </h3>
         <p className="field-hint">진행할 활동을 선택하면 기본 정보가 자동으로 설정돼요.</p>
         <div className="unit-grid">
