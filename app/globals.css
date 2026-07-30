@@ -722,6 +722,26 @@ a {
   line-height: 1.5;
 }
 
+.feedback-mission-content {
+  min-width: 0;
+}
+
+.feedback-mission-name {
+  margin: 0 0 0.25rem;
+  font-weight: 750;
+  color: #5b21b6;
+}
+
+.feedback-complete {
+  padding: 1rem;
+  color: #166534;
+  font-weight: 700;
+  line-height: 1.5;
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  border-radius: 10px;
+}
+
 .coach-button-wrap {
   display: flex;
   justify-content: center;

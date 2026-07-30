@@ -2,6 +2,7 @@
 
 import { Fragment } from 'react'
 import { diffWords } from 'diff'
+import { getMissionStatusSymbol, getVisibleMissions } from '../lib/feedback.js'
 
 const roundLabel = (index) => (index === 0 ? '초안' : `${index}차 수정`)
 
@@ -45,6 +46,8 @@ export function RevisionHistory({ rounds, layout = 'vertical' }) {
       <div className="history-items">
         {rounds.map((round, index) => {
           const previousRound = index > 0 ? rounds[index - 1] : null
+          const currentMissions = getVisibleMissions(round)
+          const previousMissions = getVisibleMissions(previousRound)
           return (
             <div className="history-item" key={index}>
               <p className="history-item-title">
@@ -63,11 +66,20 @@ export function RevisionHistory({ rounds, layout = 'vertical' }) {
                     <div className="history-mission-check">
                       <p className="history-subtitle">지난 미션 반영 확인</p>
                       <ul>
-                        {previousRound.improvements.map((mission, missionIndex) => (
-                          <li key={missionIndex}>
-                            {round.addressed?.[missionIndex] ? '✅' : '❌'} {mission}
-                          </li>
-                        ))}
+                        {previousMissions.map((mission, missionIndex) => {
+                          const previousMissionId = previousRound.missions?.[missionIndex]?.id
+                          const newStatus = round.priorMissionStatuses?.find(
+                            (status) => status.missionId === previousMissionId,
+                          )?.status
+                          const legacyStatus = round.addressed?.[missionIndex]
+                          return (
+                            <li key={previousMissionId ?? missionIndex}>
+                              {getMissionStatusSymbol(newStatus ?? legacyStatus)}{' '}
+                              {mission.title ? `${mission.title} — ` : ''}
+                              {mission.instruction}
+                            </li>
+                          )
+                        })}
                       </ul>
                     </div>
                   )}
@@ -75,8 +87,13 @@ export function RevisionHistory({ rounds, layout = 'vertical' }) {
                   <div className="history-mission-new">
                     <p className="history-subtitle">👍 {round.strength}</p>
                     <ul>
-                      <li>✏️ {round.improvements[0]}</li>
-                      <li>✏️ {round.improvements[1]}</li>
+                      {currentMissions.map((mission, missionIndex) => (
+                        <li key={round.missions?.[missionIndex]?.id ?? missionIndex}>
+                          ✏️ {mission.title ? `${mission.title} — ` : ''}
+                          {mission.instruction}
+                        </li>
+                      ))}
+                      {round.complete && <li>🎉 루브릭의 기준을 모두 갖췄어요.</li>}
                     </ul>
                   </div>
                 </>
