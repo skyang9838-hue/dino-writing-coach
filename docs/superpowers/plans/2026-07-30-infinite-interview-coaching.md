@@ -32,7 +32,7 @@
 
 - [ ] **Step 1: Write failing tests**
 
-Add tests proving the first round is 40 regardless of rubric status, `done/done` adds 20, `done/partial` adds 10, and 12 rounds can reach 260.
+Add tests proving the first round is 40 regardless of rubric status, `done/done` adds 20, `done/partial` adds 10, and an arbitrarily large number of rounds keeps increasing by the same formula without a cap.
 
 - [ ] **Step 2: Run tests to verify failure**
 
@@ -201,7 +201,7 @@ Expected: agreement ≥85% with all safety and infinite-coaching gates passing.
 
 - [ ] **Step 4: Verify local integration**
 
-Confirm a meaningful interview report receives two missions and 40%; simulate persisted later rounds through 100% and 260%; confirm the screen never displays completion or perfect-copy language.
+Confirm a meaningful interview report receives two missions and 40%; simulate many persisted later rounds beyond 100% with no upper bound; confirm the screen never displays completion or perfect-copy language.
 
 - [ ] **Step 5: Review and final commit**
 
