@@ -44,7 +44,7 @@
         { "criterionId": "purpose", "status": "met" },
         { "criterionId": "interviewee", "status": "met" },
         { "criterionId": "new-fact", "status": "met" },
-        { "criterionId": "fact-detail", "status": "met" },
+        { "criterionId": "fact-detail", "status": "partial" },
         { "criterionId": "opening", "status": "partial" },
         { "criterionId": "body", "status": "met" },
         { "criterionId": "closing", "status": "partial" }

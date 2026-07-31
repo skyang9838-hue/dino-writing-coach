@@ -21,7 +21,13 @@ if (!process.env.GEMINI_API_KEY) {
 }
 
 const fixturePath = path.resolve('evals', 'interview-report', `${options.set}.json`)
-const fixtures = JSON.parse(await fs.readFile(fixturePath, 'utf8'))
+const allFixtures = JSON.parse(await fs.readFile(fixturePath, 'utf8'))
+const fixtures = options.caseId
+  ? allFixtures.filter((fixture) => fixture.id === options.caseId)
+  : allFixtures
+if (options.caseId && fixtures.length === 0) {
+  throw new Error(`평가 사례를 찾을 수 없음: ${options.caseId}`)
+}
 const results = []
 
 function assessmentSignature(result) {
