@@ -187,6 +187,7 @@
   },
   {
     "id": "dev-unchanged-revision",
+    "currentAttainment": 80,
     "writing": "나는 우체부가 편지를 나누는 방법을 알아보려고 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다.",
     "previousWriting": "나는 우체부가 편지를 나누는 방법을 알아보려고 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다.",
     "previousMissions": [
@@ -245,6 +246,7 @@
   },
   {
     "id": "dev-minimally-changed-revision",
+    "currentAttainment": 80,
     "writing": "나는 우편 배달에 관해 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다. 면담 뒤에는 편지 한 통을 배달하는 데에도 꼼꼼한 준비가 필요하다는 것을 느꼈다.",
     "previousWriting": "나는 우편 배달에 관해 우체부인 이모를 면담했다. 이모는 우편번호와 주소를 보고 지역별로 편지를 먼저 나눈다고 했다.",
     "previousMissions": [

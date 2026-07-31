@@ -10,6 +10,7 @@ import {
   parseEvalArgs,
   scoreAssessmentCase,
   scoreMissionCase,
+  scoreProgressionCase,
 } from '../lib/interviewEval.js'
 
 dotenv.config({ path: '.env.local', quiet: true })
@@ -54,12 +55,15 @@ for (const fixture of fixtures) {
         criteria: result.assessments,
       })
       const missionViolations = result.meaningless ? [] : scoreMissionCase(fixture, result)
+      const progression = scoreProgressionCase(fixture, result)
+      const progressionFailures = progression?.failures ?? []
       results.push({
         caseId: fixture.id,
         run,
         assessment,
         signature: assessmentSignature(result),
         missionViolations,
+        progressionFailures,
         meaningful: !result.meaningless,
         missionCount: result.missions.length,
         terminalState: Object.hasOwn(result, 'complete'),
@@ -69,6 +73,9 @@ for (const fixture of fixtures) {
       process.stdout.write(`판정 ${(caseAgreement * 100).toFixed(1)}%`)
       if (missionViolations.length) {
         process.stdout.write(` · 미션 위반 ${missionViolations.join(', ')}`)
+      }
+      if (progressionFailures.length) {
+        process.stdout.write(` · 누적 달성도 오류 ${progressionFailures.join(', ')}`)
       }
       process.stdout.write('\n')
     } catch (error) {
@@ -84,6 +91,9 @@ for (const fixture of fixtures) {
           schemaValid: false,
         },
         signature: `error:${error.message}`,
+        progressionFailures: fixture.expected.meaningless
+          ? []
+          : ['누적 달성도를 계산하지 못함'],
         missionViolations: ['Gemini 호출 또는 응답 검증 실패'],
         meaningful: !fixture.expected.meaningless,
         missionCount: 0,
@@ -111,6 +121,8 @@ console.log(`수정미션 위반: ${metrics.missionViolations}`)
 console.log(`의미 있는 글의 수정미션 2개 생성률: ${percent(metrics.twoMissionRate)}`)
 console.log(`종료 상태 생성: ${metrics.terminalStates}`)
 console.log(failures.length ? `실패 조건: ${failures.join(', ')}` : '모든 종료 조건 통과')
+
+console.log(`누적 달성도 오류: ${metrics.progressionFailures}`)
 
 const reportDir = path.resolve('.eval-results', 'interview-report')
 await fs.mkdir(reportDir, { recursive: true })
