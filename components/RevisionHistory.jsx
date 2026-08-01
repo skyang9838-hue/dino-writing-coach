@@ -29,16 +29,17 @@ const renderWritingDiff = (before, after) =>
     )
   })
 
-// Pure display of a submission's coaching rounds: each round's writing
-// (diffed word-for-word against the previous round), whether the prior
-// round's improvement missions were addressed, and the new feedback.
-// Used by both the student's own writing screen (layout="vertical", the
-// default) and the teacher's read-only growth view (layout="horizontal",
-// for side-by-side comparison across rounds) — no expand/collapse state
-// of its own.
-export function RevisionHistory({ rounds, layout = 'vertical' }) {
+// Pure display of a submission's coaching rounds on the student's own writing
+// screen: each round's writing (diffed word-for-word against the previous
+// round), whether the prior round's improvement missions were addressed, and
+// the new feedback. Stacked vertically, no expand/collapse state of its own —
+// components/WritingScreen.jsx owns the "이전 버전 다시 보기" toggle.
+//
+// The teacher reads the same rounds through components/RevisionBoard.jsx,
+// which lays them out side by side and adds the rubric table.
+export function RevisionHistory({ rounds }) {
   return (
-    <div className={`history-list history-list-${layout}`}>
+    <div className="history-list">
       <p className="history-legend">
         <span className="diff-removed">빨강 취소선</span>은 지운 부분,{' '}
         <span className="diff-added">파랑 밑줄</span>은 추가한 부분이에요.

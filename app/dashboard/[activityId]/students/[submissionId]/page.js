@@ -2,9 +2,10 @@ import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { auth } from '../../../../../auth.js'
 import { prisma } from '../../../../../lib/prisma.js'
-import { RevisionHistory } from '../../../../../components/RevisionHistory.jsx'
+import { getMascotState } from '../../../../../lib/mascot.js'
+import { RevisionBoard } from '../../../../../components/RevisionBoard.jsx'
 import { ProfanityReviewPanel } from '../../../../../components/ProfanityReviewPanel.jsx'
-import { TeacherHeader } from '../../../../../components/TeacherHeader.jsx'
+import { SignOutButton } from '../../../../../components/SignOutButton.jsx'
 
 export default async function StudentGrowthPage({ params }) {
   const session = await auth()
@@ -20,25 +21,64 @@ export default async function StudentGrowthPage({ params }) {
     notFound()
   }
 
+  const { attainment, rounds } = submission
+  const mascot = getMascotState(attainment)
+
   return (
     <div className="container-widest">
-      <Link href={`/dashboard/${activityId}`} className="new-writing-link">
-        ← 활동으로 돌아가기
-      </Link>
+      {/* This page builds its own header instead of using TeacherHeader: the
+          attainment card takes the space TeacherHeader gives the email. */}
+      <div className="board-topbar">
+        <Link href={`/dashboard/${activityId}`} className="new-writing-link">
+          ← 학생 목록으로 돌아가기
+        </Link>
+        <div className="board-topbar-account">
+          <span className="teacher-email">{session.user.email}</span>
+          <SignOutButton />
+        </div>
+      </div>
 
-      <TeacherHeader
-        icon="🙋"
-        title={submission.studentName}
-        subtitle={`${submission.attainment !== null ? `도달도 ${submission.attainment}% · ` : ''}${submission.rounds.length}회 코칭`}
-        email={session.user.email}
-      />
+      <div className="board-header">
+        <div className="board-identity">
+          <span className="board-avatar" aria-hidden="true">
+            🙋
+          </span>
+          <div>
+            <h1>
+              {submission.studentName}
+              <span className="board-grade-badge">{submission.activity.grade}</span>
+            </h1>
+            <p>
+              {submission.activity.genre} 쓰기 · 총 {rounds.length}회 수정
+            </p>
+          </div>
+        </div>
+
+        {attainment !== null && (
+          <div className="board-attainment-card">
+            <img src={`/dino/${mascot.face}.png`} alt="" aria-hidden="true" />
+            <div className="board-attainment-body">
+              <p className="board-attainment-label">도달도 {attainment}%</p>
+              <div className="board-attainment-bar">
+                <div className="attainment-track-bg">
+                  <div
+                    className={`attainment-track-fill${attainment >= 100 ? ' full' : ''}`}
+                    style={{ width: `${Math.min(attainment, 100)}%` }}
+                  />
+                </div>
+                <span className="board-attainment-value">{attainment}%</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
       {submission.feedback?.pending && (
         <ProfanityReviewPanel submissionId={submission.id} writing={submission.writing} />
       )}
 
-      {submission.rounds.length > 0 ? (
-        <RevisionHistory rounds={submission.rounds} layout="horizontal" />
+      {rounds.length > 0 ? (
+        <RevisionBoard genre={submission.activity.genre} rounds={rounds} />
       ) : (
         <>
           <p className="empty-state">아직 코칭을 받지 않았어요.</p>

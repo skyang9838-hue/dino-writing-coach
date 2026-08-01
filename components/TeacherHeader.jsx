@@ -1,14 +1,13 @@
-import { signOut } from '../auth.js'
 import { DinoIcon } from './DinoIcon.jsx'
+import { SignOutButton } from './SignOutButton.jsx'
 
-// Shared header for every teacher-facing page (dashboard, new-activity,
-// activity detail, student growth view) — icon+title (+optional subtitle) on
-// the left, signed-in email + logout on the right. A Server Component (no
-// 'use client') so it can own the sign-out Server Action itself.
+// Shared header for the teacher-facing list pages (dashboard, new-activity,
+// activity detail) — icon+title (+optional subtitle) on the left, signed-in
+// email + logout on the right. The student revision board builds its own
+// header instead: it puts the attainment card where this one puts the email.
 //
-// `icon` defaults to the dino mascot image, but callers pass a genre emoji
-// (lib/curriculum.js getGenreIcon) on the activity detail / growth pages —
-// those keep rendering as-is.
+// `icon` defaults to the dino mascot image, but the activity detail page
+// passes a genre emoji (lib/curriculum.js getGenreIcon).
 export function TeacherHeader({ icon, title, subtitle, email }) {
   return (
     <div className="top-bar">
@@ -24,16 +23,7 @@ export function TeacherHeader({ icon, title, subtitle, email }) {
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <span className="teacher-email">{email}</span>
-        <form
-          action={async () => {
-            'use server'
-            await signOut({ redirectTo: '/login' })
-          }}
-        >
-          <button type="submit" className="sign-out-link">
-            로그아웃
-          </button>
-        </form>
+        <SignOutButton />
       </div>
     </div>
   )

@@ -978,18 +978,6 @@ a {
   gap: 1rem;
 }
 
-.history-list-horizontal .history-items {
-  flex-direction: row;
-  align-items: stretch;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
-}
-
-.history-list-horizontal .history-item {
-  flex: 0 0 420px;
-  max-width: 420px;
-}
-
 .diff-added {
   color: #1565c0;
   background-color: rgba(21, 101, 192, 0.09);
@@ -1197,4 +1185,387 @@ a {
   display: flex;
   justify-content: center;
   margin: 1rem 0;
+}
+
+/* ── Student revision board (/dashboard/[activityId]/students/[submissionId]) ──
+   Its own `.board-` namespace: the cards look like `.history-item` but carry a
+   rubric table and a per-round badge the student screen never shows. Follows
+   design-reference/학생 글쓰기 수정 진행 대시보드.png. */
+
+.board-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.board-topbar .new-writing-link {
+  margin: 0;
+}
+
+.board-topbar-account {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 1.2rem 0 2rem;
+}
+
+.board-identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.board-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  flex-shrink: 0;
+  font-size: 2rem;
+  background-color: #f1f8f2;
+  border: 1.5px solid #a5d6a7;
+  border-radius: 50%;
+}
+
+.board-identity h1 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: 1.75rem;
+  color: #222;
+}
+
+.board-grade-badge {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2e7d32;
+  background-color: #f1f8f2;
+  border: 1.5px solid #a5d6a7;
+  border-radius: 999px;
+}
+
+.board-identity p {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.board-attainment-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1 1 340px;
+  max-width: 560px;
+  padding: 1rem 1.4rem;
+  background-color: #f1f8f2;
+  border: 1.5px solid #a5d6a7;
+  border-radius: 16px;
+}
+
+.board-attainment-card img {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.board-attainment-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.board-attainment-label {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+/* Reuses .attainment-track-bg/-fill from the student write screen — same bar,
+   same rule that only the width is capped at 100% while the number keeps
+   rising. Not the .attainment-track wrapper: that reserves headroom for the
+   floating mascot, and here the dino sits beside the bar instead. */
+.board-attainment-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.board-attainment-bar .attainment-track-bg {
+  flex: 1;
+}
+
+.board-attainment-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1565c0;
+}
+
+.board-track {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+}
+
+.board-track:focus-visible {
+  outline: 2px solid #4caf50;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.board-chevron {
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  color: #ccc;
+}
+
+/* Sized so four cards fit inside .container-widest without scrolling — a
+   student who has revised four times is the case the board is built for. */
+.board-card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 325px;
+  max-width: 325px;
+  padding: 1rem 1.1rem;
+  background-color: white;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 14px;
+  text-align: left;
+}
+
+.board-card-latest {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px #f1f8f2;
+}
+
+.board-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.board-card-title h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 1.1rem;
+  color: #222;
+}
+
+.board-card-latest .board-card-title h3 {
+  color: #2e7d32;
+}
+
+.board-card-attainment {
+  font-weight: 500;
+  color: #666;
+}
+
+.board-badge {
+  padding: 0.15rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  background-color: #f5f5f5;
+  border-radius: 999px;
+}
+
+.board-badge-latest {
+  color: #2e7d32;
+  background-color: #f1f8f2;
+}
+
+.board-section-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #444;
+  text-align: left;
+}
+
+.board-rubric-table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.board-rubric-table th {
+  padding: 0.45rem 0.5rem;
+  font-weight: 400;
+  text-align: left;
+  color: #444;
+}
+
+.board-rubric-table td {
+  width: 1.8rem;
+  padding: 0.45rem 0;
+  text-align: center;
+}
+
+.board-rubric-table tr {
+  border: 1.5px solid #eee;
+}
+
+.rubric-mark,
+.rubric-trend,
+.mission-mark {
+  font-weight: 700;
+  line-height: 1;
+}
+
+.rubric-mark-met {
+  color: #2e7d32;
+}
+
+.rubric-mark-partial {
+  color: #f9a825;
+}
+
+.rubric-mark-unmet {
+  color: #c62828;
+}
+
+.rubric-trend-same {
+  color: #bbb;
+}
+
+.rubric-trend-up {
+  color: #2e7d32;
+}
+
+.rubric-trend-down {
+  color: #c62828;
+}
+
+.board-missions {
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  background-color: #f1f8f2;
+  border: 1.5px solid #a5d6a7;
+  border-radius: 10px;
+}
+
+/* The missions the newest round handed out — nothing has judged them yet, so
+   they read as open work rather than a pass or a fail. */
+.board-missions-pending {
+  background-color: #fff8e1;
+  border-color: #ffca28;
+}
+
+/* The circled numbers are spelled out in the markup rather than left to
+   list-style: a flex list item drops its marker. */
+.board-missions ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.board-mission-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  line-height: 1.5;
+}
+
+.board-mission-number {
+  flex-shrink: 0;
+  color: #666;
+}
+
+.board-mission-row + .board-mission-row {
+  margin-top: 0.4rem;
+}
+
+.board-mission-text {
+  flex: 1;
+}
+
+.board-writing {
+  margin-bottom: 0.8rem;
+}
+
+.board-writing-text {
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  background-color: #fafafa;
+  border: 1.5px solid #eee;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.board-charcount {
+  margin-top: auto;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.board-card-latest .board-charcount {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.board-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.5rem;
+  background-color: #fafafa;
+  border: 1.5px solid #eee;
+  border-radius: 14px;
+}
+
+.board-legend-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #444;
+}
+
+.board-legend ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+@media (max-width: 720px) {
+  .board-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .board-attainment-card {
+    max-width: none;
+  }
+
+  .board-card {
+    flex-basis: 300px;
+  }
 }
