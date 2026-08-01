@@ -169,6 +169,7 @@ Phase 3(루브릭)을 교사가 표/이미지를 업로드하는 범용 기능�
 판정과 미션 생성을 **한 번에 시키지 않는다** — 같이 시키면 판정이 미션에 끌려가 허위 충족이 생겼다.
 
 1. **판정** — `buildInterviewAssessmentPrompt` → 7개 기준을 각각 met/partial/unmet으로 판정 (`INTERVIEW_ASSESSMENT_SCHEMA`). `normalizeInterviewAssessment` / `validateInterviewAssessment`로 검증.
+   - **글이 한 글자도 안 바뀌었으면 이 호출을 건너뛰고 직전 라운드의 판정을 그대로 쓴다.** 판정 호출은 `temperature: 0`이지만 프롬프트가 변화 맥락(`previousWriting`, `changes`, 지난 미션)까지 함께 받아서, 같은 글도 이력이 달라지면 판정이 흔들렸다 — 2026-08-02 실측에서 동일한 267자 글이 `body` partial→met, `closing` partial→unmet으로 뒤집혀 교사 보드에 있지도 않은 향상 ↑ / 하락 ▼ 화살표가 떴다. 바로 아래 지난 미션을 `not-done`으로 확정하는 것과 같은 처리이고, 라운드당 Gemini 호출도 한 번 줄어든다.
 2. **미션 생성** — `buildInterviewMissionPrompt` → 선택된 대상에 맞는 수정미션 2개 생성 (`INTERVIEW_MISSION_SCHEMA`). `sanitizeInterviewMissionResult` / `validateInterviewMissionResult`가 막연한 조언, 복사 가능한 모범 문장, 학생 글에 없는 사실, 미션 개수 불일치를 걸러내고 `buildRetryPrompt`로 재시도시킨다.
 
 미션 제목은 `~하기` 형태이고, 설명에는 학생이 손댈 위치와 실행 동작이 들어가야 한다.
