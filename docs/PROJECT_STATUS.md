@@ -5,9 +5,9 @@
 
 **마지막 갱신:** 2026-08-02
 **저장소:** https://github.com/skyang9838-hue/dino-writing-coach (public)
-**배포:** https://dino-writing-coach.vercel.app — 2026-08-01 확인 시점에 **`3ec2c40`(2026-07-28) 반영 상태**. 면담 보고서 파일럿과 수정 진행 대시보드는 아직 프로덕션에 없다(`master`에만 있음).
+**배포:** https://dino-writing-coach.vercel.app — **`b30e060` 반영 (2026-08-02, `success`)**. 면담 보고서 파일럿과 수정 진행 대시보드 모두 프로덕션에 올라갔다.
 
-> ⚠️ **GitHub push로 Vercel 자동 배포가 걸리는지 불확실하다.** 2026-07-12에는 "안 걸린다"고 기록됐지만, 2026-08-01 확인 시 프로덕션이 직전 origin/master(`3ec2c40`)와 정확히 일치했다 — 자동 배포가 걸렸거나 누군가 수동 배포한 것이다. **배포 여부가 중요한 작업 전에는 Vercel 대시보드에서 실제 배포 목록을 직접 확인할 것.**
+> **`master` push = 프로덕션 자동 배포다. 확인된 사실이다.** 2026-08-02 push 직후 GitHub Deployments에 `Production / success`가 찍혔다. 예전의 "불확실하다"는 기록은 폐기됐다. `/wrap-up`은 이제 push·배포까지 하므로, **프로덕션에 나가면 곤란한 변경은 `master`에 커밋하지 않는다.** 자세한 건 [`../CLAUDE.md`](../CLAUDE.md)의 커밋/배포 방침.
 
 ## 어디까지 왔나
 
