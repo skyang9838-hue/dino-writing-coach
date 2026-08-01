@@ -5,7 +5,9 @@
 
 **마지막 갱신:** 2026-08-01
 **저장소:** https://github.com/skyang9838-hue/dino-writing-coach (public)
-**배포:** https://dino-writing-coach.vercel.app — `950e4f3`까지만 반영되어 있고 **그 이후 작업은 미배포**
+**배포:** https://dino-writing-coach.vercel.app — 2026-08-01 확인 시점에 **`3ec2c40`(2026-07-28) 반영 상태**. 면담 보고서 파일럿은 아직 프로덕션에 없다.
+
+> ⚠️ **GitHub push로 Vercel 자동 배포가 걸리는지 불확실하다.** 2026-07-12에는 "안 걸린다"고 기록됐지만, 2026-08-01 확인 시 프로덕션이 직전 origin/master(`3ec2c40`)와 정확히 일치했다 — 자동 배포가 걸렸거나 누군가 수동 배포한 것이다. **배포 여부가 중요한 작업 전에는 Vercel 대시보드에서 실제 배포 목록을 직접 확인할 것.**
 
 ## 어디까지 왔나
 
