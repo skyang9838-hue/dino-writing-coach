@@ -14,6 +14,19 @@
 
 **PROJECT_STATUS.md는 1페이지로 유지한다.** 작업이 끝나면 그 내용은 CHANGELOG.md 아래에 덧붙이고 STATUS에서는 뺀다.
 
+## 세션 마무리 — `/wrap-up`
+
+작업을 마칠 때 **`/wrap-up`** 을 실행하면 다음이 한 번에 처리된다. 이 절차를 사람이 기억해야 했던 탓에 PROJECT_STATUS가 40KB까지 자랐고 2026-07-30~31 작업 26커밋이 문서에서 통째로 누락됐었다.
+
+1. `PROJECT_STATUS.md`를 마지막으로 갱신한 커밋 이후의 변경을 파악 (커밋 메시지가 아니라 **실제 코드**를 읽는다)
+2. `PROJECT_STATUS.md`를 현행화 — 현재 상태 / 진행 중 / **다음 할 일** / 검증 상태, 1페이지 유지
+3. 끝난 작업은 `CHANGELOG.md` 맨 아래로 이관 (날짜 + 커밋 범위 명시)
+4. 앱 동작이 바뀌었으면 `FEATURES.md` 갱신
+5. `npm test` · `npm run lint` 실행 후 결과를 기록 (실패하면 고치지 말고 보고)
+6. `docs:` 커밋 — **push·배포는 하지 않는다**
+
+까먹으면 Stop 훅이 알려준다: PROJECT_STATUS 갱신 이후 커밋이 3개 이상 쌓이면 "미반영" 알림이 뜬다(30분 쓰로틀, 비차단). 훅 스크립트는 `~/.claude/hooks/dino-wrapup-nudge.ps1`, 등록은 상위 폴더의 `.claude/settings.json`에 있다 — **둘 다 이 저장소 밖이라 백업되지 않으므로, 절차의 정본은 이 문서다.**
+
 ## 스택
 
 Next.js 16 (App Router, Turbopack) · React 19 · Prisma 7 + Postgres(Neon) · Auth.js v5(Google OAuth) · Gemini `gemini-2.5-flash-lite` · Vitest · oxlint · Vercel 배포
