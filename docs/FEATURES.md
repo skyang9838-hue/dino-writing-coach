@@ -3,8 +3,8 @@
 > 이 문서는 "지금 이 순간 앱이 실제로 무엇을 하는지"를 코드 기준으로 정리한 스펙입니다.
 > 작업 흐름/이력은 [`PROJECT_STATUS.md`](PROJECT_STATUS.md)를 참고하세요. 이 문서는 오직 **기능 상태**만 다룹니다.
 
-**기준:** 2026-07-15, Phase 1~4 완료 + 6학년 1학기 국어 단원 카드 기반 활동 생성 리디자인 + 마스코트 기반 학생 글쓰기 화면 리디자인 + 나머지 교사/학생 화면 디자인 통일 완료 시점 — `master` 브랜치
-**배포 주소:** https://dino-writing-coach.vercel.app (Next.js 교실 플랫폼 버전이 실제로 배포되어 있음)
+**기준:** 2026-08-01, Phase 1~4 완료 + 디자인/타이포그래피 통일 + **면담 보고서 루브릭 코칭 파일럿**(6-1번 항목)까지 반영 — `master` 브랜치
+**배포 주소:** https://dino-writing-coach.vercel.app — 배포본은 `950e4f3` 시점이라 **면담 보고서 파일럿은 아직 프로덕션에 없다**(로컬/`master`에만 있음)
 
 ---
 
@@ -101,9 +101,12 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 - 1회차 코칭 버튼은 목표 글자 수 미만이면 비활성화. 2회차 이후에는 이 조건이 사라짐(로직 동일).
 
 ### 도달도 게이지 (`lib/attainment.js`)
-- 1회차는 무조건 40%. 이후 라운드는 직전 보완점 2개 중 고친 개수 × 10%를 더함. 상한 없음. 계산 로직은 순수 함수로 분리되어 Vitest로 테스트됨.
+- `computeNextAttainment`: 1회차는 무조건 40%(`ATTAINMENT_START`). 이후 라운드는 직전 미션 2개 중 고친 개수 × 10%(`ATTAINMENT_PER_POINT`)를 더함. 감소 없음, **상한 없음**. 계산 로직은 순수 함수로 분리되어 Vitest로 테스트됨.
+- 화면에서는 막대 **너비만** `Math.min(attainment, 100)`으로 잘리고 숫자는 상한 없이 표시된다. 100%를 넘어도 완성/종료로 표현하지 않는다.
+- `computeRubricAttainment`(루브릭 충족률 백분율)는 **학생 도달도와 무관하다** — 면담 보고서 라운드의 `actualAttainment`로만 저장되는 교사 분석용 값이다.
 
 ### AI 코칭 (`lib/coaching.js`, Server Action `requestCoaching`)
+- 모델은 `gemini-2.5-flash-lite`. 장르에 따라 **두 갈래**로 갈린다 — 면담 보고서는 루브릭 기반 2단계 파이프라인(`getInterviewReportFeedback`, 6-1번 항목), 나머지 장르는 아래의 기존 단일 호출 코칭(`getGeminiFeedback`).
 - 프롬프트/스키마는 기존 `api/coach.js`와 동일(디노 페르소나, 1회차 vs 재코칭 분기, Gemini `responseSchema` 구조화 출력).
 - 서버 측에서 활동의 `topic`을 불러와 프롬프트에 사용(학생이 주제를 직접 입력하지 않음 — 교사가 활동 생성 시 정한 소재를 그대로 씀).
 - **장르별 코칭 지침 추가**: 활동의 `genre`에 맞는 한 줄 지침(`lib/curriculum.js`의 `GENRE_COACHING_GUIDANCE`)이 프롬프트 끝에 덧붙여짐(예: "주장하는 글"이면 "주장이 분명한지, 근거가 있는지도 함께 봐줘." 추가). 실제 Gemini 호출로 검증됨 — 장르를 반영한 피드백이 나오는 것 확인.
@@ -135,6 +138,54 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 
 ---
 
+## 6-1. 면담 보고서 — 루브릭 기반 무한 코칭 (파일럿)
+
+Phase 3(루브릭)을 교사가 표/이미지를 업로드하는 범용 기능으로 만들기 전에, **"면담 보고서" 한 장르에 루브릭을 코드로 고정해 넣어 코칭 품질을 먼저 검증**하는 파일럿. 활동의 `genre`가 `면담 보고서`(`INTERVIEW_REPORT_GENRE`)일 때만 이 경로를 탄다.
+
+### 고정 루브릭 (`lib/curriculum.js`)
+
+교사 업로드가 아니라 **코드 상수**다. 루브릭 3개 / 채점기준 7개:
+
+| 루브릭 | 채점기준 |
+|---|---|
+| 면담의 목적과 대상이 분명하게 드러난다 | `purpose`(면담 목적), `interviewee`(면담 대상자) |
+| 면담을 통해 얻은 정보를 구체적으로 전달한다 | `new-fact`(새로 알게 된 사실), `fact-detail`(사실의 이유·과정·상황) |
+| 면담 보고서의 짜임에 맞게 구성한다 | `opening`(앞부분), `body`(가운데), `closing`(뒷부분 느낀 점) |
+
+각 기준은 `met`/`partial`/`unmet` 판정 문구, 미션 생성용 지시문(`missionSeed`), 우선순위(`priority`)를 갖는다.
+
+### 2단계 Gemini 파이프라인 (`lib/coaching.js`)
+
+판정과 미션 생성을 **한 번에 시키지 않는다** — 같이 시키면 판정이 미션에 끌려가 허위 충족이 생겼다.
+
+1. **판정** — `buildInterviewAssessmentPrompt` → 7개 기준을 각각 met/partial/unmet으로 판정 (`INTERVIEW_ASSESSMENT_SCHEMA`). `normalizeInterviewAssessment` / `validateInterviewAssessment`로 검증.
+2. **미션 생성** — `buildInterviewMissionPrompt` → 선택된 대상에 맞는 수정미션 2개 생성 (`INTERVIEW_MISSION_SCHEMA`). `sanitizeInterviewMissionResult` / `validateInterviewMissionResult`가 막연한 조언, 복사 가능한 모범 문장, 학생 글에 없는 사실, 미션 개수 불일치를 걸러내고 `buildRetryPrompt`로 재시도시킨다.
+
+미션 제목은 `~하기` 형태이고, 설명에는 학생이 손댈 위치와 실행 동작이 들어가야 한다.
+
+### 수정 대상 선택은 코드가 한다 (`lib/missions.js`)
+
+`selectMissionTargets`가 **AI가 아니라 결정론적 규칙으로** 어느 기준을 고칠지 고른다.
+
+- `unmet` → `partial` → `priority` 순으로 정렬. 최근 **두 라운드 연속**으로 나온 대상은 뒤로 미룬다.
+- 짝지어 다뤄야 자연스러운 기준은 하나로 병합한다: `new-fact`+`fact-detail`, `purpose`+`interviewee`.
+- 상위 기준이 `unmet`이면 종속 기준을 후보에서 뺀다 (`new-fact`가 unmet이면 `body` 제외, `purpose`·`interviewee`가 둘 다 unmet이면 `opening` 제외).
+- **모든 기준이 `met`이어도** `REFINEMENT_SEEDS`로 "이미 갖춘 것을 한 단계 더 다듬는" 대상을 채워 **항상 정확히 2개**를 반환한다.
+
+### 라운드 저장 (`lib/interviewRound.js`)
+
+`buildInterviewRoundState`가 라운드마다 `writing`, `strength`, `missions`, `assessments`, `priorMissionStatuses`, `actualAttainment`(루브릭 백분율), `attainmentAfter`(학생 도달도)를 쌓는다. 직전 미션 판정에서 `status === 'done'`인 개수만 세어 `computeNextAttainment`로 넘긴다.
+
+### 완료 상태가 없다
+
+`complete`, "완성", "완벽", "모든 기준 충족으로 종료" 같은 **제품 상태를 쓰지 않는다.** 루브릭은 글의 완성을 판정하는 종료 조건이 아니라 다음 수정 행동 두 개를 고르는 진단 도구다. 루브릭 완료 축하 박스와 `complete` 분기는 UI·영속화·스코어링 전부에서 제거됐고, 100% 이상에서는 마스코트 문구도 완성이 아니라 계속 성장하는 표현을 쓴다.
+
+### 프롬프트 평가 루프 (`evals/`, `scripts/eval-interview-report.js`, `lib/interviewEval.js`)
+
+`npm run eval -- --set dev --runs 3` / `--set validation --runs 1`로 **Gemini를 실제 호출해** 프롬프트 품질을 측정한다(비용 발생). 게이트: 판정 일치율(개발셋 90%+, 검증셋 85%+), 스키마 100%, 미션 2개 생성률 100%, 종료 상태 0건, 허위 충족·논리 모순 0건. 결과는 `.eval-results/interview-report/`에 남는다.
+
+---
+
 ## 7. 보안 / 키 관리
 
 - Gemini API 키는 여전히 서버 환경변수(`GEMINI_API_KEY`)에만 존재, 브라우저에 노출되지 않음(기존과 동일).
@@ -143,13 +194,15 @@ Next.js 16 App Router. 화면은 교사/학생 역할별로 분리되어 있고,
 
 ---
 
-## 8. 알려진 제약 / 미구현 영역 (Phase 1 기준)
+## 8. 알려진 제약 / 미구현 영역
 
-- **디노 캐릭터 이미지/애니메이션 없음** (이전과 동일한 미구현 상태)
-- **루브릭 업로드/파싱, 피드백 우선순위 선택 없음** — Phase 3 예정
+- **교사의 루브릭 업로드/파싱 없음** — 루브릭은 면담 보고서 한 장르에 코드 상수로 고정되어 있다(6-1번 항목). 표/이미지 업로드와 AI 파싱, 교사가 고르는 피드백 우선순위는 파일럿 결과를 보고 결정한다.
+- **면담 보고서 파일럿의 라이브 평가 미실행** — 자동 테스트는 통과하지만 `npm run eval`(Gemini 실호출)을 아직 돌리지 않아 `.eval-results/`가 없다.
+- **면담 보고서 파일럿은 프로덕션에 없다** — `master`에는 있지만 배포본은 `950e4f3` 시점이다.
+- **디노 캐릭터 애니메이션 없음** (정적 이미지만 있음)
 - **성취기준 선택/AI 기반 활동 자동 생성 없음(의도적 제외)** — 6학년 1학기 국어 단원은 카드로 고를 수 있지만, 전체 2022 교육과정 성취기준 데이터를 구조화하는 건 범위가 너무 커서 하지 않기로 결정. AI가 활동 제목/소재를 대신 생성하는 기능도 의도적으로 넣지 않음(AI는 학생 코칭에만 사용).
 - **복붙(카피/페이스트) 탐지 없음** — 브라우저 붙여넣기 이벤트 감지가 필요해 범위에서 제외하기로 확정. 자모 반복/스페이스 도배/욕설·비속어 감지는 모두 구현됨(6번 항목 참고).
 - **참여 학생 목록 필터/정렬 없음** — 이름순 등 정렬이나 검색 기능은 아직 없음
 - **"제출" 개념 자체가 없음(의도적 제거)** — Phase 1에서 구현했다가 Phase 2 이후 제거함(6번 항목 참고). 학생은 언제든 계속 쓰고 코칭받을 뿐, 별도의 제출 이벤트는 없음.
-- **100% 이후 특별 연출 없음** (이전과 동일)
+- **100% 이후 특별 연출 없음** — 축하 연출은 의도적으로 넣지 않는다. 코칭에 종료가 없다는 원칙상 100%는 도착점이 아니며, 마스코트 문구만 계속 성장하는 표현으로 이어진다.
 - **정식 UI/E2E 테스트 스위트 없음** — Vitest 유닛테스트는 이번에 도입됐지만(순수 로직 한정), UI 흐름 검증은 여전히 임시 Playwright 스크립트 관례. 실제 Google OAuth 로그인 자체는 여전히 자동화하지 않지만(구글의 자동화 방지 정책), 로컬 전용 `lib/devLogin.js`(6번 항목 참고)로 교사 로그인이 필요한 나머지 모든 흐름은 이제 Playwright로 자동 검증 가능.
