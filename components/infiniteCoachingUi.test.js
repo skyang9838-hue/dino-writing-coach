@@ -39,10 +39,15 @@ describe('continuous coaching UI copy and branches', () => {
     expect(source).not.toContain('미충족')
   })
 
-  it('names the AI as the one judging the rubric', () => {
+  // The caption used to say "AI가 본 채점기준" because the AI judged all of
+  // them. Now each criterion carries its own AI/교사 badge, so the caption
+  // names the section and the note keeps the disclaimer attached to the AI's
+  // verdicts alone.
+  it('names the AI as the one judging the criteria it judges', () => {
     const source = fs.readFileSync('components/RevisionBoard.jsx', 'utf8')
 
-    expect(source).toContain('AI가 본 채점기준')
-    expect(source).toContain('선생님 확정 채점이 아니에요')
+    expect(source).toContain('AI 판정은 선생님 확정 채점이 아니에요')
+    expect(source).toContain("ai: { text: 'AI'")
+    expect(source).toContain("teacher: { text: '교사'")
   })
 })

@@ -78,7 +78,7 @@ export default async function StudentGrowthPage({ params }) {
       )}
 
       {rounds.length > 0 ? (
-        <RevisionBoard genre={submission.activity.genre} rounds={rounds} />
+        <RevisionBoard rounds={rounds} unitId={submission.activity.unitId} />
       ) : (
         <>
           <p className="empty-state">아직 코칭을 받지 않았어요.</p>

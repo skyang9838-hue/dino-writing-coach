@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { diffWords } from 'diff'
-import { getMissionRows, getRubricRows } from '../lib/revisionBoard.js'
+import { getUnitStandard } from '../lib/curriculum.js'
+import { getChunkRows, getMissionRows } from '../lib/revisionBoard.js'
 import { BoardTrack } from './BoardTrack.jsx'
 
 // The teacher's read-only view of one student's revisions, laid out as cards
@@ -8,10 +9,13 @@ import { BoardTrack } from './BoardTrack.jsx'
 // shown is already stored on the round (lib/interviewRound.js) — this renders
 // saved data and asks nothing of the AI.
 //
-// The rubric table only appears for genres that have a rubric (the interview
-// report pilot); every other genre still gets the missions, the diff and the
+// The criteria only appear for units that have them (the interview report
+// pilot); every other unit still gets the missions, the diff and the
 // character count. The student's own screen keeps components/RevisionHistory
 // .jsx — same rounds, but stacked and written for the student.
+//
+// The achievement standard sits above the track, once — it is the same for
+// every round, so repeating it on each card would just cost width.
 //
 // Card titles count revisions from 1, so the first coaching round reads
 // "1차 수정" with a 초안 badge. The student screen calls that same round 초안.
@@ -37,6 +41,16 @@ const MISSION_MARKS = {
   done: { glyph: '✅', label: '고쳤어요' },
   partial: { glyph: '🔄', label: '고치는 중이에요' },
   'not-done': { glyph: '❌', label: '아직 안 고쳤어요' },
+}
+
+// Teacher-judged criteria have no verdict to show. The board is read-only, so
+// this is the whole of their state — it is not a placeholder for something
+// that arrives later.
+const NOT_APPLICABLE = { glyph: '—', label: '선생님이 직접 확인해요' }
+
+const EVALUATOR_BADGES = {
+  ai: { text: 'AI', label: '디노가 판정한 항목' },
+  teacher: { text: '교사', label: '선생님이 직접 확인하는 항목' },
 }
 
 const FLAG_REASON_LABELS = {
@@ -72,27 +86,58 @@ function Mark({ marks, value, className }) {
   )
 }
 
-function RubricTable({ rows }) {
+function EvaluatorBadge({ evaluator }) {
+  const badge = EVALUATOR_BADGES[evaluator]
+  if (!badge) return <span className="evaluator-badge evaluator-badge-none" aria-hidden="true" />
   return (
-    <table className="board-rubric-table">
-      <caption className="board-section-title">
-        📋 AI가 본 채점기준
-        <span className="board-rubric-caption-note">선생님 확정 채점이 아니에요</span>
-      </caption>
-      <tbody>
-        {rows.map((row) => (
-          <tr key={row.id}>
-            <th scope="row">{row.label}</th>
-            <td>
-              <Mark marks={RUBRIC_MARKS} value={row.status} className="rubric-mark" />
-            </td>
-            <td>
-              <Mark marks={TREND_MARKS} value={row.trend} className="rubric-trend" />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <span className={`evaluator-badge evaluator-badge-${evaluator}`} title={badge.label}>
+      {badge.text}
+    </span>
+  )
+}
+
+function CriterionRow({ row, index }) {
+  const isAi = row.evaluator === 'ai'
+  return (
+    <li className="board-criterion-row">
+      <span className="board-criterion-number" aria-hidden="true">
+        {index + 1}
+      </span>
+      <span className="board-criterion-label">{row.label}</span>
+      {isAi ? (
+        <Mark marks={RUBRIC_MARKS} value={row.status} className="rubric-mark" />
+      ) : (
+        <span className="rubric-mark rubric-mark-na" title={NOT_APPLICABLE.label} aria-label={NOT_APPLICABLE.label} role="img">
+          {NOT_APPLICABLE.glyph}
+        </span>
+      )}
+      <Mark marks={TREND_MARKS} value={isAi ? row.trend : null} className="rubric-trend" />
+      <EvaluatorBadge evaluator={row.evaluator} />
+    </li>
+  )
+}
+
+function ChunkSections({ chunks }) {
+  return (
+    <div className="board-chunks">
+      <p className="board-section-title">
+        📋 채점기준
+        <span className="board-rubric-caption-note">AI 판정은 선생님 확정 채점이 아니에요</span>
+      </p>
+      {chunks.map((chunk) => (
+        <section
+          className={`board-chunk${chunk.rows.every((row) => row.evaluator !== 'ai') ? ' board-chunk-teacher' : ''}`}
+          key={chunk.id}
+        >
+          <h4 className="board-chunk-title">{chunk.label}</h4>
+          <ol className="board-criterion-list">
+            {chunk.rows.map((row, index) => (
+              <CriterionRow index={index} key={row.id} row={row} />
+            ))}
+          </ol>
+        </section>
+      ))}
+    </div>
   )
 }
 
@@ -119,11 +164,21 @@ function MissionList({ rows }) {
   )
 }
 
-export function RevisionBoard({ genre, rounds }) {
-  const hasRubric = rounds.some((round) => getRubricRows(genre, round, null).length > 0)
+export function RevisionBoard({ unitId, rounds }) {
+  const hasRubric = rounds.some((round) => getChunkRows(unitId, round, null).length > 0)
+  const standard = hasRubric ? getUnitStandard(unitId) : null
 
   return (
     <div className="board">
+      {standard && (
+        <details className="board-standard">
+          <summary>
+            성취기준 <strong>[{standard.code}]</strong>
+          </summary>
+          <p className="board-standard-text">{standard.text}</p>
+        </details>
+      )}
+
       {/* Scrollable region: focusable so the cards can be reached with the
           keyboard alone once the track overflows, and draggable so the
           teacher never has to hunt for the scrollbar below the cards. */}
@@ -132,7 +187,7 @@ export function RevisionBoard({ genre, rounds }) {
           const previousRound = index > 0 ? rounds[index - 1] : null
           const nextRound = index < rounds.length - 1 ? rounds[index + 1] : null
           const isLatest = index === rounds.length - 1
-          const rubricRows = getRubricRows(genre, round, previousRound)
+          const chunks = getChunkRows(unitId, round, previousRound)
           const missionRows = getMissionRows(round, nextRound)
 
           return (
@@ -158,7 +213,7 @@ export function RevisionBoard({ genre, rounds }) {
                   <p className="history-flagged-badge">⚠️ {flagReasonLabel(round.flagReason)}</p>
                 ) : (
                   <>
-                    {rubricRows.length > 0 && <RubricTable rows={rubricRows} />}
+                    {chunks.length > 0 && <ChunkSections chunks={chunks} />}
                     {missionRows.length > 0 && <MissionList rows={missionRows} />}
                   </>
                 )}
@@ -187,6 +242,22 @@ export function RevisionBoard({ genre, rounds }) {
                   <span className={`rubric-mark rubric-mark-${status}`}>{mark.glyph}</span> {mark.label}
                 </li>
               ))}
+              <li>
+                <span className="rubric-mark rubric-mark-na">{NOT_APPLICABLE.glyph}</span> 해당 없음
+              </li>
+            </ul>
+          </div>
+        )}
+        {hasRubric && (
+          <div className="board-legend-group">
+            <p className="board-legend-title">평가 주체</p>
+            <ul>
+              {Object.entries(EVALUATOR_BADGES).map(([evaluator, badge]) => (
+                <li key={evaluator}>
+                  <span className={`evaluator-badge evaluator-badge-${evaluator}`}>{badge.text}</span> {badge.label}
+                </li>
+              ))}
+              <li>교사 항목은 판정을 저장하지 않아요</li>
             </ul>
           </div>
         )}
