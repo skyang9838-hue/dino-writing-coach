@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { diffWords } from 'diff'
 import { getMissionRows, getRubricRows } from '../lib/revisionBoard.js'
+import { BoardTrack } from './BoardTrack.jsx'
 
 // The teacher's read-only view of one student's revisions, laid out as cards
 // side by side so a round can be compared with the ones around it. Everything
@@ -15,10 +16,15 @@ import { getMissionRows, getRubricRows } from '../lib/revisionBoard.js'
 // Card titles count revisions from 1, so the first coaching round reads
 // "1차 수정" with a 초안 badge. The student screen calls that same round 초안.
 
+// Deliberately hedged. These used to be the circle/triangle/cross a teacher
+// writes when a grade is settled, but the judgement behind them is the AI's,
+// and it is demonstrably noisy — the same writing assessed twice came back
+// different. The glyphs and their labels now claim only as much certainty as
+// the assessment actually has.
 const RUBRIC_MARKS = {
-  met: { glyph: '○', label: '충분히 충족' },
-  partial: { glyph: '△', label: '보완 필요' },
-  unmet: { glyph: '✕', label: '미충족' },
+  met: { glyph: '✓', label: '충족으로 보임' },
+  partial: { glyph: '?', label: '판단이 애매함' },
+  unmet: { glyph: '✕', label: '확인 안 됨' },
 }
 
 const TREND_MARKS = {
@@ -69,7 +75,10 @@ function Mark({ marks, value, className }) {
 function RubricTable({ rows }) {
   return (
     <table className="board-rubric-table">
-      <caption className="board-section-title">📋 채점기준표</caption>
+      <caption className="board-section-title">
+        📋 AI가 본 채점기준
+        <span className="board-rubric-caption-note">선생님 확정 채점이 아니에요</span>
+      </caption>
       <tbody>
         {rows.map((row) => (
           <tr key={row.id}>
@@ -116,8 +125,9 @@ export function RevisionBoard({ genre, rounds }) {
   return (
     <div className="board">
       {/* Scrollable region: focusable so the cards can be reached with the
-          keyboard alone once the track overflows. */}
-      <div className="board-track" tabIndex={0} role="group" aria-label="수정 라운드">
+          keyboard alone once the track overflows, and draggable so the
+          teacher never has to hunt for the scrollbar below the cards. */}
+      <BoardTrack>
         {rounds.map((round, index) => {
           const previousRound = index > 0 ? rounds[index - 1] : null
           const nextRound = index < rounds.length - 1 ? rounds[index + 1] : null
@@ -165,12 +175,12 @@ export function RevisionBoard({ genre, rounds }) {
             </Fragment>
           )
         })}
-      </div>
+      </BoardTrack>
 
       <div className="board-legend">
         {hasRubric && (
           <div className="board-legend-group">
-            <p className="board-legend-title">채점기준표 상태</p>
+            <p className="board-legend-title">AI 판정 표시</p>
             <ul>
               {Object.entries(RUBRIC_MARKS).map(([status, mark]) => (
                 <li key={status}>
@@ -189,6 +199,7 @@ export function RevisionBoard({ genre, rounds }) {
                   <span className={`rubric-trend rubric-trend-${trend}`}>{mark.glyph}</span> {mark.label}
                 </li>
               ))}
+              <li>지난 회차의 AI 판정과 견준 것이에요</li>
             </ul>
           </div>
         )}

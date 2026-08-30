@@ -26,4 +26,23 @@ describe('continuous coaching UI copy and branches', () => {
     expect(source).not.toContain('완성')
     expect(source).not.toContain('완벽')
   })
+
+  // ○△✕ and 충분히 충족/미충족 are what a teacher writes when the grade is
+  // settled. The AI made these calls and it contradicts itself on reruns, so
+  // the board is not allowed to speak with a marker's certainty.
+  it('does not claim settled grading certainty on the rubric table', () => {
+    const source = fs.readFileSync('components/RevisionBoard.jsx', 'utf8')
+
+    expect(source).not.toContain('○')
+    expect(source).not.toContain('△')
+    expect(source).not.toContain('충분히 충족')
+    expect(source).not.toContain('미충족')
+  })
+
+  it('names the AI as the one judging the rubric', () => {
+    const source = fs.readFileSync('components/RevisionBoard.jsx', 'utf8')
+
+    expect(source).toContain('AI가 본 채점기준')
+    expect(source).toContain('선생님 확정 채점이 아니에요')
+  })
 })

@@ -1314,12 +1314,121 @@ a {
   color: #1565c0;
 }
 
+/* A second horizontal scrollbar, sitting above the cards where the teacher is
+   already looking. The track's own scrollbar is at the foot of a column of
+   text several screens tall, so nobody ever sees it. An empty spacer as wide
+   as the track's scrollWidth is all it takes — the browser draws the bar, and
+   components/BoardTrack.jsx keeps the two scrollers in step. It renders only
+   when the cards actually overflow. */
+/* A button at each end with the scrollbar stretched between them, so the row
+   spans exactly the width of the cards below it. */
+.board-scroll-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Chips, like the rest of the teacher screens. Sized for a comfortable click
+   rather than for the 10px scrollbar they sit beside — these are the part a
+   teacher who has never scrolled this board is meant to notice. */
+.board-scroll-button {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: #2e7d32;
+  background-color: #f1f8f2;
+  border: 1.5px solid #a5d6a7;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.board-scroll-button:hover:not(:disabled) {
+  color: white;
+  background-color: #2e7d32;
+  border-color: #2e7d32;
+}
+
+.board-scroll-button:disabled {
+  color: #ccc;
+  background-color: #fafafa;
+  border-color: #eee;
+  cursor: default;
+}
+
+.board-scrollbar {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.board-scrollbar-spacer {
+  height: 1px;
+}
+
+/* Both bars wear the same green. The one above the cards and the track's own
+   one below them scroll the same thing, so dressing them differently would
+   make them read as two separate controls. The thumb is a step darker than
+   the #a5d6a7 the board uses for borders — a bar the teacher has to notice
+   carries more weight than a divider does. */
+.board-scrollbar,
+.board-track {
+  scrollbar-width: thin;
+  scrollbar-color: #81c784 #f1f8f2;
+}
+
+/* Safari has no scrollbar-width/-color, so it gets the same look through the
+   old pseudo-elements. Chromium 121+ and Firefox never reach this block, and
+   would ignore it anyway: setting either standard property makes them drop
+   the ::-webkit-scrollbar rules wholesale. */
+@supports not (scrollbar-width: thin) {
+  .board-scrollbar::-webkit-scrollbar,
+  .board-track::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .board-scrollbar::-webkit-scrollbar-track,
+  .board-track::-webkit-scrollbar-track {
+    background-color: #f1f8f2;
+    border-radius: 999px;
+  }
+
+  .board-scrollbar::-webkit-scrollbar-thumb,
+  .board-track::-webkit-scrollbar-thumb {
+    background-color: #81c784;
+    border-radius: 999px;
+  }
+
+  .board-scrollbar::-webkit-scrollbar-thumb:hover,
+  .board-track::-webkit-scrollbar-thumb:hover {
+    background-color: #2e7d32;
+  }
+}
+
+/* Grabbable: the cards are tall enough that the scrollbar underneath is off
+   screen, so the track is dragged instead (components/BoardTrack.jsx). No
+   touch-action here on purpose — touch keeps its native momentum scrolling. */
 .board-track {
   display: flex;
   align-items: stretch;
   gap: 0.5rem;
   overflow-x: auto;
   padding-bottom: 0.75rem;
+  cursor: grab;
+}
+
+/* Only while a drag is actually underway, so text stays selectable the rest
+   of the time. */
+.board-track-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .board-track:focus-visible {
@@ -1397,6 +1506,17 @@ a {
   font-weight: 700;
   color: #444;
   text-align: left;
+}
+
+/* Says out loud who did the judging. The marks in this table come from the
+   AI, which gets it wrong sometimes, so the caption never lets it pass for a
+   teacher's own grading. */
+.board-rubric-caption-note {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #888;
 }
 
 .board-rubric-table {
