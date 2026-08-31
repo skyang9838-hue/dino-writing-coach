@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { diffWords } from 'diff'
-import { getUnitStandard } from '../lib/curriculum.js'
+import { getUnitStandards } from '../lib/curriculum.js'
 import { getChunkRows, getMissionRows } from '../lib/revisionBoard.js'
 import { BoardTrack } from './BoardTrack.jsx'
 
@@ -51,6 +51,10 @@ const NOT_APPLICABLE = { glyph: '—', label: '선생님이 직접 확인해요'
 const EVALUATOR_BADGES = {
   ai: { text: 'AI', label: '디노가 판정한 항목' },
   teacher: { text: '교사', label: '선생님이 직접 확인하는 항목' },
+  // Judged by the AI behind the scenes so it can write missions about them,
+  // but the verdict stays off the board: on these the teacher's call is the
+  // one that counts. See showsAiVerdict in lib/curriculum.js.
+  'teacher-ai-feedback': { text: '교사·AI', label: '선생님이 확인하고 디노가 조언하는 항목' },
 }
 
 const FLAG_REASON_LABELS = {
@@ -129,7 +133,8 @@ function ChunkSections({ chunks }) {
           className={`board-chunk${chunk.rows.every((row) => row.evaluator !== 'ai') ? ' board-chunk-teacher' : ''}`}
           key={chunk.id}
         >
-          <h4 className="board-chunk-title">{chunk.label}</h4>
+          {/* 6단원처럼 채점기준을 청크로 나누지 않은 단원은 제목 없이 항목만 나온다. */}
+          {chunk.label && <h4 className="board-chunk-title">{chunk.label}</h4>}
           <ol className="board-criterion-list">
             {chunk.rows.map((row, index) => (
               <CriterionRow index={index} key={row.id} row={row} />
@@ -165,17 +170,39 @@ function MissionList({ rows }) {
 }
 
 export function RevisionBoard({ unitId, rounds }) {
-  const hasRubric = rounds.some((round) => getChunkRows(unitId, round, null).length > 0)
-  const standard = hasRubric ? getUnitStandard(unitId) : null
+  // The criteria table is the same shape on every card, so one round that has
+  // one tells the legend everything it needs: whether to appear at all, and
+  // which evaluator badges this unit actually uses.
+  const sampleChunks = rounds
+    .map((round) => getChunkRows(unitId, round, null))
+    .find((chunks) => chunks.length > 0) ?? []
+  const hasRubric = sampleChunks.length > 0
+  // A list because the 매체 unit carries two standards. One is the common case,
+  // so the summary reads the same as it always did for those units.
+  const standards = (hasRubric ? getUnitStandards(unitId) : null) ?? []
+  const usedEvaluators = new Set(
+    sampleChunks.flatMap((chunk) => chunk.rows.map((row) => row.evaluator)),
+  )
 
   return (
     <div className="board">
-      {standard && (
+      {standards.length > 0 && (
         <details className="board-standard">
           <summary>
-            성취기준 <strong>[{standard.code}]</strong>
+            성취기준{' '}
+            {standards.map((standard, index) => (
+              <Fragment key={standard.code}>
+                {index > 0 && ' '}
+                <strong>[{standard.code}]</strong>
+              </Fragment>
+            ))}
           </summary>
-          <p className="board-standard-text">{standard.text}</p>
+          {standards.map((standard) => (
+            <p className="board-standard-text" key={standard.code}>
+              {standards.length > 1 && <strong>[{standard.code}] </strong>}
+              {standard.text}
+            </p>
+          ))}
         </details>
       )}
 
@@ -252,12 +279,14 @@ export function RevisionBoard({ unitId, rounds }) {
           <div className="board-legend-group">
             <p className="board-legend-title">평가 주체</p>
             <ul>
-              {Object.entries(EVALUATOR_BADGES).map(([evaluator, badge]) => (
-                <li key={evaluator}>
-                  <span className={`evaluator-badge evaluator-badge-${evaluator}`}>{badge.text}</span> {badge.label}
-                </li>
-              ))}
-              <li>교사 항목은 판정을 저장하지 않아요</li>
+              {Object.entries(EVALUATOR_BADGES)
+                .filter(([evaluator]) => usedEvaluators.has(evaluator))
+                .map(([evaluator, badge]) => (
+                  <li key={evaluator}>
+                    <span className={`evaluator-badge evaluator-badge-${evaluator}`}>{badge.text}</span> {badge.label}
+                  </li>
+                ))}
+              <li>선생님 몫인 항목은 판정을 저장하지 않아요</li>
             </ul>
           </div>
         )}

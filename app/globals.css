@@ -1582,7 +1582,7 @@ a {
    columns never wrap inside the 325px card. */
 .board-criterion-row {
   display: grid;
-  grid-template-columns: 1rem 1fr 0.9rem 0.9rem 1.9rem;
+  grid-template-columns: 1rem 1fr 0.9rem 0.9rem 2.7rem;
   align-items: center;
   gap: 0.2rem;
   padding: 0.26rem 0;
@@ -1634,6 +1634,16 @@ a {
   color: #1565c0;
   background-color: #e8f1fb;
   border: 1px solid #bbdefb;
+}
+
+/* The teacher settles it, the AI only advises. Reads as a teacher badge — same
+   blue — because the verdict column stays empty for these, but outlined rather
+   than filled so it is not mistaken for a plain 교사 item. */
+.evaluator-badge-teacher-ai-feedback {
+  color: #1565c0;
+  background-color: #fff;
+  border: 1px dashed #90caf9;
+  letter-spacing: -0.03em;
 }
 
 .rubric-mark-met {

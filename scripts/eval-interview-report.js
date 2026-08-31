@@ -2,7 +2,8 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import process from 'node:process'
 import dotenv from 'dotenv'
-import { getInterviewReportFeedback } from '../lib/coaching.js'
+import { getRubricCoachingFeedback, getUnitCoachingSpec } from '../lib/coaching.js'
+import { INTERVIEW_REPORT_UNIT_ID } from '../lib/curriculum.js'
 import { summarizeWritingChanges } from '../lib/interviewRound.js'
 import {
   aggregateEvalResults,
@@ -15,6 +16,10 @@ import {
 
 dotenv.config({ path: '.env.local', quiet: true })
 dotenv.config({ quiet: true })
+
+// The eval fixtures are labelled against the interview report's criteria, so
+// this harness stays pinned to that unit even though the pipeline no longer is.
+const SPEC = getUnitCoachingSpec(INTERVIEW_REPORT_UNIT_ID)
 
 const options = parseEvalArgs(process.argv.slice(2))
 if (!process.env.GEMINI_API_KEY) {
@@ -42,7 +47,8 @@ for (const fixture of fixtures) {
   for (let run = 1; run <= options.runs; run += 1) {
     process.stdout.write(`[${fixture.id}] ${run}/${options.runs} `)
     try {
-      const result = await getInterviewReportFeedback({
+      const result = await getRubricCoachingFeedback({
+        spec: SPEC,
         topic: '면담 보고서 쓰기',
         writing: fixture.writing,
         previousWriting: fixture.previousWriting,

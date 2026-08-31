@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { GRADE6_SEMESTER1_UNITS, LENGTH_OPTIONS } from '../lib/curriculum.js'
+import { GRADE6_SEMESTER2_UNITS, LENGTH_OPTIONS } from '../lib/curriculum.js'
 import { createActivity } from '../lib/actions.js'
 import { DinoIcon } from './DinoIcon.jsx'
 
@@ -10,10 +10,10 @@ const INSTRUCTIONS_MAX = 100
 const PRESET_LENGTHS = [200, 400, 600, 800, 1000]
 
 export function NewActivityForm() {
-  const [selectedUnitId, setSelectedUnitId] = useState(GRADE6_SEMESTER1_UNITS[0].id)
+  const [selectedUnitId, setSelectedUnitId] = useState(GRADE6_SEMESTER2_UNITS[0].id)
   const [topic, setTopic] = useState('')
   const [instructions, setInstructions] = useState('')
-  const [targetLength, setTargetLength] = useState(GRADE6_SEMESTER1_UNITS[0].recommendedLength)
+  const [targetLength, setTargetLength] = useState(GRADE6_SEMESTER2_UNITS[0].recommendedLength)
   const [isCustomLength, setIsCustomLength] = useState(false)
 
   const handleUnitSelect = (unit) => {
@@ -28,7 +28,7 @@ export function NewActivityForm() {
   }
 
   const recommendedLength =
-    GRADE6_SEMESTER1_UNITS.find((unit) => unit.id === selectedUnitId)?.recommendedLength
+    GRADE6_SEMESTER2_UNITS.find((unit) => unit.id === selectedUnitId)?.recommendedLength
   // The dropdown offers every value the quick-pick buttons do, plus the finer
   // steps from LENGTH_OPTIONS and whatever the chosen unit recommends.
   const lengthChoices = [
@@ -45,7 +45,7 @@ export function NewActivityForm() {
         </h3>
         <p className="field-hint">진행할 활동을 선택하면 기본 정보가 자동으로 설정돼요.</p>
         <div className="unit-grid">
-          {GRADE6_SEMESTER1_UNITS.map((unit) => (
+          {GRADE6_SEMESTER2_UNITS.map((unit) => (
             <button
               key={unit.id}
               type="button"
