@@ -41,3 +41,6 @@ skills-lock.json
 # Vercel
 .vercel
 .env*
+
+# Playwright MCP output (screenshots, snapshots, console logs)
+.playwright-mcp
