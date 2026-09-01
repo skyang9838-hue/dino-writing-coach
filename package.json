@@ -11,6 +11,7 @@
     "lint": "oxlint",
     "test": "vitest run",
     "eval": "node scripts/eval-interview-report.js",
+    "smoke": "node scripts/smoke-rubric-coaching.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {

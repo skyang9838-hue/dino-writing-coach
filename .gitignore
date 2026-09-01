@@ -32,6 +32,7 @@ skills-lock.json
 .superpowers
 .worktrees
 .eval-results
+.smoke-results
 
 # Environment variables
 .env

@@ -55,7 +55,8 @@ export function NewActivityForm() {
             >
               {selectedUnitId === unit.id && <span className="unit-card-check">✓</span>}
               <span className="unit-card-icon">{unit.icon}</span>
-              <span className="unit-card-number">{unit.unitNumber}단원</span>
+              {/* 매체 단원처럼 번호가 없는 단원은 unitLabel이 그 자리를 대신한다. */}
+              <span className="unit-card-number">{unit.unitLabel ?? `${unit.unitNumber}단원`}</span>
               <span className="unit-card-title">{unit.title}</span>
               <span className="unit-card-desc">{unit.description}</span>
             </button>
