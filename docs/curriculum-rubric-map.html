@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* 아티팩트 호스트가 넣어 주던 최소 리셋 — 단독 파일로 열 때도 같게 보이도록 옮겨 왔다. */
+  :root { color-scheme: light dark; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>6학년 2학기 채점기준표</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+
+<style>
+  :root {
+    --paper: #f4f6f8;
+    --card: #ffffff;
+    --card-sunk: #f8fafb;
+    --ink: #161a1f;
+    --ink-mid: #454d58;
+    --ink-soft: #6d7681;
+    --ink-faint: #9aa3ae;
+    --rule: #e0e4e9;
+    --rule-soft: #edf0f3;
+
+    --teacher: #1565c0;
+    --teacher-wash: #e9f1fb;
+    --ai: #79828d;
+    --ai-wash: #eef0f2;
+
+    --met: #2c6e31;
+    --partial: #9a6a05;
+    --unmet: #b23030;
+
+    --shadow: 0 1px 2px rgba(20, 30, 45, .05), 0 8px 24px -16px rgba(20, 30, 45, .22);
+
+    --sans: 'IBM Plex Sans KR', 'Malgun Gothic', system-ui, -apple-system, sans-serif;
+    --serif: 'Gowun Batang', 'Batang', Georgia, serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'Consolas', monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #121519;
+      --card: #1a1e24;
+      --card-sunk: #15181d;
+      --ink: #e7eaee;
+      --ink-mid: #b3bbc5;
+      --ink-soft: #8d97a3;
+      --ink-faint: #6a737e;
+      --rule: #2b3138;
+      --rule-soft: #22272d;
+
+      --teacher: #79b2f0;
+      --teacher-wash: #17293d;
+      --ai: #929ba6;
+      --ai-wash: #24292f;
+
+      --met: #6cc072;
+      --partial: #d6a53a;
+      --unmet: #e08282;
+
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px -18px rgba(0, 0, 0, .7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #121519;
+    --card: #1a1e24;
+    --card-sunk: #15181d;
+    --ink: #e7eaee;
+    --ink-mid: #b3bbc5;
+    --ink-soft: #8d97a3;
+    --ink-faint: #6a737e;
+    --rule: #2b3138;
+    --rule-soft: #22272d;
+
+    --teacher: #79b2f0;
+    --teacher-wash: #17293d;
+    --ai: #929ba6;
+    --ai-wash: #24292f;
+
+    --met: #6cc072;
+    --partial: #d6a53a;
+    --unmet: #e08282;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px -18px rgba(0, 0, 0, .7);
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+  }
+
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  /* ---------- header ---------- */
+
+  .eyebrow {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    color: var(--ink-faint);
+    margin: 0 0 .9rem;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(2rem, 5.2vw, 2.9rem);
+    line-height: 1.25;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+    margin: 0 0 .8rem;
+  }
+
+  .lede {
+    max-width: 56ch;
+    color: var(--ink-mid);
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- summary ---------- */
+
+  .summary {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 1.4rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .summary-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .4rem 1rem;
+  }
+
+  .summary-title {
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .11em;
+    color: var(--ink-soft);
+  }
+
+  .summary-total {
+    font-size: .84rem;
+    color: var(--ink-soft);
+  }
+
+  .summary-total strong {
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .bar {
+    display: flex;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    gap: 2px;
+  }
+
+  .bar span { display: block; }
+  .bar-ai { flex: 17; background: var(--ai); }
+  .bar-both {
+    flex: 4;
+    background: repeating-linear-gradient(-45deg, var(--teacher) 0 3px, transparent 3px 6px), var(--teacher-wash);
+    box-shadow: inset 0 0 0 1px var(--teacher);
+  }
+  .bar-teacher { flex: 10; background: var(--teacher); }
+
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1rem;
+  }
+
+  .legend-item {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    padding-left: .85rem;
+    border-left: 3px solid var(--rule);
+  }
+
+  .legend-item.is-ai { border-left-color: var(--ai); }
+  .legend-item.is-both { border-left-color: var(--teacher); border-left-style: dashed; }
+  .legend-item.is-teacher { border-left-color: var(--teacher); }
+
+  .legend-count {
+    font-family: var(--mono);
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .legend-count em {
+    font-style: normal;
+    font-family: var(--sans);
+    font-size: .78rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin-left: .25rem;
+  }
+
+  .legend-desc {
+    font-size: .82rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  .summary-note {
+    font-size: .82rem;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule-soft);
+    padding-top: .9rem;
+    margin: 0;
+  }
+
+  .summary-note code { font-family: var(--mono); font-size: .92em; color: var(--ink-mid); }
+
+  /* ---------- chips ---------- */
+
+  .chip {
+    display: inline-block;
+    flex: none;
+    padding: .1rem .42rem;
+    border-radius: 4px;
+    font-size: .68rem;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+
+  .chip-ai { color: var(--ink-soft); background: var(--ai-wash); border: 1px solid var(--rule); }
+  .chip-teacher { color: var(--teacher); background: var(--teacher-wash); border: 1px solid var(--teacher); }
+  .chip-both { color: var(--teacher); background: transparent; border: 1px dashed var(--teacher); letter-spacing: -.03em; }
+
+  /* ---------- unit ---------- */
+
+  .unit {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .unit-head {
+    display: flex;
+    align-items: flex-start;
+    gap: .9rem;
+    padding: 1.4rem 1.5rem 1.2rem;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .unit-mark {
+    flex: none;
+    width: 3.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .15rem;
+    padding-top: .1rem;
+  }
+
+  .unit-icon { font-size: 1.4rem; line-height: 1.2; }
+
+  .unit-no {
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 500;
+    color: var(--ink-faint);
+    letter-spacing: .02em;
+    white-space: nowrap;
+  }
+
+  .unit-no.is-label { font-family: var(--sans); font-size: .68rem; font-weight: 600; }
+
+  .unit-title {
+    font-family: var(--serif);
+    font-size: 1.32rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0 0 .25rem;
+    text-wrap: balance;
+  }
+
+  .unit-desc { color: var(--ink-mid); font-size: .88rem; margin: 0 0 .55rem; }
+
+  .unit-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3rem .9rem;
+    font-size: .76rem;
+    color: var(--ink-faint);
+  }
+
+  .unit-meta code { font-family: var(--mono); }
+
+  /* ---------- standards ---------- */
+
+  .standards {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    padding: 1.1rem 1.5rem;
+    background: var(--card-sunk);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .standards-label {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .13em;
+    color: var(--ink-faint);
+  }
+
+  .standard {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .2rem .7rem;
+  }
+
+  .standard-code {
+    font-family: var(--mono);
+    font-size: .78rem;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: .05rem .4rem;
+    white-space: nowrap;
+  }
+
+  .standard-code .kr { font-family: var(--sans); font-weight: 600; }
+
+  .standard-text { font-size: .9rem; color: var(--ink-mid); flex: 1 1 22ch; }
+
+  /* ---------- chunks & criteria ---------- */
+
+  .chunks { display: flex; flex-direction: column; }
+
+  .chunk { border-bottom: 1px solid var(--rule-soft); }
+  .chunk:last-child { border-bottom: 0; }
+
+  .chunk-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .25rem .7rem;
+    padding: 1rem 1.5rem .5rem;
+  }
+
+  .chunk-name { font-size: .95rem; font-weight: 600; }
+  .chunk-name.is-none { color: var(--ink-faint); font-weight: 400; font-style: italic; }
+  .chunk-desc { font-size: .8rem; color: var(--ink-soft); }
+  .chunk-id { font-family: var(--mono); font-size: .72rem; color: var(--ink-faint); margin-left: auto; }
+
+  .crit-list { display: flex; flex-direction: column; padding: 0 1.5rem 1.1rem; gap: 2px; }
+
+  .crit { border-left: 3px solid var(--ai); background: transparent; }
+  .crit.is-teacher { border-left-color: var(--teacher); }
+  .crit.is-both { border-left-color: var(--teacher); border-left-style: dashed; }
+
+  .crit-row {
+    display: grid;
+    grid-template-columns: 2.1rem 1fr auto;
+    align-items: baseline;
+    gap: .3rem .55rem;
+    padding: .48rem .7rem .48rem .8rem;
+    list-style: none;
+  }
+
+  details.crit > summary.crit-row { cursor: pointer; }
+  details.crit > summary.crit-row::-webkit-details-marker { display: none; }
+  details.crit > summary.crit-row:hover { background: var(--card-sunk); }
+  details.crit > summary.crit-row:focus-visible { outline: 2px solid var(--teacher); outline-offset: -2px; }
+
+  .crit-pri {
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    padding-right: .15rem;
+  }
+
+  .crit-pri.is-none { color: var(--rule); }
+
+  .crit-label { font-size: .92rem; line-height: 1.5; }
+
+  .crit-id {
+    display: block;
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--ink-faint);
+    margin-top: .05rem;
+  }
+
+  .crit-caret {
+    display: inline-block;
+    width: .6rem;
+    color: var(--ink-faint);
+    font-size: .62rem;
+    transition: transform .16s ease;
+    transform-origin: 45% 55%;
+  }
+
+  details[open] > .crit-row .crit-caret { transform: rotate(90deg); }
+
+  .crit-right { display: flex; align-items: center; gap: .45rem; }
+
+  .statuses {
+    display: grid;
+    grid-template-columns: 3.1rem 1fr;
+    gap: .3rem .7rem;
+    margin: 0 .7rem .6rem .8rem;
+    padding: .75rem .9rem;
+    background: var(--card-sunk);
+    border-radius: 8px;
+    font-size: .84rem;
+  }
+
+  .st-key {
+    font-family: var(--mono);
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    padding-top: .2rem;
+  }
+
+  .st-met { color: var(--met); }
+  .st-partial { color: var(--partial); }
+  .st-unmet { color: var(--unmet); }
+
+  .st-val { color: var(--ink-mid); line-height: 1.55; }
+
+  /* ---------- empty unit ---------- */
+
+  .empty {
+    margin: 1.1rem 1.5rem 1.5rem;
+    padding: 1.1rem 1.2rem;
+    border: 1px dashed var(--rule);
+    border-radius: 10px;
+    color: var(--ink-soft);
+    font-size: .87rem;
+    background: var(--card-sunk);
+  }
+
+  .empty strong { color: var(--ink-mid); font-weight: 600; }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    font-size: .82rem;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule);
+    padding-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+  }
+
+  footer code { font-family: var(--mono); color: var(--ink-mid); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 2.5rem 1rem 4rem; gap: 2rem; }
+    .unit-head, .standards, .chunk-head { padding-left: 1rem; padding-right: 1rem; }
+    .crit-list { padding-left: 1rem; padding-right: 1rem; }
+    .crit-row { grid-template-columns: 1.7rem 1fr; }
+    .crit-right { grid-column: 2; justify-content: flex-start; }
+    .chunk-id { margin-left: 0; flex-basis: 100%; }
+    .statuses { grid-template-columns: 2.8rem 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">국어 6학년 2학기 · 디노 글쓰기 코치</p>
+    <h1>단원별 성취기준·청크·채점기준</h1>
+    <p class="lede">
+      6개 단원, 성취기준 <b>7개</b>, 청크 <b>10개</b>, 채점기준 <b>31항목</b>.
+      항목마다 <b>누가 판정하는가</b>가 정해져 있고, 그 구분이 디노가 무엇을 보고 무엇을 못 보는지를 결정한다.
+      원본은 <code style="font-family:var(--mono)">lib/curriculum.js</code>의 <code style="font-family:var(--mono)">GRADE6_SEMESTER2_UNITS</code>.
+    </p>
+  </header>
+
+  <section class="summary">
+    <div class="summary-head">
+      <span class="summary-title">판정 주체</span>
+      <span class="summary-total">채점기준 <strong>31</strong>항목 · 디노가 실제로 판정하는 것 <strong>21</strong>항목</span>
+    </div>
+
+    <div class="bar" role="img" aria-label="AI 17항목, 교사·AI 4항목, 교사 10항목">
+      <span class="bar-ai"></span>
+      <span class="bar-both"></span>
+      <span class="bar-teacher"></span>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item is-ai">
+        <span class="chip chip-ai" style="align-self:flex-start">AI</span>
+        <span class="legend-count">17<em>항목</em></span>
+        <span class="legend-desc">디노가 판정하고, 그 판정이 보드에 그대로 나온다.</span>
+      </div>
+      <div class="legend-item is-both">
+        <span class="chip chip-both" style="align-self:flex-start">교사·AI</span>
+        <span class="legend-count">4<em>항목</em></span>
+        <span class="legend-desc">디노가 속으로 판정해 수정미션은 쓰지만, 보드의 판정 칸은 비워 둔다. 최종 판단은 선생님 몫.</span>
+      </div>
+      <div class="legend-item is-teacher">
+        <span class="chip chip-teacher" style="align-self:flex-start">교사</span>
+        <span class="legend-count">10<em>항목</em></span>
+        <span class="legend-desc">선생님 전담. 디노는 이런 항목이 있다는 사실조차 모른다.</span>
+      </div>
+    </div>
+
+    <p class="summary-note">
+      왼쪽 숫자는 <b>우선순위</b>다 — 작을수록 수정미션에 먼저 뽑힌다.
+      <span style="color:var(--ai)">AI</span>·<span style="color:var(--teacher)">교사·AI</span> 항목만 우선순위와 met/partial/unmet 기술이 있고,
+      <span style="color:var(--teacher)">교사</span> 항목에는 아예 없다 — 디노에게 넘기지 않으니 판정 기준을 줄 필요가 없다.
+      항목을 누르면 채점기준 3단계가 펼쳐진다.
+    </p>
+  </section>
+
+  <!-- ===================== 1단원 ===================== -->
+  <article class="unit">
+    <div class="unit-head">
+      <div class="unit-mark">
+        <span class="unit-icon">📜</span>
+        <span class="unit-no">1단원</span>
+      </div>
+      <div>
+        <h2 class="unit-title">줄거리 간추리기</h2>
+        <p class="unit-desc">이야기의 중요한 사건을 골라 순서대로 간추려요.</p>
+        <div class="unit-meta">
+          <span>장르 · 줄거리 요약</span>
+          <span>권장 400자</span>
+          <span><code>g6s2-unit1</code></span>
+        </div>
+      </div>
+    </div>
+    <p class="empty">
+      <strong>성취기준·채점기준이 아직 없다.</strong>
+      활동 틀로만 쓰이고, 교사 보드에 채점기준표가 나오지 않는다. 디노는 장르 일반 조언(<span style="font-family:var(--mono);font-size:.9em">GENRE_COACHING_GUIDANCE</span>)만 준다.
+    </p>
+  </article>
+
+  <!-- ===================== 2단원 ===================== -->
+  <article class="unit">
+    <div class="unit-head">
+      <div class="unit-mark">
+        <span class="unit-icon">🎤</span>
+        <span class="unit-no">2단원</span>
+      </div>
+      <div>
+        <h2 class="unit-title">면담 보고서 쓰기</h2>
+        <p class="unit-desc">면담한 내용을 목적과 짜임에 맞게 보고서로 써요.</p>
+        <div class="unit-meta">
+          <span>장르 · 면담 보고서</span>
+          <span>권장 600자</span>
+          <span><code>g6s2-unit2</code></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="standards">
+      <span class="standards-label">성취기준</span>
+      <div class="standard">
+        <span class="standard-code">6<span class="kr">국</span>01-04</span>
+        <span class="standard-text">면담의 절차를 이해하고 상대와 매체를 고려하여 면담한다.</span>
+      </div>
+    </div>
+
+    <div class="chunks">
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name">면담의 절차</span>
+          <span class="chunk-desc">면담 보고서의 특징</span>
+          <span class="chunk-id">interview-procedure</span>
+        </div>
+        <div class="crit-list">
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">30</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 면담의 목적과 대상을 밝혔다.<span class="crit-id">purpose-and-target</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">누구에게서 무엇을 알아보려 했는지가 둘 다 분명하다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">목적과 대상 중 하나만 분명하거나, “그분”처럼 누구인지 알기 어렵다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">면담 목적도 대상도 식별할 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">60</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 면담 준비 과정을 돌아보아 썼다.<span class="crit-id">preparation</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">질문 만들기, 자료 조사, 약속 잡기처럼 면담 전에 한 준비 행동이 글에 직접 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">준비했다는 언급은 있으나 무엇을 준비했는지 알기 어렵다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">면담 준비 과정을 식별할 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">10</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 새롭게 알게 된 사실을 소개했다.<span class="crit-id">learned-facts</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">면담으로 새롭게 알게 된 사실과 함께 그 사실의 이유, 과정, 사례, 상황 중 하나 이상을 설명한다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">새롭게 알게 된 사실은 있으나 단순히 나열하거나 뭉뚱그려 표현한다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">면담으로 새롭게 알게 된 사실을 식별할 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">50</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 면담 후 느낀 점을 밝혔다.<span class="crit-id">reflection</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">면담 뒤에 든 생각, 느낌, 변화를 구체적으로 밝힌다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">느낌이 짧거나 막연해서 무엇을 느꼈는지 알기 어렵다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">면담 후 느낀 점을 찾을 수 없다.</span>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name">상대와 매체 고려</span>
+          <span class="chunk-desc">상대와 매체를 고려하여 면담하기</span>
+          <span class="chunk-id">audience-and-medium</span>
+        </div>
+        <div class="crit-list">
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">상대를 고려하여 면담했다.<span class="crit-id">audience</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">매체를 고려하여 면담했다.<span class="crit-id">medium</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- ===================== 5단원 ===================== -->
+  <article class="unit">
+    <div class="unit-head">
+      <div class="unit-mark">
+        <span class="unit-icon">📰</span>
+        <span class="unit-no">5단원</span>
+      </div>
+      <div>
+        <h2 class="unit-title">독자와 매체를 고려하여 기사문 작성하기</h2>
+        <p class="unit-desc">읽을 사람과 매체를 생각하며 사실을 전하는 기사문을 써요.</p>
+        <div class="unit-meta">
+          <span>장르 · 기사문</span>
+          <span>권장 600자</span>
+          <span><code>g6s2-unit5</code></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="standards">
+      <span class="standards-label">성취기준</span>
+      <div class="standard">
+        <span class="standard-code">6<span class="kr">국</span>03-04</span>
+        <span class="standard-text">독자와 매체를 고려하여 내용을 생성하고 표현하며 글을 쓴다.</span>
+      </div>
+    </div>
+
+    <div class="chunks">
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name">독자 고려하여 내용 생성하기</span>
+          <span class="chunk-id">reader-content</span>
+        </div>
+        <div class="crit-list">
+
+          <details class="crit is-both">
+            <summary class="crit-row">
+              <span class="crit-pri">40</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 관심을 끌 만한 기삿거리를 골랐다.<span class="crit-id">newsworthy-topic</span></span>
+              <span class="crit-right"><span class="chip chip-both">교사·AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">왜 지금 알릴 만한 일인지가 드러나고, 읽는 사람이 궁금해할 내용이 담겨 있다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">알릴 만한 일이기는 하나 무엇이 새롭거나 중요한지가 드러나지 않는다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">무엇을 알리려는 기사인지 식별할 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit is-both">
+            <summary class="crit-row">
+              <span class="crit-pri">50</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 흥미를 끄는 제목을 붙였다.<span class="crit-id">headline</span></span>
+              <span class="crit-right"><span class="chip chip-both">교사·AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">제목이 기사의 핵심 내용을 담으면서 읽고 싶게 만든다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">제목은 있으나 내용을 짐작하기 어렵거나 “○○에 대하여”처럼 밋밋하다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">제목을 찾을 수 없다.</span>
+            </div>
+          </details>
+
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">이해하기 쉬운 표현으로 썼다.<span class="crit-id">plain-expression</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name">매체 고려하여 표현하며 글쓰기</span>
+          <span class="chunk-id">medium-form</span>
+        </div>
+        <div class="crit-list">
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">10</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 제목, 전문, 본문을 갖추었다.<span class="crit-id">article-structure</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">제목, 전문, 본문 세 부분이 모두 구분되어 있다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">세 부분 가운데 하나 또는 둘만 있다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">제목도 전문도 없이 본문만 이어져 있다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">20</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 전문에서 육하원칙을 지켰다.<span class="crit-id">five-w-one-h</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">전문에 누가·언제·어디서·무엇을·어떻게·왜 가운데 다섯 가지 이상이 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">전문에 육하원칙 요소가 셋에서 넷만 드러난다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">전문이 없거나 육하원칙 요소가 둘 이하다.</span>
+            </div>
+          </details>
+
+          <details class="crit is-both">
+            <summary class="crit-row">
+              <span class="crit-pri">30</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 사실이나 사건을 전달했다.<span class="crit-id">fact-delivery</span></span>
+              <span class="crit-right"><span class="chip chip-both">교사·AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">실제로 있었던 일이나 확인할 수 있는 사실을 중심으로 쓰였다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">사실은 있으나 글쓴이의 생각이나 느낌과 뒤섞여 구분되지 않는다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">전달하는 사실이나 사건을 찾을 수 없다.</span>
+            </div>
+          </details>
+
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- ===================== 매체 단원 ===================== -->
+  <article class="unit">
+    <div class="unit-head">
+      <div class="unit-mark">
+        <span class="unit-icon">📱</span>
+        <span class="unit-no is-label">매체 단원</span>
+      </div>
+      <div>
+        <h2 class="unit-title">매체 성찰 보고서 쓰기</h2>
+        <p class="unit-desc">자신의 매체 이용 경험을 돌아보고 보고서로 써요.</p>
+        <div class="unit-meta">
+          <span>장르 · 매체 성찰 보고서</span>
+          <span>권장 600자</span>
+          <span>번호 없는 단원</span>
+          <span><code>g6s2-media</code></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="standards">
+      <span class="standards-label">성취기준 · 유일하게 2개</span>
+      <div class="standard">
+        <span class="standard-code">6<span class="kr">국</span>06-04</span>
+        <span class="standard-text">자신의 매체 이용 양상에 대해 성찰한다. <span style="color:var(--ink-faint)">→ 첫째 청크</span></span>
+      </div>
+      <div class="standard">
+        <span class="standard-code">6<span class="kr">국</span>03-06</span>
+        <span class="standard-text">쓰기에 적극적으로 참여하며 자신의 글을 독자와 공유하는 태도를 지닌다. <span style="color:var(--ink-faint)">→ 둘째·셋째 청크</span></span>
+      </div>
+    </div>
+
+    <div class="chunks">
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name">자신의 매체 이용 양상 성찰하기</span>
+          <span class="chunk-id">media-reflection</span>
+        </div>
+        <div class="crit-list">
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">10</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 매체 이용 경험을 돌아본 까닭과 목적을 밝혔다.<span class="crit-id">reflection-purpose</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">무엇 때문에 자신의 매체 이용을 돌아보게 됐는지와 무엇을 알아보려 했는지가 둘 다 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">까닭과 목적 중 하나만 드러난다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">돌아본 까닭도 목적도 식별할 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">20</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 매체 이용 경험에서 고쳐야 할 특징이 드러난다.<span class="crit-id">usage-pattern</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">자신의 매체 이용에서 고쳐야 할 점이 구체적인 행동이나 습관으로 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">고칠 점을 말하기는 하나 “많이 본다”처럼 막연하다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">고쳐야 할 점을 찾을 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">30</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 매체 이용 경험을 돌아보며 느낀 점을 밝혔다.<span class="crit-id">felt-point</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">돌아본 뒤에 든 생각, 느낌, 앞으로의 다짐이 구체적으로 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">“반성했다”, “좋았다”처럼 까닭이나 변화가 없는 말만 있다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">느낀 점을 찾을 수 없다.</span>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name">쓰기에 적극적으로 참여한다</span>
+          <span class="chunk-id">active-participation</span>
+        </div>
+        <div class="crit-list">
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">쓰기에 적극적으로 참여했다.<span class="crit-id">participation</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name">자신의 글을 독자와 공유하는 태도</span>
+          <span class="chunk-id">sharing-attitude</span>
+        </div>
+        <div class="crit-list">
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">공유할 대상과 목적을 고려했다.<span class="crit-id">share-audience</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- ===================== 6단원 ===================== -->
+  <article class="unit">
+    <div class="unit-head">
+      <div class="unit-mark">
+        <span class="unit-icon">📝</span>
+        <span class="unit-no">6단원</span>
+      </div>
+      <div>
+        <h2 class="unit-title">경험을 떠올리며 이야기 바꾸어 쓰기</h2>
+        <p class="unit-desc">자신의 경험을 떠올려 이야기의 인물이나 사건을 바꾸어 써요.</p>
+        <div class="unit-meta">
+          <span>장르 · 이야기(창작)</span>
+          <span>권장 600자</span>
+          <span><code>g6s2-unit6</code></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="standards">
+      <span class="standards-label">성취기준</span>
+      <div class="standard">
+        <span class="standard-code">6<span class="kr">국</span>05-05</span>
+        <span class="standard-text">자신의 경험을 시, 소설, 극, 수필 등 적절한 갈래로 표현한다.</span>
+      </div>
+    </div>
+
+    <div class="chunks">
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name is-none">청크 구분 없음 — 항목만 나열된다</span>
+          <span class="chunk-id">story-rewrite</span>
+        </div>
+        <div class="crit-list">
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">10</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 자신의 경험이 이야기에 들어 있다.<span class="crit-id">own-experience</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">글쓴이가 실제로 겪은 일로 볼 수 있는 장면이나 그때의 마음이 이야기 속에 들어 있다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">경험처럼 보이는 대목이 있으나 무엇을 겪었는지 알기 어렵다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">글쓴이 자신의 경험을 찾을 수 없다.</span>
+            </div>
+          </details>
+
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">인물이나 배경이 바뀔 때 이야기가 알맞게 달라졌다.<span class="crit-id">character-setting-change</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">20</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 사건 사이의 원인과 결과가 타당하다.<span class="crit-id">cause-and-effect</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">앞 사건이 뒤 사건의 원인이 되는 연결이 이야기 안에서 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">사건은 이어지나 왜 그렇게 됐는지 알기 어려운 대목이 있다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">사건들이 서로 이어지지 않고 따로 놓여 있다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">30</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 처음, 가운데, 끝이 자연스럽게 이어진다.<span class="crit-id">story-flow</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">이야기가 시작되고 사건이 벌어지고 마무리되는 흐름이 끊기지 않는다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">세 부분 가운데 하나가 너무 짧거나 이야기가 갑자기 끝난다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">이야기의 흐름을 따라가기 어렵다.</span>
+            </div>
+          </details>
+
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">자신의 경험과 생각을 반영했다.<span class="crit-id">experience-and-thought</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">창의적인 아이디어로 이야기를 바꾸었다.<span class="crit-id">creative-change</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- ===================== 보완단원 ===================== -->
+  <article class="unit">
+    <div class="unit-head">
+      <div class="unit-mark">
+        <span class="unit-icon">🧳</span>
+        <span class="unit-no is-label">보완단원</span>
+      </div>
+      <div>
+        <h2 class="unit-title">여정, 견문, 감상이 드러나는 기행문 쓰기</h2>
+        <p class="unit-desc">여행하며 다닌 곳과 보고 들은 것, 그때 생각하고 느낀 것을 글로 써요.</p>
+        <div class="unit-meta">
+          <span>장르 · 기행문</span>
+          <span>권장 600자</span>
+          <span>교과서에 단원이 없는 성취기준</span>
+          <span><code>g6s2-supplement</code></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="standards">
+      <span class="standards-label">성취기준 · 2개</span>
+      <div class="standard">
+        <span class="standard-code">6<span class="kr">국</span>03-03</span>
+        <span class="standard-text">체험한 일에 대한 감상을 나타내는 글을 쓴다. <span style="color:var(--ink-faint)">→ 첫째 청크</span></span>
+      </div>
+      <div class="standard">
+        <span class="standard-code">6<span class="kr">국</span>03-05</span>
+        <span class="standard-text">쓰기 과정을 점검·조정하며 글을 쓰고, 글 전체를 대상으로 통일성 있게 고쳐 쓴다. <span style="color:var(--ink-faint)">→ 둘째 청크 (전부 교사 몫이라 디노는 이 성취기준의 존재를 모른다)</span></span>
+      </div>
+    </div>
+
+    <div class="chunks">
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name">기행문의 특성</span>
+          <span class="chunk-id">travel-writing</span>
+        </div>
+        <div class="crit-list">
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">40</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 글 처음 부분에 여행을 떠난 까닭과 여행에 대한 기대가 드러나 있다.<span class="crit-id">trip-reason</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">왜 그곳에 가게 됐는지와 가기 전에 무엇을 기대했는지가 둘 다 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">떠난 까닭과 기대 중 하나만 드러난다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">떠난 까닭도 기대도 찾을 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">10</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 여행하며 다닌 곳을 나타내는 여정이 있다.<span class="crit-id">itinerary</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">어디에 갔는지와 어떤 차례로 옮겨 다녔는지가 글을 따라가며 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">간 곳이 나오기는 하나 한 군데뿐이거나 옮겨 다닌 차례를 알 수 없다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">어디에 갔는지 찾을 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">20</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 여행하며 보고 들은 것을 나타내는 견문이 있다.<span class="crit-id">observation</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">그곳에서 직접 보거나 들은 것이 무엇인지 떠올릴 수 있게 그려진다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">보고 들었다고 말하기는 하나 “구경했다”처럼 무엇을 봤는지 알 수 없다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">보고 들은 것을 찾을 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">30</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 여행하며 생각하거나 느낀 것이 드러나 있다.<span class="crit-id">impression</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">보고 들은 것에 대해 그때 어떤 생각이 들었고 어떤 마음이었는지가 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">“재미있었다”, “좋았다”처럼 까닭이 없는 말만 있다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">생각이나 느낌을 찾을 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit is-both">
+            <summary class="crit-row">
+              <span class="crit-pri">50</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 글 끝 부분에 여행하고 난 뒤 전체적인 느낌이 생생히 드러나 있다.<span class="crit-id">overall-feeling</span></span>
+              <span class="crit-right"><span class="chip chip-both">교사·AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">여행을 마치고 난 뒤의 느낌이 글 끝에서 구체적인 말로 그려진다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">마무리에 느낌이 있기는 하나 “좋은 여행이었다” 정도로 뭉뚱그려져 있다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">여행을 마친 뒤의 느낌을 찾을 수 없다.</span>
+            </div>
+          </details>
+
+          <details class="crit">
+            <summary class="crit-row">
+              <span class="crit-pri">60</span>
+              <span class="crit-label"><span class="crit-caret">▶</span> 앞으로의 계획이나 각오가 잘 드러나 있다.<span class="crit-id">future-plan</span></span>
+              <span class="crit-right"><span class="chip chip-ai">AI</span></span>
+            </summary>
+            <div class="statuses">
+              <span class="st-key st-met">met</span><span class="st-val">이 여행을 하고 나서 앞으로 무엇을 하고 싶은지나 어떻게 하겠다는 다짐이 드러난다.</span>
+              <span class="st-key st-partial">partial</span><span class="st-val">앞으로의 이야기가 있으나 “또 가고 싶다” 정도에 그친다.</span>
+              <span class="st-key st-unmet">unmet</span><span class="st-val">앞으로의 계획이나 각오를 찾을 수 없다.</span>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <section class="chunk">
+        <div class="chunk-head">
+          <span class="chunk-name">쓰기 과정과 고쳐쓰기</span>
+          <span class="chunk-id">process-revision</span>
+        </div>
+        <div class="crit-list">
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">쓰기 과정을 점검하고 조정하며 글을 썼다.<span class="crit-id">writing-process</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+          <div class="crit is-teacher">
+            <div class="crit-row">
+              <span class="crit-pri is-none">—</span>
+              <span class="crit-label">글 전체가 통일성 있도록 고쳐 썼다.<span class="crit-id">coherence-revision</span></span>
+              <span class="crit-right"><span class="chip chip-teacher">교사</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <footer>
+    <span>원본 <code>lib/curriculum.js</code> · 접근 함수 <code>getUnitStandards()</code> <code>getUnitChunks()</code> <code>getAiRubrics()</code></span>
+    <span><code>getAiRubrics()</code>가 <code>AI</code>·<code>교사·AI</code> 21항목만 걸러 Gemini 프롬프트로 넘긴다. <code>교사</code> 10항목은 프롬프트에 들어가지 않는다.</span>
+    <span>도달도는 <code>lib/attainment.js</code>에서 met 1점 · partial 0.5점 · unmet 0점의 평균으로 환산된다.</span>
+  </footer>
+
+</div>
+</body>
+</html>
