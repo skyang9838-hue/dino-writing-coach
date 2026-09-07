@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { diffWords } from 'diff'
 import { getUnitStandards } from '../lib/curriculum.js'
-import { getChunkRows, getMissionRows } from '../lib/revisionBoard.js'
+import { getChunkRows, getMissionRows, orderRoundsLatestFirst } from '../lib/revisionBoard.js'
 import { BoardTrack } from './BoardTrack.jsx'
 
 // The teacher's read-only view of one student's revisions, laid out as cards
@@ -58,10 +58,10 @@ const EVALUATOR_BADGES = {
 }
 
 const FLAG_REASON_LABELS = {
-  nonsense: '무의미한 글로 판단되어 도달도가 0%로 처리됐어요.',
+  nonsense: '무의미한 글로 판단된 회차예요. (도달도는 변동 없어요)',
   profanity: '선생님이 부적절한 표현으로 판단해 반려했어요. (도달도는 변동 없어요)',
 }
-const flagReasonLabel = (reason) => FLAG_REASON_LABELS[reason] ?? '이 글은 검토가 필요해 도달도가 0%로 처리됐어요.'
+const flagReasonLabel = (reason) => FLAG_REASON_LABELS[reason] ?? '검토가 필요해 코칭하지 않은 회차예요. (도달도는 변동 없어요)'
 
 const renderWritingDiff = (before, after) =>
   diffWords(before, after).map((part, partIndex) => {
@@ -157,9 +157,12 @@ function MissionList({ rows }) {
             <span className="board-mission-number" aria-hidden="true">
               {String.fromCodePoint(0x2460 + index)}
             </span>
+            {/* 제목만 — 제목이 곧 학생이 할 행동이다(까닭 추가하기). 뒤에
+                붙던 지시문은 어디를 어떻게 고치라는 두세 줄짜리 설명이라,
+                카드를 길게 만들면서 회차끼리 견주기를 어렵게 했다. 제목이
+                없는 옛 라운드만 지시문으로 대신한다. */}
             <span className="board-mission-text">
-              {row.title ? `${row.title} — ` : ''}
-              {row.instruction}
+              {row.title || row.instruction}
             </span>
             <Mark marks={MISSION_MARKS} value={row.status} className="mission-mark" />
           </li>
@@ -210,16 +213,22 @@ export function RevisionBoard({ unitId, rounds }) {
           keyboard alone once the track overflows, and draggable so the
           teacher never has to hunt for the scrollbar below the cards. */}
       <BoardTrack>
-        {rounds.map((round, index) => {
-          const previousRound = index > 0 ? rounds[index - 1] : null
-          const nextRound = index < rounds.length - 1 ? rounds[index + 1] : null
-          const isLatest = index === rounds.length - 1
+        {orderRoundsLatestFirst(rounds).map(({ round, originalIndex }, position) => {
+          const previousRound = originalIndex > 0 ? rounds[originalIndex - 1] : null
+          const nextRound = originalIndex < rounds.length - 1 ? rounds[originalIndex + 1] : null
+          const isLatest = originalIndex === rounds.length - 1
           const chunks = getChunkRows(unitId, round, previousRound)
           const missionRows = getMissionRows(round, nextRound)
 
           return (
-            <Fragment key={index}>
-              {index > 0 && (
+            <Fragment key={originalIndex}>
+              {/* 맨 앞의 최신 카드와 1차부터 이어지는 나머지 사이를 갈라
+                  준다. 그러지 않으면 8차 옆에 1차가 붙어 있는 것이 시간
+                  순서로 읽힌다. */}
+              {position === 1 && (
+                <span className="board-divider" aria-hidden="true" />
+              )}
+              {position > 1 && (
                 <span className="board-chevron" aria-hidden="true">
                   ›
                 </span>
@@ -227,22 +236,22 @@ export function RevisionBoard({ unitId, rounds }) {
               <article className={`board-card${isLatest ? ' board-card-latest' : ''}`}>
                 <header className="board-card-title">
                   <h3>
-                    {index + 1}차 수정
+                    {originalIndex + 1}차 수정
                     {round.attainmentAfter !== null && round.attainmentAfter !== undefined && (
                       <span className="board-card-attainment"> ({round.attainmentAfter}%)</span>
                     )}
                   </h3>
-                  {index === 0 && <span className="board-badge">초안</span>}
-                  {isLatest && index > 0 && <span className="board-badge board-badge-latest">최근</span>}
+                  {originalIndex === 0 && <span className="board-badge">초안</span>}
+                  {isLatest && originalIndex > 0 && <span className="board-badge board-badge-latest">최근</span>}
                 </header>
 
+                {/* 기준 → 글 → 미션. 선생님이 글을 읽고 나서 그 글을 보고 낸
+                    미션을 보게 되고, 미션이 카드 맨 아래에 놓이므로 그것을
+                    수행한 결과인 다음 회차로 눈이 자연스럽게 이어진다. */}
                 {round.flagged ? (
                   <p className="history-flagged-badge">⚠️ {flagReasonLabel(round.flagReason)}</p>
                 ) : (
-                  <>
-                    {chunks.length > 0 && <ChunkSections chunks={chunks} />}
-                    {missionRows.length > 0 && <MissionList rows={missionRows} />}
-                  </>
+                  chunks.length > 0 && <ChunkSections chunks={chunks} />
                 )}
 
                 <div className="board-writing">
@@ -251,6 +260,8 @@ export function RevisionBoard({ unitId, rounds }) {
                     {previousRound ? renderWritingDiff(previousRound.writing, round.writing) : round.writing}
                   </p>
                 </div>
+
+                {!round.flagged && missionRows.length > 0 && <MissionList rows={missionRows} />}
 
                 <footer className="board-charcount">글자 수 {round.writing.length}자</footer>
               </article>

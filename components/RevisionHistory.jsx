@@ -7,10 +7,10 @@ import { getMissionStatusSymbol, getVisibleMissions } from '../lib/feedback.js'
 const roundLabel = (index) => (index === 0 ? '초안' : `${index}차 수정`)
 
 const FLAG_REASON_LABELS = {
-  nonsense: '무의미한 글로 판단되어 도달도가 0%로 처리됐어요.',
+  nonsense: '무의미한 글로 판단된 회차예요. (도달도는 변동 없어요)',
   profanity: '선생님이 부적절한 표현으로 판단해 반려했어요. (도달도는 변동 없어요)',
 }
-const flagReasonLabel = (reason) => FLAG_REASON_LABELS[reason] ?? '이 글은 검토가 필요해 도달도가 0%로 처리됐어요.'
+const flagReasonLabel = (reason) => FLAG_REASON_LABELS[reason] ?? '검토가 필요해 코칭하지 않은 회차예요. (도달도는 변동 없어요)'
 
 const renderWritingDiff = (before, after) =>
   diffWords(before, after).map((part, partIndex) => {

@@ -1444,6 +1444,16 @@ a {
   color: #ccc;
 }
 
+/* 맨 앞의 최신 회차와, 그 오른쪽부터 1차로 다시 시작하는 지난 회차들 사이.
+   폭을 .board-chevron과 비슷하게 잡아 두었다 — BoardTrack이 좌우 화살표의
+   이동 거리를 첫 두 카드의 간격으로 재기 때문에, 여기만 넓으면 화살표가
+   한 장씩 정확히 넘어가지 않는다. */
+.board-divider {
+  flex: 0 0 0.6rem;
+  align-self: stretch;
+  border-left: 2px dashed #d6d6d6;
+}
+
 /* Sized so four cards fit inside .container-widest without scrolling — a
    student who has revised four times is the case the board is built for. */
 .board-card {
