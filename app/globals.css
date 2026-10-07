@@ -151,12 +151,6 @@ a {
   margin: 0 0 1.5rem;
 }
 
-.chip-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
 .chip {
   padding: 0.5rem 1rem;
   font-size: 0.95rem;
@@ -169,12 +163,6 @@ a {
 
 .chip:hover {
   border-color: #4caf50;
-}
-
-.chip-selected {
-  background-color: #2e7d32;
-  border-color: #2e7d32;
-  color: white;
 }
 
 .unit-grid {
