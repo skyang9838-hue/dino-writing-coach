@@ -1,8 +1,8 @@
 import { Fragment } from 'react'
-import { diffWords } from 'diff'
 import { getUnitStandards } from '../lib/curriculum.js'
 import { getChunkRows, getMissionRows, orderRoundsLatestFirst } from '../lib/revisionBoard.js'
 import { BoardTrack } from './BoardTrack.jsx'
+import { flagReasonLabel, renderWritingDiff } from './roundDisplay.jsx'
 
 // The teacher's read-only view of one student's revisions, laid out as cards
 // side by side so a round can be compared with the ones around it. Everything
@@ -56,29 +56,6 @@ const EVALUATOR_BADGES = {
   // one that counts. See showsAiVerdict in lib/curriculum.js.
   'teacher-ai-feedback': { text: '교사·AI', label: '선생님이 확인하고 디노가 조언하는 항목' },
 }
-
-const FLAG_REASON_LABELS = {
-  nonsense: '무의미한 글로 판단된 회차예요. (도달도는 변동 없어요)',
-  profanity: '선생님이 부적절한 표현으로 판단해 반려했어요. (도달도는 변동 없어요)',
-}
-const flagReasonLabel = (reason) => FLAG_REASON_LABELS[reason] ?? '검토가 필요해 코칭하지 않은 회차예요. (도달도는 변동 없어요)'
-
-const renderWritingDiff = (before, after) =>
-  diffWords(before, after).map((part, partIndex) => {
-    const lines = part.value.split('\n')
-    const content = lines.map((line, lineIndex) => (
-      <Fragment key={lineIndex}>
-        {lineIndex > 0 && <br />}
-        {line}
-      </Fragment>
-    ))
-    const className = part.added ? 'diff-added' : part.removed ? 'diff-removed' : undefined
-    return (
-      <span className={className} key={partIndex}>
-        {content}
-      </span>
-    )
-  })
 
 function Mark({ marks, value, className }) {
   const mark = marks[value]
