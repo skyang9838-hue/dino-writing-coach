@@ -1,0 +1,203 @@
+{
+  "unitId": "g6s2-media",
+  "student": "김도윤",
+  "topic": "나의 매체 이용 습관 돌아보기",
+  "attainment": 70,
+  "rounds": [
+    {
+      "writing": "나의 매체 이용 습관 돌아보기\n\n나는 유튜브 쇼츠를 많이 본다. 그리고 게임도 한다. 쇼츠는 재미있는게 계속 나온다. 그래서 자꾸 보게 된다.\n친구들이랑 메신저도 한다. 그리고 밤에도 한다. 게임은 주말에 많이한다. 엄마가 그만하라고 할때도 있다. 그래도 재미있어서 계속 한다.\n쇼츠를 보면 시간이 빨리 간다. 게임도 시간이 빨리 간다. 그리고 형이랑 같이 할 때도 있다.\n반성이 됬다. 앞으로 잘 해야겠다.",
+      "strength": "글을 끝까지 쓴 노력을 칭찬합니다.",
+      "missions": [
+        {
+          "id": "1",
+          "title": "돌아보게 된 계기 말하기",
+          "instruction": "학생 글의 '나는 유튜브 쇼츠를 많이 본다. 그리고 게임도 한다.' 부분을 보고, 왜 이런 매체 이용 습관을 돌아보게 되었는지 떠올려 보세요.",
+          "criterion": "매체 이용을 돌아보게 된 계기를 구체적인 경험을 바탕으로 1~2 문장으로 작성한다.",
+          "rubricIds": [
+            "media-reflection"
+          ],
+          "criterionIds": [
+            "reflection-purpose"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "고칠 점 또렷하게 쓰기",
+          "instruction": "학생 글의 '나는 유튜브 쇼츠를 많이 본다. 그리고 게임도 한다.' 부분을 학생 글의 관련 내용 알 수 있도록 구체적인 행동을 넣어 바꿔 써 보세요.",
+          "criterion": "언제, 얼마나, 무엇을 하는지 구체적인 행동을 포함하여 매체 이용 습관을 1~2 문장으로 작성한다.",
+          "rubricIds": [
+            "media-reflection"
+          ],
+          "criterionIds": [
+            "usage-pattern"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "media-reflection",
+          "criterionId": "reflection-purpose",
+          "status": "unmet"
+        },
+        {
+          "rubricId": "media-reflection",
+          "criterionId": "usage-pattern",
+          "status": "partial"
+        },
+        {
+          "rubricId": "media-reflection",
+          "criterionId": "felt-point",
+          "status": "partial"
+        }
+      ],
+      "priorMissionStatuses": [],
+      "actualAttainment": 33,
+      "attainmentAfter": 40
+    },
+    {
+      "writing": "나의 매체 이용 습관 돌아보기\n\n엄마가 나한테 맨날 휴대폰만 본다고 잔소리를 해서 내가 진짜 그런지 돌아보기로 했다.\n\n나는 유튜브 쇼츠를 많이 본다. 그리고 게임도 한다. 쇼츠는 진짜 엄청 많이 본다. 쇼츠는 재미있는게 계속 나온다. 그래서 자꾸 보게 된다.\n친구들이랑 메신저도 한다. 그리고 밤에도 한다. 게임은 주말에 많이한다. 엄마가 그만하라고 할때도 있다. 그래도 재미있어서 계속 한다.\n쇼츠를 보면 시간이 빨리 간다. 게임도 시간이 빨리 간다. 그리고 형이랑 같이 할 때도 있다.\n반성이 됬다. 앞으로 잘 해야겠다.",
+      "strength": "엄마의 잔소리를 듣고 자신의 매체 이용 습관을 돌아보려는 까닭을 명확하게 밝혔어요.",
+      "missions": [
+        {
+          "id": "1",
+          "title": "고칠 점 또렷하게 쓰기",
+          "instruction": "‘쇼츠는 진짜 엄청 많이 본다.’, 학생 글의 관련 내용과 같이 뭉뚱그려 표현한 부분을 '언제', '얼마나', '무엇을' 보는지 구체적인 행동을 나타내도록 바꿔 써 보세요.",
+          "criterion": "매체 이용 시간이나 횟수를 구체적인 숫자나 시간으로 명시한다.",
+          "rubricIds": [
+            "media-reflection"
+          ],
+          "criterionIds": [
+            "usage-pattern"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "느낀 점 덧붙이기",
+          "instruction": "글 마지막에 ‘반성이 됬다. 앞으로 잘 해야겠다.’ 라고 쓴 부분에, 매체 이용 습관을 돌아본 뒤에 생긴 구체적인 생각이나 앞으로 바꾸고 싶은 점 하나를 학생의 말로 덧붙여 보세요.",
+          "criterion": "매체 이용 경험을 돌아본 후 느낀 점이나 앞으로의 다짐을 구체적인 내용으로 덧붙인다.",
+          "rubricIds": [
+            "media-reflection"
+          ],
+          "criterionIds": [
+            "felt-point"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "media-reflection",
+          "criterionId": "reflection-purpose",
+          "status": "met"
+        },
+        {
+          "rubricId": "media-reflection",
+          "criterionId": "usage-pattern",
+          "status": "partial"
+        },
+        {
+          "rubricId": "media-reflection",
+          "criterionId": "felt-point",
+          "status": "partial"
+        }
+      ],
+      "priorMissionStatuses": [
+        {
+          "missionId": "1",
+          "status": "done"
+        },
+        {
+          "missionId": "2",
+          "status": "partial"
+        }
+      ],
+      "actualAttainment": 67,
+      "attainmentAfter": 50
+    },
+    {
+      "writing": "나의 매체 이용 습관 돌아보기\n\n엄마가 나한테 맨날 휴대폰만 본다고 잔소리를 해서 내가 진짜 그런지 돌아보기로 했다.\n\n나는 유튜브 쇼츠를 많이 본다. 그리고 게임도 한다. 쇼츠는 진짜 엄청 많이 본다. 학원에 갔다 와서 저녁 먹기 전까지 침대에 누워서 한 시간쯤 본다. 하나만 보고 일어나야지 했는데 손가락으로 올리면 다음 게 바로 나온다. 그래서 계속 보게 된다. 쇼츠는 재미있는게 계속 나온다.\n친구들이랑 메신저도 한다. 그리고 밤에도 한다. 게임은 주말에 많이한다. 엄마가 그만하라고 할때도 있다. 그래도 재미있어서 계속 한다.\n쇼츠를 보면 시간이 빨리 간다. 게임도 시간이 빨리 간다. 그리고 형이랑 같이 할 때도 있다.\n반성이 됬다. 앞으로 잘 해야겠다. 저녁 먹기 전에 한 시간을 그냥 버린게 아까웠다. 앞으로는 학원에 갔다 오면 숙제부터 하고 쇼츠는 숙제 다 하고 나서 삼십 분만 보려고 한다.",
+      "strength": "유튜브 쇼츠를 보며 시간이 너무 빨리 가서 아깝다는 느낌을 솔직하게 표현한 점이 좋아요.",
+      "missions": [
+        {
+          "id": "rewrite-reflection-purpose",
+          "title": "돌아본 까닭 분명히 하기",
+          "instruction": "글 첫 부분에 엄마의 잔소리 때문에 휴대폰 사용 습관을 돌아보게 되었다는 내용을 썼어요. 이 내용을 바탕으로, 쇼츠를 보느라 저녁 먹기 전 한 시간이 아깝게 느껴졌다는 성찰 내용과 더 잘 이어지도록 까닭을 조금 더 자세히 설명해 보아요.",
+          "criterion": "매체 이용 경험을 돌아본 까닭과 목적이 성찰 내용과 더 분명하게 연결되도록 설명한다.",
+          "rubricIds": [
+            "media-reflection"
+          ],
+          "criterionIds": [
+            "reflection-purpose"
+          ]
+        },
+        {
+          "id": "connect-felt-point-to-correction",
+          "title": "느낀 점과 고칠 점 연결하기",
+          "instruction": "저녁 먹기 전 한 시간이 아깝다는 느낌을 쓴 뒤 학생 글의 관련 내용고 앞으로의 다짐을 썼어요. 시간이 아깝다는 느낌이 왜 그런 다짐으로 이어졌는지, 고치고 싶은 마음이 어떻게 들었는지 느낀 점을 조금 더 자세히 덧붙여 보세요.",
+          "criterion": "매체 이용 경험을 돌아보며 느낀 점이 앞서 짚은 고칠 점과 직접 이어지도록 구체적으로 작성한다.",
+          "rubricIds": [
+            "media-reflection"
+          ],
+          "criterionIds": [
+            "felt-point"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "media-reflection",
+          "criterionId": "reflection-purpose",
+          "status": "met"
+        },
+        {
+          "rubricId": "media-reflection",
+          "criterionId": "usage-pattern",
+          "status": "met"
+        },
+        {
+          "rubricId": "media-reflection",
+          "criterionId": "felt-point",
+          "status": "met"
+        }
+      ],
+      "priorMissionStatuses": [
+        {
+          "missionId": "1",
+          "status": "done"
+        },
+        {
+          "missionId": "2",
+          "status": "done"
+        }
+      ],
+      "actualAttainment": 100,
+      "attainmentAfter": 70
+    }
+  ],
+  "lastSubmittedWriting": "나의 매체 이용 습관 돌아보기\n\n엄마가 나한테 맨날 휴대폰만 본다고 잔소리를 해서 내가 진짜 그런지 돌아보기로 했다.\n\n나는 유튜브 쇼츠를 많이 본다. 그리고 게임도 한다. 쇼츠는 진짜 엄청 많이 본다. 학원에 갔다 와서 저녁 먹기 전까지 침대에 누워서 한 시간쯤 본다. 하나만 보고 일어나야지 했는데 손가락으로 올리면 다음 게 바로 나온다. 그래서 계속 보게 된다. 쇼츠는 재미있는게 계속 나온다.\n친구들이랑 메신저도 한다. 그리고 밤에도 한다. 게임은 주말에 많이한다. 엄마가 그만하라고 할때도 있다. 그래도 재미있어서 계속 한다.\n쇼츠를 보면 시간이 빨리 간다. 게임도 시간이 빨리 간다. 그리고 형이랑 같이 할 때도 있다.\n반성이 됬다. 앞으로 잘 해야겠다. 저녁 먹기 전에 한 시간을 그냥 버린게 아까웠다. 앞으로는 학원에 갔다 오면 숙제부터 하고 쇼츠는 숙제 다 하고 나서 삼십 분만 보려고 한다.",
+  "lastImprovements": [
+    {
+      "id": "rewrite-reflection-purpose",
+      "title": "돌아본 까닭 분명히 하기",
+      "instruction": "글 첫 부분에 엄마의 잔소리 때문에 휴대폰 사용 습관을 돌아보게 되었다는 내용을 썼어요. 이 내용을 바탕으로, 쇼츠를 보느라 저녁 먹기 전 한 시간이 아깝게 느껴졌다는 성찰 내용과 더 잘 이어지도록 까닭을 조금 더 자세히 설명해 보아요.",
+      "criterion": "매체 이용 경험을 돌아본 까닭과 목적이 성찰 내용과 더 분명하게 연결되도록 설명한다.",
+      "rubricIds": [
+        "media-reflection"
+      ],
+      "criterionIds": [
+        "reflection-purpose"
+      ]
+    },
+    {
+      "id": "connect-felt-point-to-correction",
+      "title": "느낀 점과 고칠 점 연결하기",
+      "instruction": "저녁 먹기 전 한 시간이 아깝다는 느낌을 쓴 뒤 학생 글의 관련 내용고 앞으로의 다짐을 썼어요. 시간이 아깝다는 느낌이 왜 그런 다짐으로 이어졌는지, 고치고 싶은 마음이 어떻게 들었는지 느낀 점을 조금 더 자세히 덧붙여 보세요.",
+      "criterion": "매체 이용 경험을 돌아보며 느낀 점이 앞서 짚은 고칠 점과 직접 이어지도록 구체적으로 작성한다.",
+      "rubricIds": [
+        "media-reflection"
+      ],
+      "criterionIds": [
+        "felt-point"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "unitId": "g6s2-unit2",
+  "student": "정우진",
+  "topic": "우리 마을에서 오래 일하신 분 면담하기",
+  "attainment": 70,
+  "rounds": [
+    {
+      "writing": "나는 우리 동네 떡집 아저씨를 만나서 이야기를 들었다.\n아저씨는 떡집을 삼십년 넘게 했다고 했다. 떡은 새벽 네시부터 만든다고 했다. 쌀도 아저씨가 직접 고른다고 했다. 여름에는 떡이 잘 상한다고 했다. 손님이 많이 올때도 있고 아예 안올때도 있다고 했다. 떡 종류는 열가지 정도 된다고 했다. 기계도 오래 됬다고 했다.\n이야기를 듣고 신기했다.",
+      "strength": "떡집 아저씨의 이야기를 듣기 위해 직접 만나러 간 노력을 칭찬합니다.",
+      "missions": [
+        {
+          "id": "mission1",
+          "title": "면담 준비 과정 떠올리기",
+          "instruction": "떡집 아저씨를 만나기 전에 무엇을 준비했는지 글에 덧붙여 보세요.",
+          "criterion": "면담 전에 실제로 한 준비 행동을 구체적으로 덧붙여 쓴다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "preparation"
+          ]
+        },
+        {
+          "id": "mission2",
+          "title": "새롭게 알게 된 사실의 까닭 덧붙이기",
+          "instruction": "떡에 대해 새롭게 알게 된 사실 하나를 골라, 그 사실이 왜 그런지 이유나 과정을 덧붙여 보세요.",
+          "criterion": "면담에서 새롭게 알게 된 사실의 이유나 과정을 구체적으로 덧붙여 쓴다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "learned-facts"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "purpose-and-target",
+          "status": "partial"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "preparation",
+          "status": "unmet"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "learned-facts",
+          "status": "partial"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "reflection",
+          "status": "partial"
+        }
+      ],
+      "priorMissionStatuses": [],
+      "actualAttainment": 38,
+      "attainmentAfter": 40
+    },
+    {
+      "writing": "나는 우리 동네 떡집 아저씨를 만나서 이야기를 들었다. 가기 전에 준비를 하고 갔다.\n아저씨는 떡집을 삼십년 넘게 했다고 했다. 떡은 새벽 네시부터 만든다고 했다. 왜 그렇게 일찍 만드냐고 물어보니까 떡은 시간이 지나면 딱딱해져서 아침에 손님이 오기 전에 다 만들어 놔야 한다고 했다. 쌀도 아저씨가 직접 고른다고 했다. 여름에는 떡이 잘 상한다고 했다. 손님이 많이 올때도 있고 아예 안올때도 있다고 했다. 떡 종류는 열가지 정도 된다고 했다. 기계도 오래 됬다고 했다.\n이야기를 듣고 신기했다.",
+      "strength": "떡집 아저씨께서 떡을 만들기 위해 새벽 네 시부터 일하신다는 사실과 그 이유를 설명해주신 부분을 잘 소개했어요.",
+      "missions": [
+        {
+          "id": "mission-1",
+          "title": "느낀 점 덧붙이기",
+          "instruction": "떡집 아저씨의 이야기를 듣고 나서 '신기했다'라고 쓴 부분에, 무엇이 왜 신기했는지 구체적인 느낌이나 생각을 덧붙여 보세요.",
+          "criterion": "면담을 통해 새롭게 알게 된 사실에 대한 자신의 생각이나 느낌을 구체적으로 덧붙여 쓴다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "reflection"
+          ]
+        },
+        {
+          "id": "mission-2",
+          "title": "준비 과정 질문 만들기",
+          "instruction": "떡집에 가기 전에 어떤 준비를 했는지 떠올려 보세요. 떡에 대해 미리 알아본 것이 있나요? 아니면 아저씨께 여쭤볼 질문을 미리 생각해 갔나요? 무엇을 준비했는지 구체적인 질문을 만들어 글에 넣어 보세요.",
+          "criterion": "면담 전 준비한 내용을 구체적인 질문으로 만들어 글에 포함한다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "preparation"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "purpose-and-target",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "preparation",
+          "status": "partial"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "learned-facts",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "reflection",
+          "status": "partial"
+        }
+      ],
+      "priorMissionStatuses": [
+        {
+          "missionId": "mission1",
+          "status": "partial"
+        },
+        {
+          "missionId": "mission2",
+          "status": "done"
+        }
+      ],
+      "actualAttainment": 75,
+      "attainmentAfter": 50
+    },
+    {
+      "writing": "나는 우리 동네 떡집 아저씨를 만나서 이야기를 들었다. 가기 전에 공책에 질문을 다섯개 적어서 갔다. 떡집을 왜 시작했는지, 힘든 점은 없는지 이런걸 물어보려고 미리 적었다. 그리고 아저씨한테 전화해서 손님이 없는 오후 세시로 약속을 잡았다.\n아저씨는 떡집을 삼십년 넘게 했다고 했다. 떡은 새벽 네시부터 만든다고 했다. 왜 그렇게 일찍 만드냐고 물어보니까 떡은 시간이 지나면 딱딱해져서 아침에 손님이 오기 전에 다 만들어 놔야 한다고 했다. 쌀도 아저씨가 직접 고른다고 했다. 여름에는 떡이 잘 상한다고 했다. 손님이 많이 올때도 있고 아예 안올때도 있다고 했다. 떡 종류는 열가지 정도 된다고 했다. 기계도 오래 됬다고 했다.\n이야기를 듣고 신기했다. 나는 떡을 그냥 아침에 뚝딱 만드는줄 알았는데 아저씨가 새벽 네시에 일어나서 만든다는게 제일 신기했다. 매일 그 시간에 일어나는건 진짜 힘들것 같다. 이제부터 떡을 먹을때 남기지 말아야겠다고 생각했다.",
+      "strength": "떡집 아저씨가 떡을 만들기 위해 새벽 네시에 일어난다는 사실과 그 이유를 신기해하며 잘 썼어요.",
+      "missions": [
+        {
+          "id": "mission-1",
+          "title": "만난 사람 소개하기",
+          "instruction": "학생 글의 첫 문장에서 떡집 아저씨를 만났다고 했는데, 누구에게 왜 떡집에 대해 물어보고 싶었는지 더 자세히 안내해 줄까요?",
+          "criterion": "글의 시작 부분에서 면담 대상과 면담 목적을 명확하게 제시한다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "purpose-and-target"
+          ]
+        },
+        {
+          "id": "mission-2",
+          "title": "이유 알기 추가하기",
+          "instruction": "떡을 새벽 네 시부터 만드는 것이 신기하다고 했는데, 아저씨가 왜 그렇게 일찍 떡을 만들기 시작했는지 그 이유를 좀 더 자세히 설명하는 문장을 넣어볼까요?",
+          "criterion": "새롭게 알게 된 사실에 대해 면담에서 들은 이유나 과정을 구체적으로 덧붙여 설명한다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "learned-facts"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "purpose-and-target",
+          "status": "partial"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "preparation",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "learned-facts",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "reflection",
+          "status": "met"
+        }
+      ],
+      "priorMissionStatuses": [
+        {
+          "missionId": "mission-1",
+          "status": "done"
+        },
+        {
+          "missionId": "mission-2",
+          "status": "done"
+        }
+      ],
+      "actualAttainment": 88,
+      "attainmentAfter": 70
+    }
+  ],
+  "lastSubmittedWriting": "나는 우리 동네 떡집 아저씨를 만나서 이야기를 들었다. 가기 전에 공책에 질문을 다섯개 적어서 갔다. 떡집을 왜 시작했는지, 힘든 점은 없는지 이런걸 물어보려고 미리 적었다. 그리고 아저씨한테 전화해서 손님이 없는 오후 세시로 약속을 잡았다.\n아저씨는 떡집을 삼십년 넘게 했다고 했다. 떡은 새벽 네시부터 만든다고 했다. 왜 그렇게 일찍 만드냐고 물어보니까 떡은 시간이 지나면 딱딱해져서 아침에 손님이 오기 전에 다 만들어 놔야 한다고 했다. 쌀도 아저씨가 직접 고른다고 했다. 여름에는 떡이 잘 상한다고 했다. 손님이 많이 올때도 있고 아예 안올때도 있다고 했다. 떡 종류는 열가지 정도 된다고 했다. 기계도 오래 됬다고 했다.\n이야기를 듣고 신기했다. 나는 떡을 그냥 아침에 뚝딱 만드는줄 알았는데 아저씨가 새벽 네시에 일어나서 만든다는게 제일 신기했다. 매일 그 시간에 일어나는건 진짜 힘들것 같다. 이제부터 떡을 먹을때 남기지 말아야겠다고 생각했다.",
+  "lastImprovements": [
+    {
+      "id": "mission-1",
+      "title": "만난 사람 소개하기",
+      "instruction": "학생 글의 첫 문장에서 떡집 아저씨를 만났다고 했는데, 누구에게 왜 떡집에 대해 물어보고 싶었는지 더 자세히 안내해 줄까요?",
+      "criterion": "글의 시작 부분에서 면담 대상과 면담 목적을 명확하게 제시한다.",
+      "rubricIds": [
+        "interview-procedure"
+      ],
+      "criterionIds": [
+        "purpose-and-target"
+      ]
+    },
+    {
+      "id": "mission-2",
+      "title": "이유 알기 추가하기",
+      "instruction": "떡을 새벽 네 시부터 만드는 것이 신기하다고 했는데, 아저씨가 왜 그렇게 일찍 떡을 만들기 시작했는지 그 이유를 좀 더 자세히 설명하는 문장을 넣어볼까요?",
+      "criterion": "새롭게 알게 된 사실에 대해 면담에서 들은 이유나 과정을 구체적으로 덧붙여 설명한다.",
+      "rubricIds": [
+        "interview-procedure"
+      ],
+      "criterionIds": [
+        "learned-facts"
+      ]
+    }
+  ]
+}

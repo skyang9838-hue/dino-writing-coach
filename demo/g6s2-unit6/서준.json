@@ -1,0 +1,203 @@
+{
+  "unitId": "g6s2-unit6",
+  "student": "서준",
+  "topic": "경험을 떠올리며 이야기 바꾸어 쓰기",
+  "attainment": 80,
+  "rounds": [
+    {
+      "writing": "금도끼 은도끼를 바꾸어 썼다.\n\n옛날 이야기에서는 나무꾼이 나오는데 나는 나무꾼 대신에 나를 넣었다.\n\n나는 학교 끝나고 집에 가다가 길에서 지갑을 주웠다. 그런데 갑자기 산신령이 나타났다. 산신령이 이게 니 지갑이냐고 물어봤다. 나는 아니라고 했다. 그래서 산신령이 지갑 세개를 다 줬다. 나는 부자가 됬다. 친구들이 엄청 부러워했다. 나는 기분이 좋았다. 끝.",
+      "strength": "이야기 속에 '나'를 넣어 나무꾼 대신 자신의 경험을 생생하게 보여준 점이 좋아요.",
+      "missions": [
+        {
+          "id": "mission_1",
+          "title": "인과관계 밝히기",
+          "instruction": "이야기에서 산신령이 갑자기 나타나 지갑 세 개를 준 이유는 무엇인가요? 산신령이 지갑을 준 까닭을 한 문장으로 덧붙여 보세요.",
+          "criterion": "이야기에 등장하는 사건이 자연스럽게 이어지도록 원인과 결과를 명확하게 설명합니다.",
+          "rubricIds": [
+            "story-rewrite"
+          ],
+          "criterionIds": [
+            "cause-and-effect"
+          ]
+        },
+        {
+          "id": "mission_2",
+          "title": "결말 보충하기",
+          "instruction": "지갑을 세 개나 받은 후 학생 글의 관련 내용고 바로 끝내기보다, 부자가 되기까지 어떤 일이 더 있었는지, 또는 부자가 된 후 친구들과 어떤 일이 있었는지 한두 문장 더 써서 이야기를 더 풍성하게 만들어 보세요.",
+          "criterion": "이야기의 끝부분이 갑자기 끝나지 않도록, 결말에 이르기까지의 과정을 자연스럽게 이어 씁니다.",
+          "rubricIds": [
+            "story-rewrite"
+          ],
+          "criterionIds": [
+            "story-flow"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "story-rewrite",
+          "criterionId": "own-experience",
+          "status": "met"
+        },
+        {
+          "rubricId": "story-rewrite",
+          "criterionId": "cause-and-effect",
+          "status": "partial"
+        },
+        {
+          "rubricId": "story-rewrite",
+          "criterionId": "story-flow",
+          "status": "partial"
+        }
+      ],
+      "priorMissionStatuses": [],
+      "actualAttainment": 67,
+      "attainmentAfter": 40
+    },
+    {
+      "writing": "금도끼 은도끼를 바꾸어 썼다.\n\n옛날 이야기에서는 나무꾼이 나오는데 나는 나무꾼 대신에 나를 넣었다.\n\n나는 학교 끝나고 집에 가다가 길에서 지갑을 주웠다. 그런데 갑자기 산신령이 나타났다. 산신령이 이게 니 지갑이냐고 물어봤다. 나는 아니라고 했다. 산신령은 내가 거짓말을 안 하고 솔직하게 말해서 착하다고 했다. 그래서 산신령이 지갑 세개를 다 줬다. 나는 부자가 됬다. 친구들이 엄청 부러워했다. 나는 그 돈으로 게임기를 샀다. 나는 기분이 좋았다. 끝.",
+      "strength": "옛날 이야기의 나무꾼 대신 자신을 넣어 새로운 이야기로 시작한 점이 멋져요.",
+      "missions": [
+        {
+          "id": "mission_1",
+          "title": "자신의 경험과 이야기 연결하기",
+          "instruction": "이야기 시작 부분에서 나무꾼 대신 자신을 넣은 것처럼, 산신령을 만난 경험과 지갑을 주운 경험을 더 자연스럽게 이어 보세요.",
+          "criterion": "자신이 겪은 일을 이야기의 흐름에 맞게 자연스럽게 연결하여 썼는가?",
+          "rubricIds": [
+            "story-rewrite"
+          ],
+          "criterionIds": [
+            "own-experience"
+          ]
+        },
+        {
+          "id": "mission_2",
+          "title": "결과를 분명하게 하기",
+          "instruction": "산신령이 지갑 세 개를 다 준 것이 학생 글의 관련 내용 이유가 되도록, 그리고 학생 글의 관련 내용 결과로 이어지도록 더 분명하게 설명해 보세요.",
+          "criterion": "사건의 원인과 그로 인해 일어난 결과가 명확하게 드러나는가?",
+          "rubricIds": [
+            "story-rewrite"
+          ],
+          "criterionIds": [
+            "cause-and-effect"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "story-rewrite",
+          "criterionId": "own-experience",
+          "status": "met"
+        },
+        {
+          "rubricId": "story-rewrite",
+          "criterionId": "cause-and-effect",
+          "status": "met"
+        },
+        {
+          "rubricId": "story-rewrite",
+          "criterionId": "story-flow",
+          "status": "met"
+        }
+      ],
+      "priorMissionStatuses": [
+        {
+          "missionId": "mission_1",
+          "status": "done"
+        },
+        {
+          "missionId": "mission_2",
+          "status": "done"
+        }
+      ],
+      "actualAttainment": 100,
+      "attainmentAfter": 60
+    },
+    {
+      "writing": "금도끼 은도끼를 바꾸어 썼다.\n\n옛날 이야기에서는 나무꾼이 나오는데 나는 나무꾼 대신에 나를 넣었다.\n\n사실 나는 작년에 학교 앞에서 오천원을 주운 적이 있다. 그때 나는 문구점 아주머니한테 갖다 줬다. 아무도 안 찾아가면 내 거라고 했는데 그 다음날 어떤 형이 찾아갔다고 했다. 좀 아까웠지만 그래도 마음은 편했다. 그 일이 생각나서 이 이야기를 썼다.\n\n나는 학교 끝나고 집에 가다가 길에서 지갑을 주웠다. 지갑을 열어보니까 돈이 엄청 많았다. 나는 잠깐 그냥 가질까 생각했다. 그런데 그때 갑자기 산신령이 나타났다. 산신령이 이게 니 지갑이냐고 물어봤다. 나는 아니라고 했다. 산신령은 내가 거짓말을 안 하고 솔직하게 말해서 착하다고 했다. 그래서 산신령이 지갑 세개를 다 줬다. 나는 부자가 됬다. 친구들이 엄청 부러워했다. 나는 그 돈으로 게임기를 샀다.\n\n그런데 게임기를 사고 나서도 별로 안 기뻤다. 진짜 지갑 주인은 지금 얼마나 속상할까 하는 생각이 자꾸 났다. 그래서 나는 다음날 지갑 하나를 들고 경찰서에 갔다. 산신령한테는 미안하지만 나는 그게 더 마음이 편했다.",
+      "strength": "내가 작년에 오천 원을 주웠던 경험과 길에서 지갑을 주운 경험을 연결해서 이야기를 쓴 부분이 인상 깊었어요. 자신의 경험을 바탕으로 이야기를 재미있게 풀어나갔네요.",
+      "missions": [
+        {
+          "id": "own-experience-refinement",
+          "title": "경험 연결하기",
+          "instruction": "작년에 오천 원을 주웠던 경험과 길에서 지갑을 주운 경험이 이야기 속에서 더 자연스럽게 이어지도록 문장을 다듬어 보세요. 두 경험이 어떻게 연결되는지 독자가 더 쉽게 이해할 수 있도록 바꿔 써 봅시다.",
+          "criterion": "자신의 경험이 이야기의 흐름과 더 자연스럽게 맞물리도록 다듬는다.",
+          "rubricIds": [
+            "story-rewrite"
+          ],
+          "criterionIds": [
+            "own-experience"
+          ]
+        },
+        {
+          "id": "story-flow-refinement",
+          "title": "이야기 이음매 다듬기",
+          "instruction": "이야기의 처음, 가운데, 끝이 더 매끄럽게 이어지도록 문장을 다듬어 보세요. 특히 게임기를 산 후 느낀 점과 경찰서에 간 과정이 자연스럽게 연결되도록 고쳐 써 봅시다.",
+          "criterion": "이야기의 처음·가운데·끝의 이음매가 더 매끄럽게 읽히도록 다듬는다.",
+          "rubricIds": [
+            "story-rewrite"
+          ],
+          "criterionIds": [
+            "story-flow"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "story-rewrite",
+          "criterionId": "own-experience",
+          "status": "met"
+        },
+        {
+          "rubricId": "story-rewrite",
+          "criterionId": "cause-and-effect",
+          "status": "met"
+        },
+        {
+          "rubricId": "story-rewrite",
+          "criterionId": "story-flow",
+          "status": "met"
+        }
+      ],
+      "priorMissionStatuses": [
+        {
+          "missionId": "mission_1",
+          "status": "done"
+        },
+        {
+          "missionId": "mission_2",
+          "status": "done"
+        }
+      ],
+      "actualAttainment": 100,
+      "attainmentAfter": 80
+    }
+  ],
+  "lastSubmittedWriting": "금도끼 은도끼를 바꾸어 썼다.\n\n옛날 이야기에서는 나무꾼이 나오는데 나는 나무꾼 대신에 나를 넣었다.\n\n사실 나는 작년에 학교 앞에서 오천원을 주운 적이 있다. 그때 나는 문구점 아주머니한테 갖다 줬다. 아무도 안 찾아가면 내 거라고 했는데 그 다음날 어떤 형이 찾아갔다고 했다. 좀 아까웠지만 그래도 마음은 편했다. 그 일이 생각나서 이 이야기를 썼다.\n\n나는 학교 끝나고 집에 가다가 길에서 지갑을 주웠다. 지갑을 열어보니까 돈이 엄청 많았다. 나는 잠깐 그냥 가질까 생각했다. 그런데 그때 갑자기 산신령이 나타났다. 산신령이 이게 니 지갑이냐고 물어봤다. 나는 아니라고 했다. 산신령은 내가 거짓말을 안 하고 솔직하게 말해서 착하다고 했다. 그래서 산신령이 지갑 세개를 다 줬다. 나는 부자가 됬다. 친구들이 엄청 부러워했다. 나는 그 돈으로 게임기를 샀다.\n\n그런데 게임기를 사고 나서도 별로 안 기뻤다. 진짜 지갑 주인은 지금 얼마나 속상할까 하는 생각이 자꾸 났다. 그래서 나는 다음날 지갑 하나를 들고 경찰서에 갔다. 산신령한테는 미안하지만 나는 그게 더 마음이 편했다.",
+  "lastImprovements": [
+    {
+      "id": "own-experience-refinement",
+      "title": "경험 연결하기",
+      "instruction": "작년에 오천 원을 주웠던 경험과 길에서 지갑을 주운 경험이 이야기 속에서 더 자연스럽게 이어지도록 문장을 다듬어 보세요. 두 경험이 어떻게 연결되는지 독자가 더 쉽게 이해할 수 있도록 바꿔 써 봅시다.",
+      "criterion": "자신의 경험이 이야기의 흐름과 더 자연스럽게 맞물리도록 다듬는다.",
+      "rubricIds": [
+        "story-rewrite"
+      ],
+      "criterionIds": [
+        "own-experience"
+      ]
+    },
+    {
+      "id": "story-flow-refinement",
+      "title": "이야기 이음매 다듬기",
+      "instruction": "이야기의 처음, 가운데, 끝이 더 매끄럽게 이어지도록 문장을 다듬어 보세요. 특히 게임기를 산 후 느낀 점과 경찰서에 간 과정이 자연스럽게 연결되도록 고쳐 써 봅시다.",
+      "criterion": "이야기의 처음·가운데·끝의 이음매가 더 매끄럽게 읽히도록 다듬는다.",
+      "rubricIds": [
+        "story-rewrite"
+      ],
+      "criterionIds": [
+        "story-flow"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "unitId": "g6s2-unit2",
+  "student": "강예린",
+  "topic": "우리 마을에서 오래 일하신 분 면담하기",
+  "attainment": 80,
+  "rounds": [
+    {
+      "writing": "나는 우리 마을에서 제일 오래된 문구점 할머니를 면담했다. 문구점을 사십년 넘게 하시는 동안 우리 마을이 어떻게 달라졌는지 알아보고 싶었기 때문이다. 면담을 하기 전에 준비를 많이했다.\n할머니는 문구점을 1985년에 여셨다고 하셨다. 그때는 학교 앞에만 문구점이 다섯 개나 있었다고 하셨다. 지금은 할머니 가게 하나만 남았다. 왜 다 없어졌냐고 여쭤보니까 학생 수가 많이 줄어들었고 요즘은 준비물을 학교에서 다 주기 때문이라고 하셨다.\n제일 기억에 남는 이야기는 옛날에는 아이들이 오십원, 백원을 손에 꼭 쥐고 와서 뽑기를 했다는 것이다. 하루에 백 명도 넘게 왔다고 하셨다. 할머니는 지금도 그 시끄러운 소리가 제일 그립다고 하셨다.\n면담을 하고 나서 좋았다.",
+      "strength": "우리 마을에서 제일 오래된 문구점 할머니를 면담하여 문구점을 하시는 동안 마을이 어떻게 달라졌는지 알아보고 싶었다는 면담의 목적과 대상을 명확히 밝힌 점이 좋았습니다.",
+      "missions": [
+        {
+          "id": "1",
+          "title": "느낀 점 덧붙이기",
+          "instruction": "면담을 하고 나서 '좋았다'라고 쓴 부분에 어떤 점이 좋았는지, 무엇을 느꼈는지 구체적으로 덧붙여 보세요. 할머니 가게에 대한 생각이나 마을의 변화를 보며 든 느낌을 써도 좋습니다.",
+          "criterion": "면담을 통해 느낀 점이나 생각한 것을 구체적으로 덧붙여 쓴다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "reflection"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "준비 과정 떠올리기",
+          "instruction": "면담 전에 할머니께 마을의 변화에 대해 여쭤보기 위해 어떤 준비를 했는지 구체적으로 덧붙여 보세요.",
+          "criterion": "면담 전에 질문을 만들거나 약속을 잡는 등 실제로 준비한 과정을 구체적으로 쓴다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "preparation"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "purpose-and-target",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "preparation",
+          "status": "partial"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "learned-facts",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "reflection",
+          "status": "partial"
+        }
+      ],
+      "priorMissionStatuses": [],
+      "actualAttainment": 75,
+      "attainmentAfter": 40
+    },
+    {
+      "writing": "나는 우리 마을에서 제일 오래된 문구점 할머니를 면담했다. 문구점을 사십년 넘게 하시는 동안 우리 마을이 어떻게 달라졌는지 알아보고 싶었기 때문이다. 면담을 하기 전에 준비를 많이했다. 처음 보는 어른한테 말을 거는게 떨려서 마음의 준비도 단단히 했다.\n할머니는 문구점을 1985년에 여셨다고 하셨다. 그때는 학교 앞에만 문구점이 다섯 개나 있었다고 하셨다. 지금은 할머니 가게 하나만 남았다. 왜 다 없어졌냐고 여쭤보니까 학생 수가 많이 줄어들었고 요즘은 준비물을 학교에서 다 주기 때문이라고 하셨다.\n제일 기억에 남는 이야기는 옛날에는 아이들이 오십원, 백원을 손에 꼭 쥐고 와서 뽑기를 했다는 것이다. 하루에 백 명도 넘게 왔다고 하셨다. 할머니는 지금도 그 시끄러운 소리가 제일 그립다고 하셨다.\n면담을 하고 나서 마음이 좀 이상했다. 나는 문구점이 그냥 물건 파는 데인줄 알았는데 할머니한테는 사십년 동안의 추억이 담긴 곳이었다. 다섯 개나 있던 문구점이 하나만 남았다는 말을 듣고 우리 마을이 조용해진 이유를 알것 같았다. 앞으로 할머니 가게에 자주 가야겠다고 생각했다.",
+      "strength": "문구점이 할머니에게 사십년의 추억이 담긴 곳이라는 것을 깨닫고 앞으로 가게에 자주 가겠다고 생각한 점을 잘 밝혔어요.",
+      "missions": [
+        {
+          "id": "mission1",
+          "title": "면담 준비 과정 밝히기",
+          "instruction": "면담 전에 마음의 준비를 단단히 했다고 했는데, 떨리는 마음을 다잡기 위해 구체적으로 무엇을 했는지 면담 전에 한 준비 행동을 떠올리며 질문을 만들어 보세요.",
+          "criterion": "면담 전에 떨리는 마음을 다잡기 위해 구체적으로 어떤 행동을 했는지 1~2문장으로 덧붙여 썼는지 확인합니다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "preparation"
+          ]
+        },
+        {
+          "id": "mission2",
+          "title": "변화 이유 덧붙이기",
+          "instruction": "문구점이 하나만 남게 된 이유를 학생 수가 줄고 준비물을 학교에서 주기 때문이라고 설명했어요. 할머니께서 옛날 문구점 풍경을 떠올리며 어떤 점이 그립다고 하셨는지, 그 이야기가 왜 할머니께 소중한 추억이 되었는지 면담에서 들은 상황을 떠올리며 덧붙여 보세요.",
+          "criterion": "문구점이 줄어든 이유를 설명하는 문장 뒤에, 할머니께서 그리워하신 옛날 문구점 풍경에 대한 이야기를 덧붙여 썼는지 확인합니다.",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "learned-facts"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "purpose-and-target",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "preparation",
+          "status": "partial"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "learned-facts",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "reflection",
+          "status": "met"
+        }
+      ],
+      "priorMissionStatuses": [
+        {
+          "missionId": "1",
+          "status": "done"
+        },
+        {
+          "missionId": "2",
+          "status": "done"
+        }
+      ],
+      "actualAttainment": 88,
+      "attainmentAfter": 60
+    },
+    {
+      "writing": "나는 우리 마을에서 제일 오래된 문구점 할머니를 면담했다. 문구점을 사십년 넘게 하시는 동안 우리 마을이 어떻게 달라졌는지 알아보고 싶었기 때문이다. 면담을 하기 전에 물어볼 질문을 여덟 개 만들어서 공책에 적었다. 그리고 문구점에 미리 가서 할머니께 언제 시간이 되시는지 여쭤보고 토요일 오후로 약속을 잡았다. 처음 보는 어른한테 말을 거는게 떨려서 마음의 준비도 단단히 했다.\n할머니는 문구점을 1985년에 여셨다고 하셨다. 그때는 학교 앞에만 문구점이 다섯 개나 있었다고 하셨다. 지금은 할머니 가게 하나만 남았다. 왜 다 없어졌냐고 여쭤보니까 학생 수가 많이 줄어들었고 요즘은 준비물을 학교에서 다 주기 때문이라고 하셨다.\n제일 기억에 남는 이야기는 옛날에는 아이들이 오십원, 백원을 손에 꼭 쥐고 와서 뽑기를 했다는 것이다. 하루에 백 명도 넘게 왔다고 하셨다. 할머니는 지금도 그 시끄러운 소리가 제일 그립다고 하셨다. 왜 그 소리가 그리우시냐고 여쭤보니까 그때는 오는 아이들 이름을 다 외우고 있어서 가게가 꼭 학교 같았는데, 지금은 하루종일 한 명도 안 올때도 있어서 그렇다고 하셨다.\n면담을 하고 나서 마음이 좀 이상했다. 나는 문구점이 그냥 물건 파는 데인줄 알았는데 할머니한테는 사십년 동안의 추억이 담긴 곳이었다. 다섯 개나 있던 문구점이 하나만 남았다는 말을 듣고 우리 마을이 조용해진 이유를 알것 같았다. 앞으로 할머니 가게에 자주 가야겠다고 생각했다.",
+      "strength": "면담 전 질문을 미리 만들어 공책에 적고, 할머니께 여쭤보고 토요일 오후로 약속을 잡은 점, 처음 보는 어른께 말 거는 것을 떨려 마음의 준비를 한 점을 구체적으로 잘 썼어요.",
+      "missions": [
+        {
+          "id": "mission_1",
+          "title": "새 사실에 이유 연결하기",
+          "instruction": "문구점이 다섯 개에서 하나만 남았다는 사실 뒤에, 할머니께서 말씀하신 학생 수 감소와 학교에서 준비물을 주기 때문이라는 이유를 더 분명하게 연결해 보세요.",
+          "criterion": "새롭게 알게 된 사실에 대해 면담에서 들은 이유나 과정을 구체적으로 덧붙여 설명하기",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "learned-facts"
+          ]
+        },
+        {
+          "id": "mission_2",
+          "title": "면담 목적과 내용 연결하기",
+          "instruction": "우리 마을이 어떻게 달라졌는지 알아보고 싶었다는 면담의 목적이, 문구점이 하나만 남았다는 사실과 할머니의 옛날이야기를 듣고 느낀 점을 통해 분명하게 드러나도록 글의 흐름을 다듬어 보세요.",
+          "criterion": "면담의 목적과 대상이 본문에서 다룬 핵심 내용과 자연스럽게 이어지도록 표현을 명확히 하기",
+          "rubricIds": [
+            "interview-procedure"
+          ],
+          "criterionIds": [
+            "purpose-and-target"
+          ]
+        }
+      ],
+      "assessments": [
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "purpose-and-target",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "preparation",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "learned-facts",
+          "status": "met"
+        },
+        {
+          "rubricId": "interview-procedure",
+          "criterionId": "reflection",
+          "status": "met"
+        }
+      ],
+      "priorMissionStatuses": [
+        {
+          "missionId": "mission1",
+          "status": "done"
+        },
+        {
+          "missionId": "mission2",
+          "status": "done"
+        }
+      ],
+      "actualAttainment": 100,
+      "attainmentAfter": 80
+    }
+  ],
+  "lastSubmittedWriting": "나는 우리 마을에서 제일 오래된 문구점 할머니를 면담했다. 문구점을 사십년 넘게 하시는 동안 우리 마을이 어떻게 달라졌는지 알아보고 싶었기 때문이다. 면담을 하기 전에 물어볼 질문을 여덟 개 만들어서 공책에 적었다. 그리고 문구점에 미리 가서 할머니께 언제 시간이 되시는지 여쭤보고 토요일 오후로 약속을 잡았다. 처음 보는 어른한테 말을 거는게 떨려서 마음의 준비도 단단히 했다.\n할머니는 문구점을 1985년에 여셨다고 하셨다. 그때는 학교 앞에만 문구점이 다섯 개나 있었다고 하셨다. 지금은 할머니 가게 하나만 남았다. 왜 다 없어졌냐고 여쭤보니까 학생 수가 많이 줄어들었고 요즘은 준비물을 학교에서 다 주기 때문이라고 하셨다.\n제일 기억에 남는 이야기는 옛날에는 아이들이 오십원, 백원을 손에 꼭 쥐고 와서 뽑기를 했다는 것이다. 하루에 백 명도 넘게 왔다고 하셨다. 할머니는 지금도 그 시끄러운 소리가 제일 그립다고 하셨다. 왜 그 소리가 그리우시냐고 여쭤보니까 그때는 오는 아이들 이름을 다 외우고 있어서 가게가 꼭 학교 같았는데, 지금은 하루종일 한 명도 안 올때도 있어서 그렇다고 하셨다.\n면담을 하고 나서 마음이 좀 이상했다. 나는 문구점이 그냥 물건 파는 데인줄 알았는데 할머니한테는 사십년 동안의 추억이 담긴 곳이었다. 다섯 개나 있던 문구점이 하나만 남았다는 말을 듣고 우리 마을이 조용해진 이유를 알것 같았다. 앞으로 할머니 가게에 자주 가야겠다고 생각했다.",
+  "lastImprovements": [
+    {
+      "id": "mission_1",
+      "title": "새 사실에 이유 연결하기",
+      "instruction": "문구점이 다섯 개에서 하나만 남았다는 사실 뒤에, 할머니께서 말씀하신 학생 수 감소와 학교에서 준비물을 주기 때문이라는 이유를 더 분명하게 연결해 보세요.",
+      "criterion": "새롭게 알게 된 사실에 대해 면담에서 들은 이유나 과정을 구체적으로 덧붙여 설명하기",
+      "rubricIds": [
+        "interview-procedure"
+      ],
+      "criterionIds": [
+        "learned-facts"
+      ]
+    },
+    {
+      "id": "mission_2",
+      "title": "면담 목적과 내용 연결하기",
+      "instruction": "우리 마을이 어떻게 달라졌는지 알아보고 싶었다는 면담의 목적이, 문구점이 하나만 남았다는 사실과 할머니의 옛날이야기를 듣고 느낀 점을 통해 분명하게 드러나도록 글의 흐름을 다듬어 보세요.",
+      "criterion": "면담의 목적과 대상이 본문에서 다룬 핵심 내용과 자연스럽게 이어지도록 표현을 명확히 하기",
+      "rubricIds": [
+        "interview-procedure"
+      ],
+      "criterionIds": [
+        "purpose-and-target"
+      ]
+    }
+  ]
+}

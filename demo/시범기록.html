@@ -1,0 +1,783 @@
+<title>디노 코칭 24라운드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #EEF1F4;
+    --surface: #FFFFFF;
+    --surface-2: #F5F8FA;
+    --ink: #16202B;
+    --ink-2: #45535F;
+    --ink-3: #6E7C88;
+    --rule: #D3DAE1;
+    --rule-soft: #E4E9ED;
+    --accent: #2F5D8C;
+    --accent-soft: #E2EBF4;
+    --met: #2C6E52;
+    --met-bg: #E0EFE7;
+    --partial: #8A6410;
+    --partial-bg: #F4EBD6;
+    --unmet: #A8402F;
+    --unmet-bg: #F5E2DE;
+    --display: "Gowun Batang", "Nanum Myeongjo", serif;
+    --body: "IBM Plex Sans KR", "Malgun Gothic", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10161C;
+      --surface: #171F27;
+      --surface-2: #1D2831;
+      --ink: #E4EAEF;
+      --ink-2: #AAB6C0;
+      --ink-3: #7C8894;
+      --rule: #2C3843;
+      --rule-soft: #232E38;
+      --accent: #82B1DC;
+      --accent-soft: #1D2E3E;
+      --met: #74C29A;
+      --met-bg: #173026;
+      --partial: #D5AB5E;
+      --partial-bg: #322915;
+      --unmet: #E4907C;
+      --unmet-bg: #35201C;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #10161C;
+    --surface: #171F27;
+    --surface-2: #1D2831;
+    --ink: #E4EAEF;
+    --ink-2: #AAB6C0;
+    --ink-3: #7C8894;
+    --rule: #2C3843;
+    --rule-soft: #232E38;
+    --accent: #82B1DC;
+    --accent-soft: #1D2E3E;
+    --met: #74C29A;
+    --met-bg: #173026;
+    --partial: #D5AB5E;
+    --partial-bg: #322915;
+    --unmet: #E4907C;
+    --unmet-bg: #35201C;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  .col {
+    max-width: 720px;
+  }
+
+  /* ─── 머리말 ─────────────────────────────── */
+
+  header {
+    padding: 72px 0 40px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 20px;
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(38px, 6vw, 60px);
+    line-height: 1.14;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+    text-wrap: balance;
+  }
+
+  .lede {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--ink-2);
+    max-width: 62ch;
+    margin: 0 0 36px;
+  }
+
+  .lede strong { font-weight: 500; color: var(--ink); }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--surface);
+    overflow: hidden;
+    max-width: 720px;
+  }
+
+  .fact {
+    flex: 1 1 120px;
+    padding: 18px 20px;
+    border-right: 1px solid var(--rule-soft);
+  }
+
+  .fact:last-child { border-right: 0; }
+
+  .fact dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 6px;
+  }
+
+  .fact dd {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+  }
+
+  .fact dd span {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink-3);
+  }
+
+  /* ─── 구획 ─────────────────────────────── */
+
+  section { margin-bottom: 72px; }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+
+  .sec-note {
+    color: var(--ink-3);
+    font-size: 15px;
+    margin: 0 0 32px;
+    max-width: 62ch;
+  }
+
+  h3 {
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+
+  p { margin: 0 0 16px; max-width: 66ch; }
+
+  /* ─── 라운드 로그 ─────────────────────────── */
+
+  .log { border-left: 2px solid var(--rule); padding-left: 0; margin: 0; }
+
+  .round { position: relative; padding: 0 0 40px 32px; }
+
+  .round::before {
+    content: "";
+    position: absolute;
+    left: -6px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .round-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .round-n {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+
+  .round-meta {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .writing {
+    background: var(--surface);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+    font-size: 15.5px;
+    line-height: 1.9;
+    color: var(--ink-2);
+    max-width: 66ch;
+  }
+
+  .writing .new {
+    background: var(--accent-soft);
+    color: var(--ink);
+    padding: 1px 3px;
+    border-radius: 2px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .writing-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .verdicts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 16px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    padding: 3px 11px 4px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+
+  .chip .mark { font-family: var(--mono); font-size: 12px; }
+
+  .chip.met { background: var(--met-bg); color: var(--met); border-color: color-mix(in srgb, var(--met) 25%, transparent); }
+  .chip.partial { background: var(--partial-bg); color: var(--partial); border-color: color-mix(in srgb, var(--partial) 25%, transparent); }
+  .chip.unmet { background: var(--unmet-bg); color: var(--unmet); border-color: color-mix(in srgb, var(--unmet) 25%, transparent); }
+
+  .strength {
+    border-left: 3px solid var(--met);
+    padding: 2px 0 2px 16px;
+    margin-bottom: 18px;
+    font-size: 15px;
+    color: var(--ink-2);
+    max-width: 62ch;
+  }
+
+  .strength b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--met);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .missions { display: grid; gap: 12px; max-width: 66ch; }
+
+  .mission {
+    background: var(--surface);
+    border: 1px solid var(--rule-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 3px;
+    padding: 14px 18px;
+  }
+
+  .mission-id {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+
+  .mission h4 {
+    margin: 3px 0 6px;
+    font-size: 15.5px;
+    font-weight: 600;
+  }
+
+  .mission p { margin: 0; font-size: 14.5px; line-height: 1.7; color: var(--ink-2); }
+
+  .prior {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 13.5px;
+    align-items: center;
+  }
+
+  .prior-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .flag { color: var(--unmet); font-weight: 500; }
+
+  /* ─── 표 ─────────────────────────────── */
+
+  .table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 3px; background: var(--surface); }
+
+  table { border-collapse: collapse; width: 100%; min-width: 660px; font-size: 14px; }
+
+  th, td {
+    text-align: left;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--rule-soft);
+    white-space: nowrap;
+  }
+
+  th {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    background: var(--surface-2);
+    position: sticky;
+    top: 0;
+  }
+
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  tr.unit-start td { border-top: 1px solid var(--rule); }
+
+  tbody tr:last-child td { border-bottom: 0; }
+
+  .gap { color: var(--unmet); font-weight: 500; }
+
+  .marks { font-family: var(--mono); letter-spacing: 0.12em; }
+  .marks i { font-style: normal; }
+  .marks .m { color: var(--met); }
+  .marks .p { color: var(--partial); }
+  .marks .u { color: var(--unmet); }
+
+  /* ─── 발견 ─────────────────────────────── */
+
+  .findings { display: grid; gap: 20px; max-width: 760px; }
+
+  .finding {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 22px 24px;
+  }
+
+  .finding-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .sev {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px 3px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .sev.block { background: var(--unmet-bg); color: var(--unmet); }
+  .sev.watch { background: var(--partial-bg); color: var(--partial); }
+  .sev.note { background: var(--accent-soft); color: var(--accent); }
+
+  .finding h3 { margin: 0; flex: 1; }
+
+  .finding p:last-child { margin-bottom: 0; }
+
+  .quote {
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.75;
+    background: var(--surface-2);
+    border-left: 3px solid var(--rule);
+    padding: 12px 16px;
+    margin: 0 0 16px;
+    max-width: none;
+    overflow-x: auto;
+  }
+
+  .quote em { font-style: normal; background: var(--unmet-bg); color: var(--unmet); padding: 0 3px; border-radius: 2px; }
+  .quote .src { display: block; color: var(--ink-3); font-size: 11.5px; margin-top: 8px; letter-spacing: 0.03em; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--surface-2);
+    border: 1px solid var(--rule-soft);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  .good { border-left: 3px solid var(--met); }
+
+  ul { margin: 0 0 16px; padding-left: 20px; max-width: 66ch; }
+  li { margin-bottom: 7px; }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+    color: var(--ink-3);
+    font-size: 14px;
+  }
+
+  footer p { max-width: 68ch; }
+
+  @media (max-width: 640px) {
+    header { padding-top: 48px; }
+    .fact { flex-basis: 50%; border-bottom: 1px solid var(--rule-soft); }
+    .round { padding-left: 20px; }
+  }
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">6학년 2학기 · 시범 실행 기록</p>
+  <h1>디노가 실제로 뭐라고 말했나</h1>
+  <p class="lede">채점기준이 들어간 네 단원에 학생 여덟 명을 앉히고 <strong>세 라운드씩 실제로 코칭을 받게 했다</strong>. 글은 6학년이 쓸 법하게 맞춤법 실수를 섞어 썼고, 라운드 사이에는 디노가 준 미션만 보고 고쳤다. Gemini 실호출이고, 프로덕션 DB는 건드리지 않았다.</p>
+  <dl class="facts">
+    <div class="fact"><dt>단원</dt><dd>4</dd></div>
+    <div class="fact"><dt>학생</dt><dd>8</dd></div>
+    <div class="fact"><dt>라운드</dt><dd>24</dd></div>
+    <div class="fact"><dt>수정 미션</dt><dd>48</dd></div>
+    <div class="fact"><dt>못 읽을 미션</dt><dd>11 <span>/ 48</span></dd></div>
+  </dl>
+</header>
+
+<section class="col">
+  <h2>코칭은 이렇게 오간다</h2>
+  <p class="sec-note">2단원 면담 보고서, 정우진(초고가 부실한 쪽). 파랗게 칠한 부분이 그 라운드에 새로 쓴 말이다.</p>
+
+  <div class="log">
+
+    <article class="round">
+      <div class="round-head">
+        <span class="round-n">1라운드</span>
+        <span class="round-meta">193자 · 도달도 40% · 채점기준 충족 38%</span>
+      </div>
+      <div class="writing">
+        <span class="writing-label">학생이 낸 글</span>
+        나는 우리 동네 떡집 아저씨를 만나서 이야기를 들었다.<br>
+        아저씨는 떡집을 삼십년 넘게 했다고 했다. 떡은 새벽 네시부터 만든다고 했다. 쌀도 아저씨가 직접 고른다고 했다. 여름에는 떡이 잘 상한다고 했다. 손님이 많이 올때도 있고 아예 안올때도 있다고 했다. 떡 종류는 열가지 정도 된다고 했다. 기계도 오래 됬다고 했다.<br>
+        이야기를 듣고 신기했다.
+      </div>
+      <div class="verdicts">
+        <span class="chip partial"><span class="mark">◐</span> 목적과 대상</span>
+        <span class="chip unmet"><span class="mark">✗</span> 면담 준비</span>
+        <span class="chip partial"><span class="mark">◐</span> 알게 된 사실</span>
+        <span class="chip partial"><span class="mark">◐</span> 느낀 점</span>
+      </div>
+      <div class="strength">
+        <b>잘한 점</b>
+        떡집 아저씨의 이야기를 듣기 위해 직접 만나러 간 노력을 칭찬합니다.
+      </div>
+      <div class="missions">
+        <div class="mission">
+          <span class="mission-id">preparation</span>
+          <h4>면담 준비 과정 떠올리기</h4>
+          <p>떡집 아저씨를 만나기 전에 무엇을 준비했는지 글에 덧붙여 보세요.</p>
+        </div>
+        <div class="mission">
+          <span class="mission-id">learned-facts</span>
+          <h4>새롭게 알게 된 사실의 까닭 덧붙이기</h4>
+          <p>떡에 대해 새롭게 알게 된 사실 하나를 골라, 그 사실이 왜 그런지 이유나 과정을 덧붙여 보세요.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="round">
+      <div class="round-head">
+        <span class="round-n">2라운드</span>
+        <span class="round-meta">278자 · 도달도 50% · 채점기준 충족 75%</span>
+      </div>
+      <div class="prior">
+        <span class="prior-label">지난 미션</span>
+        <span class="chip partial"><span class="mark">◐</span> 면담 준비 — 얼버무림</span>
+        <span class="chip met"><span class="mark">✓</span> 알게 된 사실 — 해냄</span>
+      </div>
+      <div class="writing">
+        <span class="writing-label">학생이 고쳐 낸 글</span>
+        나는 우리 동네 떡집 아저씨를 만나서 이야기를 들었다. <span class="new">가기 전에 준비를 하고 갔다.</span><br>
+        아저씨는 떡집을 삼십년 넘게 했다고 했다. 떡은 새벽 네시부터 만든다고 했다. <span class="new">왜 그렇게 일찍 만드냐고 물어보니까 떡은 시간이 지나면 딱딱해져서 아침에 손님이 오기 전에 다 만들어 놔야 한다고 했다.</span> 쌀도 아저씨가 직접 고른다고 했다. …<br>
+        이야기를 듣고 신기했다.
+      </div>
+      <div class="verdicts">
+        <span class="chip met"><span class="mark">○</span> 목적과 대상</span>
+        <span class="chip partial"><span class="mark">◐</span> 면담 준비</span>
+        <span class="chip met"><span class="mark">○</span> 알게 된 사실</span>
+        <span class="chip partial"><span class="mark">◐</span> 느낀 점</span>
+      </div>
+      <div class="strength">
+        <b>잘한 점</b>
+        떡집 아저씨께서 떡을 만들기 위해 새벽 네 시부터 일하신다는 사실과 그 이유를 설명해주신 부분을 잘 소개했어요.
+      </div>
+      <div class="missions">
+        <div class="mission">
+          <span class="mission-id">reflection</span>
+          <h4>느낀 점 덧붙이기</h4>
+          <p>떡집 아저씨의 이야기를 듣고 나서 '신기했다'라고 쓴 부분에, 무엇이 왜 신기했는지 구체적인 느낌이나 생각을 덧붙여 보세요.</p>
+        </div>
+        <div class="mission">
+          <span class="mission-id">preparation</span>
+          <h4>준비 과정 질문 만들기</h4>
+          <p>떡집에 가기 전에 어떤 준비를 했는지 떠올려 보세요. … 무엇을 준비했는지 <span class="flag">구체적인 질문을 만들어 글에 넣어 보세요.</span></p>
+        </div>
+      </div>
+    </article>
+
+    <article class="round">
+      <div class="round-head">
+        <span class="round-n">3라운드</span>
+        <span class="round-meta">479자 · 도달도 70% · 채점기준 충족 88%</span>
+      </div>
+      <div class="prior">
+        <span class="prior-label">지난 미션</span>
+        <span class="chip met"><span class="mark">✓</span> 느낀 점 — 해냄</span>
+        <span class="chip met"><span class="mark">✓</span> 면담 준비 — 해냄</span>
+      </div>
+      <div class="writing">
+        <span class="writing-label">학생이 고쳐 낸 글</span>
+        나는 우리 동네 떡집 아저씨를 만나서 이야기를 들었다. <span class="new">가기 전에 공책에 질문을 다섯개 적어서 갔다. 떡집을 왜 시작했는지, 힘든 점은 없는지 이런걸 물어보려고 미리 적었다. 그리고 아저씨한테 전화해서 손님이 없는 오후 세시로 약속을 잡았다.</span><br>
+        아저씨는 떡집을 삼십년 넘게 했다고 했다. … 기계도 오래 됬다고 했다.<br>
+        이야기를 듣고 신기했다. <span class="new">나는 떡을 그냥 아침에 뚝딱 만드는줄 알았는데 아저씨가 새벽 네시에 일어나서 만든다는게 제일 신기했다. 매일 그 시간에 일어나는건 진짜 힘들것 같다. 이제부터 떡을 먹을때 남기지 말아야겠다고 생각했다.</span>
+      </div>
+      <div class="verdicts">
+        <span class="chip partial"><span class="mark">◐</span> 목적과 대상 <b style="font-weight:500">▼</b></span>
+        <span class="chip met"><span class="mark">○</span> 면담 준비</span>
+        <span class="chip met"><span class="mark">○</span> 알게 된 사실</span>
+        <span class="chip met"><span class="mark">○</span> 느낀 점</span>
+      </div>
+      <div class="strength">
+        <b>잘한 점</b>
+        떡집 아저씨가 떡을 만들기 위해 새벽 네시에 일어난다는 사실과 그 이유를 신기해하며 잘 썼어요.
+      </div>
+      <div class="missions">
+        <div class="mission">
+          <span class="mission-id">purpose-and-target</span>
+          <h4>만난 사람 소개하기</h4>
+          <p><span class="flag">학생 글의</span> 첫 문장에서 떡집 아저씨를 만났다고 했는데, 누구에게 왜 떡집에 대해 물어보고 싶었는지 더 자세히 <span class="flag">안내해 줄까요?</span></p>
+        </div>
+        <div class="mission">
+          <span class="mission-id">learned-facts</span>
+          <h4>이유 알기 추가하기</h4>
+          <p>떡을 새벽 네 시부터 만드는 것이 신기하다고 했는데, 아저씨가 왜 그렇게 일찍 떡을 만들기 시작했는지 그 이유를 좀 더 자세히 설명하는 문장을 넣어볼까요? <span class="flag">← 1라운드에 이미 쓴 내용이다</span></p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <p style="margin-top:8px;color:var(--ink-3);font-size:14.5px">세 라운드에서 글이 193자 → 479자로 늘었고, 늘어난 부분은 전부 디노가 시킨 자리다. <strong style="font-weight:500;color:var(--ink)">미션이 제 일을 한다는 증거는 여기 있다.</strong> 다만 3라운드에서 목적·대상이 이유 없이 ◐로 내려갔고, 미션 하나는 학생이 이미 쓴 것을 또 쓰라고 한다.</p>
+</section>
+
+<section>
+  <h2>24라운드 전부</h2>
+  <p class="sec-note">도달도는 미션을 해낸 횟수로 쌓이는 값(40%에서 시작, 하나 해낼 때마다 +10%)이고, 충족도는 그 라운드에 채점기준을 실제로 얼마나 만족했는지다. <strong>두 숫자가 벌어진 자리가 문제다.</strong></p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>단원</th><th>학생</th><th>R</th><th>글자</th><th>도달도</th><th>충족도</th><th>채점기준 판정</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="unit-start"><td>2단원 면담 보고서</td><td>정우진</td><td class="num">1</td><td class="num">193</td><td class="num">40%</td><td class="num">38%</td><td class="marks"><i class="p">◐</i><i class="u">✗</i><i class="p">◐</i><i class="p">◐</i></td></tr>
+        <tr><td></td><td>정우진</td><td class="num">2</td><td class="num">278</td><td class="num">50%</td><td class="num">75%</td><td class="marks"><i class="m">○</i><i class="p">◐</i><i class="m">○</i><i class="p">◐</i></td></tr>
+        <tr><td></td><td>정우진</td><td class="num">3</td><td class="num">479</td><td class="num">70%</td><td class="num">88%</td><td class="marks"><i class="p">◐</i><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>강예린</td><td class="num">1</td><td class="num">370</td><td class="num">40%</td><td class="num">75%</td><td class="marks"><i class="m">○</i><i class="p">◐</i><i class="m">○</i><i class="p">◐</i></td></tr>
+        <tr><td></td><td>강예린</td><td class="num">2</td><td class="num">549</td><td class="num">60%</td><td class="num">88%</td><td class="marks"><i class="m">○</i><i class="p">◐</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>강예린</td><td class="num">3</td><td class="num">715</td><td class="num">80%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+
+        <tr class="unit-start"><td>5단원 기사문</td><td>민재</td><td class="num">1</td><td class="num">316</td><td class="num">40%</td><td class="num">60%</td><td class="marks"><i class="p">◐</i><i class="m">○</i><i class="p">◐</i><i class="u">✗</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>민재</td><td class="num">2</td><td class="num">439</td><td class="num">60%</td><td class="num">90%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i><i class="p">◐</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>민재</td><td class="num">3</td><td class="num">493</td><td class="num">80%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>수아</td><td class="num">1</td><td class="num">442</td><td class="num">40%</td><td class="num">90%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i><i class="p">◐</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>수아</td><td class="num">2</td><td class="num">475</td><td class="num gap">40%</td><td class="num">90%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i><i class="p">◐</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>수아</td><td class="num">3</td><td class="num gap">40%</td><td class="num">90%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i><i class="p">◐</i><i class="m">○</i></td></tr>
+
+        <tr class="unit-start"><td>매체 단원 성찰 보고서</td><td>김도윤</td><td class="num">1</td><td class="num">228</td><td class="num">40%</td><td class="num">33%</td><td class="marks"><i class="u">✗</i><i class="p">◐</i><i class="p">◐</i></td></tr>
+        <tr><td></td><td>김도윤</td><td class="num">2</td><td class="num">294</td><td class="num">50%</td><td class="num">67%</td><td class="marks"><i class="m">○</i><i class="p">◐</i><i class="p">◐</i></td></tr>
+        <tr><td></td><td>김도윤</td><td class="num">3</td><td class="num">452</td><td class="num">70%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>이서연</td><td class="num">1</td><td class="num">480</td><td class="num gap">40%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>이서연</td><td class="num">2</td><td class="num">552</td><td class="num">60%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>이서연</td><td class="num">3</td><td class="num">677</td><td class="num">80%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+
+        <tr class="unit-start"><td>6단원 이야기 바꾸어 쓰기</td><td>서준</td><td class="num">1</td><td class="num">203</td><td class="num">40%</td><td class="num">67%</td><td class="marks"><i class="m">○</i><i class="p">◐</i><i class="p">◐</i></td></tr>
+        <tr><td></td><td>서준</td><td class="num">2</td><td class="num">257</td><td class="num">60%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>서준</td><td class="num">3</td><td class="num">550</td><td class="num">80%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>하은</td><td class="num">1</td><td class="num">515</td><td class="num gap">40%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>하은</td><td class="num">2</td><td class="num">603</td><td class="num">60%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+        <tr><td></td><td>하은</td><td class="num">3</td><td class="num">786</td><td class="num">80%</td><td class="num">100%</td><td class="marks"><i class="m">○</i><i class="m">○</i><i class="m">○</i></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>보여주기 전에 볼 것</h2>
+  <p class="sec-note">심각한 순서다. 앞의 셋은 다른 선생님이 화면을 5분만 봐도 찾아낸다.</p>
+
+  <div class="findings">
+
+    <div class="finding">
+      <div class="finding-head">
+        <span class="sev block">막는 것</span>
+        <h3>잘 쓴 학생일수록 진행 막대가 안 움직인다</h3>
+      </div>
+      <p>수아는 첫 글부터 채점기준을 90% 채웠고 미션도 성실히 따랐는데 <strong>세 라운드 내내 도달도가 40%</strong>다. 디노가 지난 미션을 <code>partial</code>로 판정했고, 도달도는 <code>done</code>만 +10%로 세기 때문이다(<code>lib/attainment.js</code>). 반대로 6단원 서준은 “나는 그 돈으로 게임기를 샀다” 한 문장을 넣고 <code>done</code>을 받아 +10%를 챙겼다.</p>
+      <p>마지막 라운드 여덟 명 중 <strong>일곱 명이 도달도 &lt; 충족도</strong>다. 네 기준이 전부 ○인데 화면에는 80%로 뜬다. “다 잘했다는데 왜 80%예요?”가 첫 질문이 될 것이다.</p>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <span class="sev block">막는 것</span>
+        <h3>미션 넷 중 하나는 학생이 읽을 수 없다</h3>
+      </div>
+      <p>48개 중 <strong>11개(23%)</strong>에 <code>학생 글의 관련 내용</code>이라는 대체 문구가 문장 한가운데 박혔다.</p>
+      <div class="quote">
+        지갑을 세 개나 받은 후 <em>학생 글의 관련 내용고</em> 바로 끝내기보다, 부자가 되기까지 어떤 일이 더 있었는지…
+        <span class="src">6단원 · 서준 1라운드</span>
+      </div>
+      <div class="quote">
+        밤에 쇼츠를 그만 볼 수 없을 것 같다고 느낀 이유가 <em>학생 글의 관련 내용라고</em> 쓴 부분을 <em>학생 글의 관련 내용은 다짐</em>과 더 분명하게 이어지도록…
+        <span class="src">매체 단원 · 이서연 3라운드</span>
+      </div>
+      <p>디노가 지어낸 인용을 걷어내는 안전장치(<code>sanitizeMissionResult</code>)가 남긴 자국이다. 원인까지 재현됐다 — <strong>모델이 학생의 맞춤법을 조용히 고쳐서 인용한다.</strong> 학생이 “됬다”라고 썼는데 모델은 ‘됐다’로 인용하고, 그러면 원문 대조에 걸려 인용이 통째로 지워지고 뒤에 붙은 조사만 남는다. <strong>맞춤법이 약한 학생일수록 못 읽을 미션을 받는다.</strong></p>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <span class="sev block">막는 것</span>
+        <h3>스물세 번에 한 번은 라운드가 통째로 날아간다</h3>
+      </div>
+      <p>이번 시범에서 한 라운드가 <code>디노 응답을 이해하지 못했어요.</code>로 죽었다. 지난 스모크 기록까지 합치면 <strong>135회 중 6회(4.4%)</strong>다.</p>
+      <p>미션 지시문에 실행 동사가 있는지 검사하는 <code>ACTION_INSTRUCTION_PATTERN</code>이 모델의 질문형 지시문(“…어떤 느낌이 들었나요?”)을 거절하고, 재시도 세 번이 같은 형태로 걸리면 502가 된다. <strong>잘 쓴 글에서도 난다.</strong> 시연 도중 여섯 라운드를 돌리면 한 번쯤 만날 확률이다.</p>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <span class="sev watch">설명 필요</span>
+        <h3>판정과 미션이 한 화면에서 서로를 부정한다</h3>
+      </div>
+      <div class="quote">
+        채점기준  [○ met] 제목·전문·본문이 있다<br>
+        수정 미션  “지금 글은 <em>제목만 있고 전문이 없어서</em> 제목 바로 뒤에 본문이 시작하고 있어요.”
+        <span class="src">5단원 · 민재 2라운드 — 같은 화면 두 칸 차이</span>
+      </div>
+      <p>6단원 하은 3라운드는 더 노골적이다. <code>story-flow</code>를 ○로 판정하고 “처음, 중간, 끝이 자연스럽게 이어지도록 구성한 점이 좋았습니다”라고 칭찬한 다음, 바로 아래 미션에서 “이야기가 갑자기 끝나는 것처럼 느껴질 수 있어요”라고 한다. 채점 호출과 미션 호출이 따로 돌기 때문이다. <strong>48개 미션 중 28개(58%)가 이미 ○인 기준을 겨냥한다.</strong></p>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <span class="sev watch">설명 필요</span>
+        <h3>“안 했다”는 판정이 한 번도 안 나왔다</h3>
+      </div>
+      <p>지난 미션 판정 32건의 분포: <strong><code>done</code> 26 · <code>partial</code> 6 · <code>not-done</code> 0</strong>. 학생 역을 맡은 쪽이 2라운드마다 미션 하나를 일부러 안 고쳤는데도 그렇다. 안 고친 것을 <code>done</code>으로 준 사례도 두 건 잡혔다 — 매체 단원 이서연은 해당 문단이 바이트 단위로 그대로인데 ✓가 떴고, 도달도가 +10% 붙었다.</p>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <span class="sev watch">설명 필요</span>
+        <h3>학생이 뭘 고쳤는지 디노에게 깨진 채로 전달된다</h3>
+      </div>
+      <div class="quote">
+        [이번 수정에서 새로 추가한 부분]<br>
+        “그리고 <em>한테 전화해서 손님이 없오후</em> 세시로 약속을 잡았다”
+        <span class="src">2단원 · 정우진 3라운드에 실제로 들어간 값</span>
+      </div>
+      <p><code>summarizeWritingChanges</code>가 쓰는 <code>diffWords</code>가 한국어의 조사·어미를 잘라 먹는다. 이 문자열이 다음 라운드 판정 프롬프트에 그대로 들어간다. <strong>데모 스크립트만의 문제가 아니다</strong> — <code>lib/actions.js</code>가 같은 함수를 쓰므로 실서비스도 같다. 위의 후한 미션 판정과 판정 흔들림이 여기서 왔을 가능성이 있다.</p>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <span class="sev note">알아둘 것</span>
+        <h3>학생에게 하는 말이 아닌 문장이 섞인다</h3>
+      </div>
+      <div class="quote">
+        “<em>자녀가</em> 밤에 휴대폰을 보다가 늦게 자는 습관을 돌아보게 된 까닭을…” <span class="src">매체 단원 · 학생 화면의 ‘잘한 점’</span>
+      </div>
+      <div class="quote">
+        “…누구에게 왜 떡집에 대해 물어보고 싶었는지 더 자세히 <em>안내해 줄까요?</em>” <span class="src">2단원 · 학생더러 안내를 하라고 한다</span>
+      </div>
+      <p>프롬프트 안쪽 지시가 학생 화면으로 새기도 한다. 2단원 <code>preparation</code> 미션은 두 번 다 “구체적인 <strong>질문을 만들어</strong> 글에 넣어 보세요”라고 나왔는데, 이건 채점기준이 AI에게 준 지침이다. 6학년이 읽으면 보고서에 질문을 써넣는다.</p>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <span class="sev note">알아둘 것</span>
+        <h3>6단원 “자신의 경험”은 1인칭이면 통과한다</h3>
+      </div>
+      <p>서준의 첫 글은 지갑을 줍고 산신령을 만나는 순수 창작이다. 겪은 일이 하나도 없다. 그런데 <code>own-experience</code>는 ○였고, 디노는 “<strong>산신령을 만난 경험</strong>과 지갑을 주운 경험을 이어 보세요”라고 했다. 이 기준은 실제 경험이 아니라 <strong>‘나’로 쓴 문장</strong>에 반응한다.</p>
+      <p><code>cause-and-effect</code>와 <code>story-flow</code>도 한 번 ○가 되면 다시 내려오지 않았다. 교육과정 자료에 “AI : 생각해봐야함”으로 적혀 있던 그 두 항목이다. <strong>교사 재량으로 내릴지 판단할 근거가 이번에 모였다.</strong></p>
+    </div>
+
+    <div class="finding good">
+      <div class="finding-head">
+        <span class="sev note">잘 되는 것</span>
+        <h3>지어내지 않는다, 그리고 방화벽은 샌 적이 없다</h3>
+      </div>
+      <ul>
+        <li>없는 면담 내용을 지어낸 미션 <strong>0건</strong>, 학생 대신 줄거리를 써 준 미션 <strong>0건</strong></li>
+        <li>교사 전용 기준(<code>evaluator: 'teacher'</code>)이 AI 응답에 샌 적 <strong>0건</strong> — 24라운드 내내</li>
+        <li>도달도 산수 자체는 24라운드 전부 규칙대로 맞았다</li>
+        <li>근거가 붙은 미션은 정말 잘 짚는다: <em style="font-style:normal;color:var(--ink)">“떡집 아저씨를 만나기 전에 무엇을 준비했는지 글에 덧붙여 보세요”</em> — 학생이 실제로 그 자리를 채웠다</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<footer class="col">
+  <p>글도 학생도 이 저장소가 지어낸 것이다. 여기서 확인한 것은 <strong>“모델이 글을 의도대로 읽고 그다음 라운드를 굴린다”</strong>까지이고, 선생님이 검증한 정답과 맞다는 뜻은 아니다. 실제 학생 글에서 판정이 어떻게 나오는지는 여전히 열린 물음으로 남는다.</p>
+  <p style="color:var(--ink-3)">원본 데이터는 저장소 <code>demo/</code> 아래에 라운드별 글과 상태 JSON으로 남아 있다. 같은 방식으로 다시 돌리려면 <code>node scripts/demo-unit-rounds.js</code>.</p>
+</footer>
+
+</div>
