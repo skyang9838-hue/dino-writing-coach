@@ -74,6 +74,10 @@
 
 ## 다음 할 일
 
+### 0. `ponytail-cleanup` 브랜치 — 머지·배포 결정 대기 (2026-10-08)
+
+동작은 그대로 두고 코드만 줄였다 (3커밋, -53줄). 판정 순서표 하나로 · 안 쓰는 칩 CSS 삭제 · 코칭 오류 처리 한 곳으로 · 미션 후보 한 번에 만들기 · 반려 문구·글 비교 표시를 `components/roundDisplay.jsx`로 모음. 위험 구역(coaching·assessmentRatchet·guard·curriculum·prisma)은 안 건드렸다. 검증: test 254 · lint 0 · build 성공, 교사 보드·학생 기록 화면은 바뀌기 전과 렌더 HTML이 같았다. 점검 목록은 `docs/superpowers/plans/2026-10-07-ponytail-audit.md`(커밋 안 된 파일). master에 머지하고 push하면 곧 배포다.
+
 ### 1. ⚠️ 스모크를 돌리고 배포한다 — 이번 작업이 아직 프로덕션에 안 나갔다
 
 `bdb8201`, `cb31c74`가 **로컬 커밋까지만 되어 있다.** 미션 프롬프트에 글다듬기 블록이 새로 붙었으므로 `npm run smoke -- --runs 3`을 한 번 돌려 보고 push해야 한다(Gemini 실호출 · 비용). 볼 것은 위 검증 상태에 적어 두었다. 스모크가 깨끗하면 `git push origin master`가 곧 배포다.
