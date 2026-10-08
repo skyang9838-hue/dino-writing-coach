@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { auth } from '../../auth.js'
 import { prisma } from '../../lib/prisma.js'
+import { isAdmin } from '../../lib/admin.js'
 import { TeacherHeader } from '../../components/TeacherHeader.jsx'
 import { NewActivityForm } from '../../components/NewActivityForm.jsx'
 import { getGenreIcon } from '../../lib/curriculum.js'
@@ -31,6 +32,12 @@ export default async function DashboardPage() {
         subtitle="교육과정에 맞는 글쓰기 활동을 선택하고 설정해 보세요."
         email={session.user.email}
       />
+
+      {isAdmin(session.user.email) && (
+        <Link href="/admin" className="new-writing-link">
+          🕵️ 전체 보기 →
+        </Link>
+      )}
 
       {pendingReviews.length > 0 && (
         <div className="pending-banner">

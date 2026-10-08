@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { auth } from '../../../../../auth.js'
 import { prisma } from '../../../../../lib/prisma.js'
+import { isAdmin } from '../../../../../lib/admin.js'
 import { getMascotState } from '../../../../../lib/mascot.js'
 import { RevisionBoard } from '../../../../../components/RevisionBoard.jsx'
 import { ProfanityReviewPanel } from '../../../../../components/ProfanityReviewPanel.jsx'
@@ -17,9 +18,9 @@ export default async function StudentGrowthPage({ params }) {
     include: { activity: true },
   })
 
-  if (!submission || submission.activityId !== activityId || submission.activity.teacherId !== session.user.id) {
-    notFound()
-  }
+  if (!submission || submission.activityId !== activityId) notFound()
+  const isOwner = submission.activity.teacherId === session.user.id
+  if (!isOwner && !isAdmin(session.user.email)) notFound()
 
   const { attainment, rounds } = submission
   const mascot = getMascotState(attainment)
@@ -73,7 +74,7 @@ export default async function StudentGrowthPage({ params }) {
         )}
       </div>
 
-      {submission.feedback?.pending && (
+      {isOwner && submission.feedback?.pending && (
         <ProfanityReviewPanel submissionId={submission.id} writing={submission.writing} />
       )}
 
