@@ -3,6 +3,7 @@ import { notFound, redirect } from 'next/navigation'
 import { headers } from 'next/headers'
 import { auth } from '../../../auth.js'
 import { prisma } from '../../../lib/prisma.js'
+import { isAdmin } from '../../../lib/admin.js'
 import { JoinQrCode } from '../../../components/JoinQrCode.jsx'
 import { TeacherHeader } from '../../../components/TeacherHeader.jsx'
 import { getGenreIcon } from '../../../lib/curriculum.js'
@@ -17,7 +18,9 @@ export default async function ActivityDetailPage({ params }) {
     include: { submissions: { orderBy: { updatedAt: 'desc' } } },
   })
 
-  if (!activity || activity.teacherId !== session.user.id) notFound()
+  if (!activity) notFound()
+  const isOwner = activity.teacherId === session.user.id
+  if (!isOwner && !isAdmin(session.user.email)) notFound()
 
   const headerList = await headers()
   const host = headerList.get('host')
@@ -26,8 +29,8 @@ export default async function ActivityDetailPage({ params }) {
 
   return (
     <div className="container-wide">
-      <Link href="/dashboard" className="new-writing-link">
-        ← 내 활동으로
+      <Link href={isOwner ? '/dashboard' : '/admin'} className="new-writing-link">
+        {isOwner ? '← 내 활동으로' : '← 전체 보기로'}
       </Link>
       <TeacherHeader
         icon={getGenreIcon(activity.genre)}

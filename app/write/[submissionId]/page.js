@@ -1,6 +1,6 @@
-import { notFound } from 'next/navigation'
 import { prisma } from '../../../lib/prisma.js'
 import { WritingScreen } from '../../../components/WritingScreen.jsx'
+import { DinoIcon } from '../../../components/DinoIcon.jsx'
 
 export default async function WritePage({ params }) {
   const { submissionId } = await params
@@ -8,7 +8,17 @@ export default async function WritePage({ params }) {
     where: { id: submissionId },
     include: { activity: true },
   })
-  if (!submission) notFound()
+  // The teacher deleted the activity (its submissions go with it).
+  if (!submission) {
+    return (
+      <div className="container">
+      <h1>
+        <DinoIcon pose="wave" size="lg" /> 디노와 함께 글쓰기
+      </h1>
+      <p className="empty-state">선생님이 활동을 닫았어요.</p>
+      </div>
+    )
+  }
 
   return (
     <WritingScreen
