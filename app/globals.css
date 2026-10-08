@@ -1127,6 +1127,89 @@ a {
   font-size: 1.3rem;
 }
 
+/* ⋯ menu (components/ActivityCard.jsx) sits over the card, left of the chevron. */
+.activity-card-wrap {
+  position: relative;
+}
+
+.activity-card-wrap .activity-card {
+  padding-right: 4.5rem;
+}
+
+.activity-card-wrap[aria-busy='true'] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.activity-card-menu {
+  position: absolute;
+  top: 50%;
+  right: 2.6rem;
+  transform: translateY(-50%);
+}
+
+.activity-card-menu summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  color: #888;
+  font-size: 1.2rem;
+}
+
+.activity-card-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.activity-card-menu summary:hover,
+.activity-card-menu[open] summary {
+  background-color: #eef5ef;
+}
+
+.activity-card-menu-list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-width: 9rem;
+  padding: 0.3rem;
+  background: white;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.activity-card-menu-list button {
+  padding: 0.55rem 0.7rem;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.activity-card-menu-list button:hover {
+  background-color: #f5f5f5;
+}
+
+.activity-card-menu-list button.danger {
+  color: #d32f2f;
+}
+
+.activity-card-rename {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  padding: 0.3rem 0.5rem;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border: 1.5px solid #4caf50;
+  border-radius: 8px;
+}
+
 .empty-state {
   color: #888;
   text-align: center;

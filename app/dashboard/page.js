@@ -4,6 +4,7 @@ import { auth } from '../../auth.js'
 import { prisma } from '../../lib/prisma.js'
 import { isAdmin } from '../../lib/admin.js'
 import { TeacherHeader } from '../../components/TeacherHeader.jsx'
+import { ActivityCard } from '../../components/ActivityCard.jsx'
 import { NewActivityForm } from '../../components/NewActivityForm.jsx'
 import { getGenreIcon } from '../../lib/curriculum.js'
 
@@ -62,17 +63,12 @@ export default async function DashboardPage() {
           <p className="empty-state">아직 만든 활동이 없어요. 위에서 단원을 골라 첫 활동을 만들어보세요.</p>
         ) : (
           activities.map((activity) => (
-            <Link key={activity.id} href={`/dashboard/${activity.id}`} className="activity-card">
-              <span className="activity-card-icon">{getGenreIcon(activity.genre)}</span>
-              <span className="activity-card-body">
-                <h3>{activity.title}</h3>
-                <p>
-                  {activity.topic || '자유 주제'} · 목표 {activity.targetLength}자 · 참여 학생{' '}
-                  {activity._count.submissions}명
-                </p>
-              </span>
-              <span className="activity-card-chevron">›</span>
-            </Link>
+            <ActivityCard
+              key={activity.id}
+              activity={activity}
+              icon={getGenreIcon(activity.genre)}
+              studentCount={activity._count.submissions}
+            />
           ))
         )}
       </section>

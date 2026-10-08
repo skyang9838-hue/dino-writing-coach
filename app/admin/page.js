@@ -3,18 +3,19 @@ import { notFound, redirect } from 'next/navigation'
 import { auth } from '../../auth.js'
 import { prisma } from '../../lib/prisma.js'
 import { isAdmin } from '../../lib/admin.js'
+import { ActivityCard } from '../../components/ActivityCard.jsx'
 import { TeacherHeader } from '../../components/TeacherHeader.jsx'
 import { getGenreIcon } from '../../lib/curriculum.js'
 
-// Read-only overview of every teacher → their activities. Each activity links
-// to the normal teacher pages, which let admins in (see lib/admin.js).
+// Overview of every teacher → their activities, most recently active first.
+// Pages are read-only for admins (see lib/admin.js); the ⋯ menu can still
+// rename or delete an activity.
 export default async function AdminPage() {
   const session = await auth()
   if (!session?.user?.id) redirect('/login')
   if (!isAdmin(session.user.email)) notFound()
 
   const teachers = await prisma.user.findMany({
-    orderBy: { email: 'asc' },
     include: {
       activities: {
         orderBy: { createdAt: 'desc' },
@@ -23,6 +24,10 @@ export default async function AdminPage() {
     },
   })
 
+  // Newest activity first; teachers with no activity sink to the bottom.
+  const latest = (teacher) => teacher.activities[0]?.createdAt.getTime() ?? 0
+  teachers.sort((a, b) => latest(b) - latest(a))
+
   return (
     <div className="container-wide">
       <Link href="/dashboard" className="new-writing-link">
@@ -30,7 +35,7 @@ export default async function AdminPage() {
       </Link>
       <TeacherHeader
         title="전체 보기"
-        subtitle={`선생님 ${teachers.length}명 · 보기 전용`}
+        subtitle={`선생님 ${teachers.length}명`}
         email={session.user.email}
       />
 
@@ -45,17 +50,12 @@ export default async function AdminPage() {
               활동 {teacher.activities.length}개 · 학생 {students}명
             </p>
             {teacher.activities.map((activity) => (
-              <Link key={activity.id} href={`/dashboard/${activity.id}`} className="activity-card">
-                <span className="activity-card-icon">{getGenreIcon(activity.genre)}</span>
-                <span className="activity-card-body">
-                  <h3>{activity.title}</h3>
-                  <p>
-                    {activity.topic || '자유 주제'} · 목표 {activity.targetLength}자 · 참여 학생{' '}
-                    {activity._count.submissions}명
-                  </p>
-                </span>
-                <span className="activity-card-chevron">›</span>
-              </Link>
+              <ActivityCard
+                key={activity.id}
+                activity={activity}
+                icon={getGenreIcon(activity.genre)}
+                studentCount={activity._count.submissions}
+              />
             ))}
           </section>
         )
