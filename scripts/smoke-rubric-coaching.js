@@ -19,6 +19,7 @@ import process from 'node:process'
 import dotenv from 'dotenv'
 import { getRubricCoachingFeedback, getUnitCoachingSpec } from '../lib/coaching.js'
 import { GRADE6_SEMESTER2_UNITS, getUnitChunks } from '../lib/curriculum.js'
+import { POLISH_TARGETS } from '../lib/missions.js'
 
 dotenv.config({ path: '.env.local', quiet: true })
 dotenv.config({ quiet: true })
@@ -108,7 +109,11 @@ function checkRun(result, { spec, teacherOnly, advisory }) {
     if ((result.missions ?? []).length !== 2) {
       problems.push(`수정미션 ${result.missions?.length ?? 0}개 (항상 2개여야 함)`)
     }
-    const aiIds = spec.rubrics.flatMap((rubric) => rubric.criteria.map((c) => c.id))
+    // 글다듬기 미션(다 충족한 글)은 채점기준이 아니라 POLISH_TARGETS를 가리킨다.
+    const aiIds = [
+      ...spec.rubrics.flatMap((rubric) => rubric.criteria.map((c) => c.id)),
+      ...POLISH_TARGETS.flatMap((target) => target.criterionIds),
+    ]
     for (const mission of result.missions ?? []) {
       const off = (mission.criterionIds ?? []).filter((id) => !aiIds.includes(id))
       if (off.length) problems.push(`미션이 모르는 기준을 가리킴: ${off.join(', ')}`)
