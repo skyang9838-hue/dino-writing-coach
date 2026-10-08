@@ -1,16 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { deleteActivity, renameActivity } from '../lib/actions.js'
 
 // Activity row for the teacher dashboard and the admin overview. The ⋯ menu
-// renames (title turns into an input; Enter saves, Esc cancels) or deletes.
+// renames (title turns into an input; Enter or clicking away saves, Esc
+// cancels) or deletes.
 // The server actions re-check that the viewer owns the activity or is admin.
 export function ActivityCard({ activity, icon, studentCount }) {
   const router = useRouter()
   const menuRef = useRef(null)
+  const cancelledRef = useRef(false)
   const [isEditing, setIsEditing] = useState(false)
   const [isBusy, setIsBusy] = useState(false)
 
@@ -29,12 +31,43 @@ export function ActivityCard({ activity, icon, studentCount }) {
     setIsBusy(false)
   }
 
-  const handleRenameKey = (event) => {
-    if (event.key === 'Escape') setIsEditing(false)
-    if (event.key !== 'Enter') return
-    const title = event.currentTarget.value.trim()
+  // Close the menu on a click elsewhere or Esc — <details> alone stays open.
+  useEffect(() => {
+    const closeOutside = (event) => {
+      if (!menuRef.current?.contains(event.target)) closeMenu()
+    }
+    const closeOnEsc = (event) => {
+      if (event.key === 'Escape') closeMenu()
+    }
+    document.addEventListener('pointerdown', closeOutside)
+    document.addEventListener('keydown', closeOnEsc)
+    return () => {
+      document.removeEventListener('pointerdown', closeOutside)
+      document.removeEventListener('keydown', closeOnEsc)
+    }
+  }, [])
+
+  // Enter or clicking away saves; only Esc cancels.
+  const saveTitle = (value) => {
     setIsEditing(false)
+    const title = value.trim()
     if (title && title !== activity.title) run(() => renameActivity(activity.id, title))
+  }
+
+  const handleRenameKey = (event) => {
+    if (event.key === 'Escape') {
+      cancelledRef.current = true
+      setIsEditing(false)
+    }
+    if (event.key === 'Enter') event.currentTarget.blur()
+  }
+
+  const handleRenameBlur = (event) => {
+    if (cancelledRef.current) {
+      cancelledRef.current = false
+      return
+    }
+    saveTitle(event.currentTarget.value)
   }
 
   const handleDelete = () => {
@@ -55,7 +88,7 @@ export function ActivityCard({ activity, icon, studentCount }) {
             autoFocus
             maxLength={100}
             onKeyDown={handleRenameKey}
-            onBlur={() => setIsEditing(false)}
+            onBlur={handleRenameBlur}
             aria-label="활동 이름"
           />
         ) : (
