@@ -9,7 +9,7 @@ import { getGenreIcon } from '../../lib/curriculum.js'
 
 // Overview of every teacher → their activities, most recently active first.
 // Pages are read-only for admins (see lib/admin.js); the ⋯ menu can still
-// rename or delete an activity.
+// delete an activity.
 export default async function AdminPage() {
   const session = await auth()
   if (!session?.user?.id) redirect('/login')

@@ -1148,6 +1148,11 @@ a {
   transform: translateY(-50%);
 }
 
+/* Lift the open menu above the cards below it. */
+.activity-card-menu[open] {
+  z-index: 20;
+}
+
 .activity-card-menu summary {
   list-style: none;
   cursor: pointer;
@@ -1197,17 +1202,6 @@ a {
 
 .activity-card-menu-list button.danger {
   color: #d32f2f;
-}
-
-.activity-card-rename {
-  width: 100%;
-  margin-bottom: 0.3rem;
-  padding: 0.3rem 0.5rem;
-  font: inherit;
-  font-size: 1.05rem;
-  font-weight: 700;
-  border: 1.5px solid #4caf50;
-  border-radius: 8px;
 }
 
 .empty-state {

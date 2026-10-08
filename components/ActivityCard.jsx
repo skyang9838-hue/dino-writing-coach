@@ -3,17 +3,14 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { deleteActivity, renameActivity } from '../lib/actions.js'
+import { deleteActivity } from '../lib/actions.js'
 
 // Activity row for the teacher dashboard and the admin overview. The ⋯ menu
-// renames (title turns into an input; Enter or clicking away saves, Esc
-// cancels) or deletes.
-// The server actions re-check that the viewer owns the activity or is admin.
+// deletes; the server action re-checks that the viewer owns the activity or
+// is admin.
 export function ActivityCard({ activity, icon, studentCount }) {
   const router = useRouter()
   const menuRef = useRef(null)
-  const cancelledRef = useRef(false)
-  const [isEditing, setIsEditing] = useState(false)
   const [isBusy, setIsBusy] = useState(false)
 
   const closeMenu = () => {
@@ -47,29 +44,6 @@ export function ActivityCard({ activity, icon, studentCount }) {
     }
   }, [])
 
-  // Enter or clicking away saves; only Esc cancels.
-  const saveTitle = (value) => {
-    setIsEditing(false)
-    const title = value.trim()
-    if (title && title !== activity.title) run(() => renameActivity(activity.id, title))
-  }
-
-  const handleRenameKey = (event) => {
-    if (event.key === 'Escape') {
-      cancelledRef.current = true
-      setIsEditing(false)
-    }
-    if (event.key === 'Enter') event.currentTarget.blur()
-  }
-
-  const handleRenameBlur = (event) => {
-    if (cancelledRef.current) {
-      cancelledRef.current = false
-      return
-    }
-    saveTitle(event.currentTarget.value)
-  }
-
   const handleDelete = () => {
     closeMenu()
     const warning = studentCount > 0 ? `\n학생 ${studentCount}명의 글도 같이 지워져요.` : ''
@@ -77,52 +51,21 @@ export function ActivityCard({ activity, icon, studentCount }) {
     run(() => deleteActivity(activity.id))
   }
 
-  const body = (
-    <>
-      <span className="activity-card-icon">{icon}</span>
-      <span className="activity-card-body">
-        {isEditing ? (
-          <input
-            className="activity-card-rename"
-            defaultValue={activity.title}
-            autoFocus
-            maxLength={100}
-            onKeyDown={handleRenameKey}
-            onBlur={handleRenameBlur}
-            aria-label="활동 이름"
-          />
-        ) : (
-          <h3>{activity.title}</h3>
-        )}
-        <p>
-          {activity.topic || '자유 주제'} · 목표 {activity.targetLength}자 · 참여 학생 {studentCount}명
-        </p>
-      </span>
-    </>
-  )
-
   return (
     <div className="activity-card-wrap" aria-busy={isBusy}>
-      {isEditing ? (
-        <div className="activity-card">{body}</div>
-      ) : (
-        <Link href={`/dashboard/${activity.id}`} className="activity-card">
-          {body}
-          <span className="activity-card-chevron">›</span>
-        </Link>
-      )}
+      <Link href={`/dashboard/${activity.id}`} className="activity-card">
+        <span className="activity-card-icon">{icon}</span>
+        <span className="activity-card-body">
+          <h3>{activity.title}</h3>
+          <p>
+            {activity.topic || '자유 주제'} · 목표 {activity.targetLength}자 · 참여 학생 {studentCount}명
+          </p>
+        </span>
+        <span className="activity-card-chevron">›</span>
+      </Link>
       <details ref={menuRef} className="activity-card-menu">
         <summary aria-label="활동 메뉴">⋯</summary>
         <div className="activity-card-menu-list">
-          <button
-            type="button"
-            onClick={() => {
-              closeMenu()
-              setIsEditing(true)
-            }}
-          >
-            ✏️ 이름 바꾸기
-          </button>
           <button type="button" className="danger" onClick={handleDelete}>
             🗑️ 삭제
           </button>
