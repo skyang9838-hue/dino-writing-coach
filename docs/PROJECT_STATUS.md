@@ -3,7 +3,7 @@
 > **세션은 이 문서에서 시작합니다.** 1페이지를 넘기지 마세요 — 끝난 작업은 [`CHANGELOG.md`](CHANGELOG.md)로 내려보냅니다.
 > 개발 규칙·명령어·함정은 [`../CLAUDE.md`](../CLAUDE.md), 화면별 동작 명세는 [`FEATURES.md`](FEATURES.md).
 
-**마지막 갱신:** 2026-10-08
+**마지막 갱신:** 2026-10-12
 **저장소:** https://github.com/skyang9838-hue/dino-writing-coach (public)
 **배포:** https://dino-writing-coach.vercel.app
 
@@ -79,9 +79,12 @@
 
 ## 다음 할 일
 
-### 1. 피드백 시스템 손보기 (사용자 2026-10-01 "싹 고쳐야 해")
+### 1. 피드백 시스템 개편 (사용자 2026-10-01 "싹 고쳐야 해")
 
-무엇이 문제인지 아직 안 들었다. 사용자에게 먼저 묻는다.
+2026-10-12에 선생님 설계안을 받아 지금 코드와 비교하고 결정을 정리했다 → [`superpowers/specs/2026-10-12-feedback-redesign-design.md`](superpowers/specs/2026-10-12-feedback-redesign-design.md). **코드는 아직 안 바꿨다.**
+
+- 정한 것: AI가 미션 3개를 직접 고름(글다듬기·코드 선정 없앰), 학생이 화면에서 골라 고른 것만 판정, done 판정은 관대하게, 판정 잠금 → 내려갈 때만 하락 확인 호출, 보드에 `▼` 부활. **도달도 공식은 그대로**(40% 시작, +10%, 상한 없음)
+- 다음: 스모크로 측정(**유료**, 허락 받고) → 미션 판정 위치·검증 규칙 결정 → 구현 계획 → 별도 브랜치에서 구현
 
 ### 2. 6단원 `cause-and-effect` / `story-flow`를 어떻게 할지 정한다
 
@@ -120,6 +123,6 @@
 dino-writing-coach 프로젝트를 이어서 작업합니다 (master 브랜치).
 docs/PROJECT_STATUS.md에서 현재 상태를 확인해줘.
 
-관리자 페이지·경량화까지 배포됐어. 다음은 피드백 시스템 손보기인데,
-뭘 고칠지는 내가 말해 줄게.
+피드백 시스템 개편 설계·결정은 docs/superpowers/specs/2026-10-12-feedback-redesign-design.md에 있어.
+다음은 그 문서 5절의 측정이야 (Gemini 유료 호출이니 돌리기 전에 물어봐).
 ```
