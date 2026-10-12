@@ -85,7 +85,7 @@
 
 - 정한 것: AI가 미션 3개를 직접 고름(글다듬기·코드 선정 없앰), 학생이 화면에서 골라 고른 것만 판정, done 판정은 관대하게, 판정 잠금 → 내려갈 때만 하락 확인 호출, 보드에 `▼` 부활. **도달도 공식은 그대로**(40% 시작, +10%, 상한 없음)
 - 10/12 측정 끝(2,157회 약 $3.6, 스펙 5-1절). 모델은 **`gemini-3.8-flash` 생각 낮게**로 결정. 검증 규칙은 `-기` 제목·설명 동작 목록을 빼고 형식·잘한 점·예시·지어내기만 남긴다
-- 다음: 구현 계획(`docs/superpowers/plans/`) → 별도 브랜치에서 구현 → 스모크 재측정
+- 구현 계획 확정(GPT와 다듬은 최종 방향 반영) → [`superpowers/plans/2026-10-12-feedback-redesign.md`](superpowers/plans/2026-10-12-feedback-redesign.md). **아직 구현 안 함.** 다음: 그 계획대로 `feedback-redesign` 브랜치에서 구현. 보류 2건(다 충족 시 미션 개수, 코드 검사 범위)은 스모크 비교 뒤 사용자가 고른다
 
 ### 2. 6단원 `cause-and-effect` / `story-flow`를 어떻게 할지 정한다
 
@@ -125,5 +125,5 @@ dino-writing-coach 프로젝트를 이어서 작업합니다 (master 브랜치).
 docs/PROJECT_STATUS.md에서 현재 상태를 확인해줘.
 
 피드백 시스템 개편 설계·결정은 docs/superpowers/specs/2026-10-12-feedback-redesign-design.md에 있어.
-측정(5-1절)까지 끝났고 모델은 3.8-flash 생각 낮게로 정했어. 다음은 구현 계획을 쓰고 별도 브랜치에서 구현하는 거야.
+구현 계획이 docs/superpowers/plans/2026-10-12-feedback-redesign.md에 있어. 그대로 feedback-redesign 브랜치에서 구현해 줘.
 ```
