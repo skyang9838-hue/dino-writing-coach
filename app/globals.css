@@ -720,6 +720,52 @@ a {
   color: #5b21b6;
 }
 
+/* 학생이 해 볼 미션을 고르는 카드 (채점기준 코칭만). */
+.feedback-mission-hint {
+  margin: -0.4rem 0 0.8rem;
+  font-size: 0.85rem;
+  color: #6d28d9;
+}
+
+.feedback-mission-pick {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  background-color: white;
+  border: 1.5px solid #ddd6fe;
+  border-radius: 10px;
+}
+
+.feedback-mission-pick:hover {
+  border-color: #a78bfa;
+}
+
+.feedback-mission-pick.is-picked {
+  background-color: #ede9fe;
+  border-color: #7c3aed;
+}
+
+.feedback-mission-check {
+  flex-shrink: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-left: auto;
+  font-size: 0.85rem;
+  line-height: 1.3rem;
+  color: white;
+  text-align: center;
+  border: 1.5px solid #c4b5fd;
+  border-radius: 6px;
+}
+
+.feedback-mission-pick.is-picked .feedback-mission-check {
+  background-color: #7c3aed;
+  border-color: #7c3aed;
+}
+
 .coach-button-wrap {
   display: flex;
   justify-content: center;
