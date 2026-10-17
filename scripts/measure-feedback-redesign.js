@@ -15,8 +15,6 @@ import path from 'node:path'
 import process from 'node:process'
 import dotenv from 'dotenv'
 import {
-  ACTION_INSTRUCTION_PATTERN,
-  ACTION_TITLE_PATTERN,
   buildAssessmentPrompt,
   getRubricCoachingFeedback,
   getUnitCoachingSpec,
@@ -26,6 +24,14 @@ import { GRADE6_SEMESTER2_UNITS } from '../lib/curriculum.js'
 import { summarizeWritingChanges } from '../lib/interviewRound.js'
 
 dotenv.config({ path: '.env.local', quiet: true })
+
+// 측정 때(2026-10-12) lib/coaching.js에 있던 두 목록. 개편에서 코드 검사를 뺐으므로
+// 측정을 다시 돌릴 수 있게 여기에 그대로 옮겨 둔다. E0 기준선은 이제 개편 뒤
+// 파이프라인을 재게 된다(개편 전 기준선은 스펙 5-1절 기록이 정본).
+const ACTION_TITLE_PATTERN =
+  /(하기|추가하기|덧붙이기|밝히기|드러내기|소개하기|설명하기|알아보기|떠올리기|써\s*넣기|이어쓰기|쓰기|옮기기|모으기|나누기|연결하기|질문하기|확인하기|고르기|바꾸기|정리하기|배치하기|표시하기|준비하기|마무리하기|완성하기|다듬기|적기|넣기|빼기|고치기|만들기|채우기|잇기|붙이기|살리기|늘리기|줄이기|세우기|묶기|나타내기|보태기|합치기)$/u
+const ACTION_INSTRUCTION_PATTERN =
+  /(추가|덧붙|밝혀|밝히|드러내|소개|설명|알아보|떠올|써|쓰세요|이어\s*쓰|옮겨|옮기|모아|모으|나눠|나누|연결|질문|물어|확인|골라|고르|바꿔|바꾸|정리|배치|표시|준비|마무리|적어|적으|넣어|넣으|빼|고쳐|고치|만들|만드|다듬|채워|채우|살려|살리|붙여|붙이|이어|늘려|늘리|줄여|줄이|나타내|합쳐|합치|세워|세우)/u
 
 export const MODELS = [
   { key: '2.5-lite', model: 'gemini-2.5-flash-lite' },
