@@ -12,14 +12,24 @@
 //   npm run smoke -- --runs 3            같은 글을 3번 돌려 판정 흔들림 측정
 //   npm run smoke -- --unit g6s2-unit6   한 단원만
 //   npm run smoke -- --case story-jumpy  한 케이스만
+//   npm run smoke -- --all-met B --checks C
+//                                        보류 2건 비교 (lib/coaching.js 상단 상수).
+//                                        --all-met A|B: 모두 met일 때 미션 3개 고정 / 0~3개
+//                                        --checks B|C: 미션 코드 검사 핵심 / 형식만
 
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import process from 'node:process'
 import dotenv from 'dotenv'
-import { getRubricCoachingFeedback, getUnitCoachingSpec } from '../lib/coaching.js'
+import {
+  ALL_MET_MISSIONS,
+  MISSION_CHECKS,
+  MISSION_COUNT,
+  getRubricCoachingFeedback,
+  getUnitCoachingSpec,
+  missionCoreProblems,
+} from '../lib/coaching.js'
 import { GRADE6_SEMESTER2_UNITS, getUnitChunks } from '../lib/curriculum.js'
-import { POLISH_TARGETS } from '../lib/missions.js'
 
 dotenv.config({ path: '.env.local', quiet: true })
 dotenv.config({ quiet: true })
@@ -32,7 +42,7 @@ process.env.DEBUG_INTERVIEW_PROMPT = '1'
 // Small and local rather than reusing lib/interviewEval.js's parseEvalArgs —
 // that one takes --set/--runs/--case, this takes --unit.
 export function parseSmokeArgs(args) {
-  const options = { runs: 1 }
+  const options = { runs: 1, allMet: ALL_MET_MISSIONS, checks: MISSION_CHECKS }
   for (let index = 0; index < args.length; index += 1) {
     const flag = args[index]
     if (flag === '--unit') {
@@ -44,6 +54,12 @@ export function parseSmokeArgs(args) {
     } else if (flag === '--case') {
       options.caseId = args[index + 1]
       index += 1
+    } else if (flag === '--all-met') {
+      options.allMet = args[index + 1]
+      index += 1
+    } else if (flag === '--checks') {
+      options.checks = args[index + 1]
+      index += 1
     } else {
       throw new Error(`알 수 없는 옵션: ${flag}`)
     }
@@ -51,6 +67,8 @@ export function parseSmokeArgs(args) {
   if (!Number.isInteger(options.runs) || options.runs < 1) {
     throw new Error('--runs는 1 이상의 정수여야 합니다')
   }
+  if (!['A', 'B'].includes(options.allMet)) throw new Error('--all-met은 A 또는 B')
+  if (!['B', 'C'].includes(options.checks)) throw new Error('--checks는 B 또는 C')
   return options
 }
 
@@ -88,7 +106,11 @@ function captureRetries() {
   }
 }
 
-function checkRun(result, { spec, teacherOnly, advisory }) {
+const isAllMet = (result) =>
+  (result.assessments ?? []).length > 0
+  && result.assessments.every((assessment) => assessment.status === 'met')
+
+function checkRun(result, { spec, teacherOnly, advisory, allMet }) {
   const problems = []
   const ids = (result.assessments ?? []).map((assessment) => assessment.criterionId)
 
@@ -106,14 +128,13 @@ function checkRun(result, { spec, teacherOnly, advisory }) {
     if (ids.length !== spec.criterionCount) {
       problems.push(`판정 개수 ${ids.length}, 기대 ${spec.criterionCount}`)
     }
-    if ((result.missions ?? []).length !== 2) {
-      problems.push(`수정미션 ${result.missions?.length ?? 0}개 (항상 2개여야 함)`)
+    // 모두 met이고 --all-met B일 때만 0~3개, 그 밖에는 항상 3개.
+    const count = (result.missions ?? []).length
+    const optional = isAllMet(result) && allMet === 'B'
+    if (optional ? count > MISSION_COUNT : count !== MISSION_COUNT) {
+      problems.push(`수정미션 ${count}개 (${optional ? `0~${MISSION_COUNT}개` : `항상 ${MISSION_COUNT}개`}여야 함)`)
     }
-    // 글다듬기 미션(다 충족한 글)은 채점기준이 아니라 POLISH_TARGETS를 가리킨다.
-    const aiIds = [
-      ...spec.rubrics.flatMap((rubric) => rubric.criteria.map((c) => c.id)),
-      ...POLISH_TARGETS.flatMap((target) => target.criterionIds),
-    ]
+    const aiIds = spec.rubrics.flatMap((rubric) => rubric.criteria.map((c) => c.id))
     for (const mission of result.missions ?? []) {
       const off = (mission.criterionIds ?? []).filter((id) => !aiIds.includes(id))
       if (off.length) problems.push(`미션이 모르는 기준을 가리킴: ${off.join(', ')}`)
@@ -133,14 +154,19 @@ async function runCase(spec, testCase, runs, context) {
         spec,
         topic: testCase.topic ?? null,
         writing: testCase.writing,
+        allMetMissions: context.allMet,
+        missionChecks: context.checks,
       })
       capture.restore()
       runResults.push({
         ok: true,
         meaningless: result.meaningless,
+        allMet: isAllMet(result),
         assessments: result.assessments,
         strength: result.strength,
         missions: result.missions,
+        // 'B' 핵심 검사에 걸렸을 사유. --checks C로 돌린 결과를 견주려고 남긴다.
+        coreProblems: (result.missions ?? []).map((mission) => missionCoreProblems(mission)),
         retries: capture.reasons.length,
         retryReasons: capture.reasons,
         rejected: capture.rejected,
@@ -224,9 +250,11 @@ for (const unit of targetUnits) {
     spec,
     teacherOnly: criteriaOf(unit.id, 'teacher'),
     advisory: criteriaOf(unit.id, 'teacher-ai-feedback'),
+    allMet: options.allMet,
+    checks: options.checks,
   }
 
-  console.log(`\n━━━ ${unit.unitLabel ?? `${unit.unitNumber}단원`} · ${unit.title} (${unit.id})`)
+  console.log(`\n━━━ [all-met ${options.allMet} · checks ${options.checks}] ${unit.unitLabel ?? `${unit.unitNumber}단원`} · ${unit.title} (${unit.id})`)
   console.log(`    AI 판정 ${spec.criterionCount}개 / 조언용 ${context.advisory.length}개 / 교사 전용 ${context.teacherOnly.length}개`)
 
   for (const testCase of cases) {
@@ -251,7 +279,10 @@ for (const unit of targetUnits) {
 
 const outDir = path.resolve('.smoke-results')
 await fs.mkdir(outDir, { recursive: true })
-const outPath = path.join(outDir, `${new Date().toISOString().replace(/[:.]/g, '-')}.json`)
+const outPath = path.join(
+  outDir,
+  `${new Date().toISOString().replace(/[:.]/g, '-')}-allmet${options.allMet}-checks${options.checks}.json`,
+)
 await fs.writeFile(outPath, JSON.stringify({ options, report }, null, 2), 'utf8')
 
 console.log(`\n${'─'.repeat(60)}`)
