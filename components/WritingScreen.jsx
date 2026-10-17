@@ -22,6 +22,7 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
   const [rounds, setRounds] = useState(initial.rounds)
   const [error, setError] = useState(null)
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
+  const [selectedIds, setSelectedIds] = useState([])
 
   const skipNextAutosave = useRef(true)
   useEffect(() => {
@@ -39,15 +40,24 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
   const isFirstRound = feedback === null
   const isPendingReview = Boolean(feedback?.pending)
   const isReady = charCount >= activity.targetLength
-  const canCoach = isPendingReview ? false : isFirstRound ? isReady : true
+  // 고를 미션은 마지막으로 반려되지 않은 회차의 것이다. 반려(flagged) 뒤에도
+  // 서버는 그 미션을 기준으로 판정하므로 화면에서도 그대로 고를 수 있어야 한다.
+  // 일반 코치(id 없는 미션)는 고르지 않는다.
+  const pickableMissions = getVisibleMissions(rounds.findLast((round) => !round.flagged))
+  const mustPick = !isFirstRound && pickableMissions.some((mission) => mission.id)
+  const needsPick = mustPick && selectedIds.length === 0
+  const canCoach = isPendingReview ? false : isFirstRound ? isReady : !needsPick
   const mascot = getMascotState(attainment)
-  const visibleMissions = getVisibleMissions(feedback)
+
+  const toggleMission = (id) => {
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]))
+  }
 
   const handleCoachClick = async () => {
     setIsCoaching(true)
     setError(null)
 
-    const result = await requestCoaching(submissionId, writing)
+    const result = await requestCoaching(submissionId, writing, selectedIds)
 
     if (result.error) {
       setError({ message: result.error })
@@ -55,6 +65,8 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
       setFeedback(result.feedback)
       setAttainment(result.attainment)
       setRounds(result.rounds)
+      // 새 미션을 받았을 때만 선택을 비운다. 반려되면 같은 미션으로 다시 낸다.
+      if (!result.feedback?.flagged && !result.feedback?.pending) setSelectedIds([])
     }
     setIsCoaching(false)
   }
@@ -140,31 +152,60 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
               <p className="pending-title">🕒 선생님이 확인하고 있어요</p>
               <p>선생님이 이 글을 확인한 뒤 다시 코칭을 받을 수 있어요. 잠시만 기다려주세요.</p>
             </div>
-          ) : feedback.flagged ? (
-            <div className="warning-card">
-              <p className="warning-title">⚠️ 다시 확인해주세요</p>
-              <p>{FLAG_MESSAGES[feedback.reason] ?? '이 글은 검토가 필요해요. 다시 써 보세요.'}</p>
-            </div>
           ) : (
             <>
-              <div className="feedback-good">
-                <p className="feedback-good-title">👍 좋은 점</p>
-                <p>{feedback.strength}</p>
-              </div>
-              <div className="feedback-missions">
-                <p className="feedback-missions-title">
-                  🎯 수정 미션 ({visibleMissions.length}가지)
-                </p>
-                {visibleMissions.map((mission, index) => (
-                  <div className="feedback-mission" key={`${mission.title ?? 'legacy'}-${index}`}>
-                    <span className="feedback-mission-number">{index + 1}</span>
-                    <div className="feedback-mission-content">
-                      {mission.title && <p className="feedback-mission-name">{mission.title}</p>}
-                      <p className="feedback-mission-text">{mission.instruction}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              {feedback.flagged ? (
+                <div className="warning-card">
+                  <p className="warning-title">⚠️ 다시 확인해주세요</p>
+                  <p>{FLAG_MESSAGES[feedback.reason] ?? '이 글은 검토가 필요해요. 다시 써 보세요.'}</p>
+                </div>
+              ) : (
+                <div className="feedback-good">
+                  <p className="feedback-good-title">👍 좋은 점</p>
+                  <p>{feedback.strength}</p>
+                </div>
+              )}
+              {(!feedback.flagged || mustPick) && (
+                <div className="feedback-missions">
+                  <p className="feedback-missions-title">
+                    🎯 수정 미션 ({pickableMissions.length}가지)
+                  </p>
+                  {mustPick && (
+                    <p className="feedback-mission-hint">해 볼 미션을 골라요. 여러 개 골라도 돼요.</p>
+                  )}
+                  {pickableMissions.length === 0 && (
+                    <p className="feedback-mission-text">이번에는 미션이 없어요. 더 고치고 싶으면 고쳐서 다시 코칭을 받아도 돼요.</p>
+                  )}
+                  {pickableMissions.map((mission, index) => {
+                    const content = (
+                      <>
+                        <span className="feedback-mission-number">{index + 1}</span>
+                        <div className="feedback-mission-content">
+                          {mission.title && <p className="feedback-mission-name">{mission.title}</p>}
+                          <p className="feedback-mission-text">{mission.instruction}</p>
+                        </div>
+                      </>
+                    )
+                    const key = mission.id ?? `${mission.title ?? 'legacy'}-${index}`
+                    if (!mission.id) {
+                      return <div className="feedback-mission" key={key}>{content}</div>
+                    }
+                    const isPicked = selectedIds.includes(mission.id)
+                    return (
+                      <button
+                        type="button"
+                        className={`feedback-mission feedback-mission-pick ${isPicked ? 'is-picked' : ''}`}
+                        aria-pressed={isPicked}
+                        key={key}
+                        onClick={() => toggleMission(mission.id)}
+                      >
+                        {content}
+                        <span className="feedback-mission-check" aria-hidden="true">{isPicked ? '✔' : ''}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
             </>
           )}
         </div>
@@ -186,6 +227,9 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
         </button>
       </div>
 
+      {needsPick && !isCoaching && !isPendingReview && (
+        <p className="coach-button-hint">미션을 하나 이상 고르면 다시 코칭을 받을 수 있어요.</p>
+      )}
       {error && <p className="error-message">{error.message}</p>}
 
       {rounds.length > 0 && (

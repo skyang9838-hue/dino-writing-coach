@@ -45,6 +45,10 @@ export function RevisionHistory({ rounds }) {
                       <ul>
                         {previousMissions.map((mission, missionIndex) => {
                           const previousMissionId = previousRound.missions?.[missionIndex]?.id
+                          // 고른 미션만 판정했으니 고른 것만 보여 준다.
+                          if (round.selectedMissionIds?.length && !round.selectedMissionIds.includes(previousMissionId)) {
+                            return null
+                          }
                           const newStatus = round.priorMissionStatuses?.find(
                             (status) => status.missionId === previousMissionId,
                           )?.status

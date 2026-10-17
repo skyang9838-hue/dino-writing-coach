@@ -124,7 +124,7 @@ console.log(`무의미 글 판별: ${percent(metrics.meaninglessRate)}`)
 console.log(`글에 없는 충족 추측: ${metrics.hallucinatedMet}`)
 console.log(`논리 모순: ${metrics.contradictions}`)
 console.log(`수정미션 위반: ${metrics.missionViolations}`)
-console.log(`의미 있는 글의 수정미션 2개 생성률: ${percent(metrics.twoMissionRate)}`)
+console.log(`의미 있는 글의 수정미션 3개 생성률: ${percent(metrics.threeMissionRate)}`)
 console.log(`종료 상태 생성: ${metrics.terminalStates}`)
 console.log(failures.length ? `실패 조건: ${failures.join(', ')}` : '모든 종료 조건 통과')
 
