@@ -766,13 +766,6 @@ a {
   border-color: #7c3aed;
 }
 
-.coach-button-hint {
-  margin: -1rem 0 1rem;
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-align: center;
-}
-
 .coach-button-wrap {
   display: flex;
   justify-content: center;

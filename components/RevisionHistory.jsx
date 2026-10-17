@@ -1,6 +1,6 @@
 'use client'
 
-import { getMissionStatusSymbol, getVisibleMissions } from '../lib/feedback.js'
+import { getMissionStatusSymbol, getPriorMissionChecks, getVisibleMissions } from '../lib/feedback.js'
 import { flagReasonLabel, renderWritingDiff } from './roundDisplay.jsx'
 
 const roundLabel = (index) => (index === 0 ? '초안' : `${index}차 수정`)
@@ -24,7 +24,6 @@ export function RevisionHistory({ rounds }) {
         {rounds.map((round, index) => {
           const previousRound = index > 0 ? rounds[index - 1] : null
           const currentMissions = getVisibleMissions(round)
-          const previousMissions = getVisibleMissions(previousRound)
           return (
             <div className="history-item" key={index}>
               <p className="history-item-title">
@@ -43,24 +42,13 @@ export function RevisionHistory({ rounds }) {
                     <div className="history-mission-check">
                       <p className="history-subtitle">지난 미션 반영 확인</p>
                       <ul>
-                        {previousMissions.map((mission, missionIndex) => {
-                          const previousMissionId = previousRound.missions?.[missionIndex]?.id
-                          // 고른 미션만 판정했으니 고른 것만 보여 준다.
-                          if (round.selectedMissionIds?.length && !round.selectedMissionIds.includes(previousMissionId)) {
-                            return null
-                          }
-                          const newStatus = round.priorMissionStatuses?.find(
-                            (status) => status.missionId === previousMissionId,
-                          )?.status
-                          const legacyStatus = round.addressed?.[missionIndex]
-                          return (
-                            <li key={previousMissionId ?? missionIndex}>
-                              {getMissionStatusSymbol(newStatus ?? legacyStatus)}{' '}
-                              {mission.title ? `${mission.title} — ` : ''}
-                              {mission.instruction}
-                            </li>
-                          )
-                        })}
+                        {getPriorMissionChecks(previousRound, round).map((check) => (
+                          <li key={check.key}>
+                            {getMissionStatusSymbol(check.status)}{' '}
+                            {check.title ? `${check.title} — ` : ''}
+                            {check.instruction}
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   )}

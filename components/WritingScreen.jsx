@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { requestCoaching, saveDraft } from '../lib/actions.js'
-import { getVisibleMissions } from '../lib/feedback.js'
+import { getMissionPick } from '../lib/feedback.js'
 import { getMascotState } from '../lib/mascot.js'
 import { RevisionHistory } from './RevisionHistory.jsx'
 import { DinoIcon } from './DinoIcon.jsx'
@@ -40,12 +40,7 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
   const isFirstRound = feedback === null
   const isPendingReview = Boolean(feedback?.pending)
   const isReady = charCount >= activity.targetLength
-  // 고를 미션은 마지막으로 반려되지 않은 회차의 것이다. 반려(flagged) 뒤에도
-  // 서버는 그 미션을 기준으로 판정하므로 화면에서도 그대로 고를 수 있어야 한다.
-  // 일반 코치(id 없는 미션)는 고르지 않는다.
-  const pickableMissions = getVisibleMissions(rounds.findLast((round) => !round.flagged))
-  const mustPick = !isFirstRound && pickableMissions.some((mission) => mission.id)
-  const needsPick = mustPick && selectedIds.length === 0
+  const { missions: pickableMissions, mustPick, needsPick } = getMissionPick({ rounds, isFirstRound, selectedIds })
   const canCoach = isPendingReview ? false : isFirstRound ? isReady : !needsPick
   const mascot = getMascotState(attainment)
 
@@ -171,7 +166,7 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
                     🎯 수정 미션 ({pickableMissions.length}가지)
                   </p>
                   {mustPick && (
-                    <p className="feedback-mission-hint">해 볼 미션을 골라요. 여러 개 골라도 돼요.</p>
+                    <p className="feedback-mission-hint">해 볼 미션을 골라요.</p>
                   )}
                   {pickableMissions.length === 0 && (
                     <p className="feedback-mission-text">이번에는 미션이 없어요. 더 고치고 싶으면 고쳐서 다시 코칭을 받아도 돼요.</p>
@@ -227,9 +222,6 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
         </button>
       </div>
 
-      {needsPick && !isCoaching && !isPendingReview && (
-        <p className="coach-button-hint">미션을 하나 이상 고르면 다시 코칭을 받을 수 있어요.</p>
-      )}
       {error && <p className="error-message">{error.message}</p>}
 
       {rounds.length > 0 && (
