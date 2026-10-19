@@ -557,7 +557,9 @@ a {
   grid-template-columns: 6fr 4fr;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
-  align-items: start;
+  /* Both panels share one height so their bottoms line up even when the
+     three mission buttons make the feedback side tall. */
+  align-items: stretch;
 }
 
 @media (max-width: 860px) {
@@ -572,6 +574,12 @@ a {
   background-color: white;
   border: 1.5px solid #e0e0e0;
   border-radius: 14px;
+}
+
+/* A flex column so the textarea can grow into whatever height the row gets. */
+.write-panel {
+  display: flex;
+  flex-direction: column;
 }
 
 .write-panel-header {
@@ -590,19 +598,27 @@ a {
 
 /* This textarea sits outside any .field wrapper, so it needs the same chrome
    .field textarea gets — otherwise it renders with the plain browser default.
-   .write-panel is a plain block (not a flex column like .field), so the width
-   has to be set explicitly or the textarea falls back to its `cols` width. */
+   min-height is sized so about 1000자 fills the box at full width; flex: 1
+   stretches it further when the feedback panel is taller. */
 .write-panel textarea {
   display: block;
+  flex: 1;
   width: 100%;
-  height: 420px;
+  min-height: 870px;
   padding: 0.8rem;
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.2rem;
+  line-height: 1.75;
   border: 1.5px solid #ccc;
   border-radius: 8px;
   resize: vertical;
   outline: none;
+}
+
+/* One column on narrow screens — nothing to line up, so don't force 880px. */
+@media (max-width: 860px) {
+  .write-panel textarea {
+    min-height: 60vh;
+  }
 }
 
 .write-panel textarea:focus {
