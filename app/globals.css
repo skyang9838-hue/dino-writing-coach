@@ -665,7 +665,7 @@ a {
   width: 100%;
   min-height: 0;
   padding: 0.8rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.7;
   border: 1.5px solid #ccc;
   border-radius: 8px;
@@ -723,7 +723,7 @@ a {
 
 .feedback-good-text {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.5;
 }
 
@@ -785,7 +785,7 @@ a {
 .feedback-mission-text {
   min-width: 0;
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.5;
 }
 
@@ -821,6 +821,16 @@ a {
 .feedback-mission-pick.is-picked {
   background-color: #ede9fe;
   border-color: #7c3aed;
+}
+
+/* 두 개를 이미 골라서 더 못 고르는 미션 */
+.feedback-mission-pick:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.feedback-mission-pick:disabled:hover {
+  border-color: #ddd6fe;
 }
 
 .feedback-mission-check {
