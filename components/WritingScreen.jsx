@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { requestCoaching, saveDraft } from '../lib/actions.js'
-import { getMissionPick } from '../lib/feedback.js'
+import { UNCHANGED_WRITING_MESSAGE, getLastCoachedWriting, getMissionPick, isUnchangedWriting } from '../lib/feedback.js'
 import { getMascotState } from '../lib/mascot.js'
 import { RevisionHistory } from './RevisionHistory.jsx'
 import { DinoIcon } from './DinoIcon.jsx'
@@ -40,8 +40,9 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
   const isFirstRound = feedback === null
   const isPendingReview = Boolean(feedback?.pending)
   const isReady = charCount >= activity.targetLength
-  const { missions: pickableMissions, mustPick, needsPick } = getMissionPick({ rounds, isFirstRound, selectedIds })
-  const canCoach = isPendingReview ? false : isFirstRound ? isReady : !needsPick
+  const { missions: pickableMissions, mustPick, needsPick, isPickFull } = getMissionPick({ rounds, isFirstRound, selectedIds })
+  const isUnchanged = !isFirstRound && !isPendingReview && isUnchangedWriting(getLastCoachedWriting(rounds), writing)
+  const canCoach = isPendingReview ? false : isFirstRound ? isReady : !needsPick && !isUnchanged
   const mascot = getMascotState(attainment)
 
   const toggleMission = (id) => {
@@ -167,7 +168,7 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
                       🎯 수정 미션 ({pickableMissions.length}가지)
                     </p>
                     {mustPick && (
-                      <p className="feedback-mission-hint">해 볼 미션을 골라요.</p>
+                      <p className="feedback-mission-hint">해 볼 미션을 1~2개 골라요.</p>
                     )}
                     {pickableMissions.length === 0 && (
                       <p className="feedback-mission-text">이번에는 미션이 없어요. 더 고치고 싶으면 고쳐서 다시 코칭을 받아도 돼요.</p>
@@ -192,6 +193,7 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
                           type="button"
                           className={`feedback-mission feedback-mission-pick ${isPicked ? 'is-picked' : ''}`}
                           aria-pressed={isPicked}
+                          disabled={!isPicked && isPickFull}
                           key={key}
                           onClick={() => toggleMission(mission.id)}
                         >
@@ -228,6 +230,7 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
           )}
         </div>
 
+        {isUnchanged && <p className="feedback-mission-hint">{UNCHANGED_WRITING_MESSAGE}</p>}
         {error && <p className="error-message">{error.message}</p>}
       </div>
 
