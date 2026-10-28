@@ -851,6 +851,70 @@ a {
   border-color: #7c3aed;
 }
 
+/* 큰 화면(교실 TV·데스크톱 모니터)에서는 글자와 미션 카드를 키워 두 칸을
+   채운다. 학생 노트북(약 1280×650)은 위 크기 그대로다. */
+@media (min-width: 1400px) and (min-height: 800px) {
+  .container-write {
+    max-width: 1600px;
+  }
+
+  .write-panel-header h3,
+  .feedback-panel h3 {
+    font-size: 1.25rem;
+  }
+
+  .write-panel textarea {
+    padding: 1rem 1.1rem;
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .feedback-good {
+    padding: 0.8rem 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .feedback-good-title,
+  .feedback-missions-title {
+    font-size: 1.1rem;
+  }
+
+  .feedback-missions-title {
+    margin-bottom: 0.7rem;
+  }
+
+  .feedback-good-text,
+  .feedback-mission-text {
+    font-size: 1.15rem;
+    line-height: 1.65;
+  }
+
+  .feedback-mission {
+    gap: 0.8rem;
+  }
+
+  .feedback-mission + .feedback-mission {
+    margin-top: 0.7rem;
+  }
+
+  .feedback-mission-pick {
+    padding: 0.9rem 1rem;
+  }
+
+  .feedback-mission-number {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  .feedback-mission-check {
+    width: 1.8rem;
+    height: 1.8rem;
+    font-size: 1.1rem;
+    line-height: 1.7rem;
+  }
+}
+
 .coach-button-wrap {
   display: flex;
   flex-direction: column;
