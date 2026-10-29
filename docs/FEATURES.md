@@ -204,10 +204,8 @@ Phase 3(루브릭)을 교사가 표/이미지를 업로드하는 범용 기능�
    - **글이 한 글자도 안 바뀌었으면 이 호출을 건너뛰고 직전 판정을 그대로 쓰고**, 지난 미션은 모두 `not-done`이다.
 2. **하락 확인** (`lib/regressionCheck.js`) — 판정이 직전 회차보다 내려간 기준이 있을 때만 한 번 더 부른다. 고치기 전후 글과 diff, 내려간 기준만 보여 주고 "관련 내용이 실제로 지워지거나 약해졌는가"를 묻는다. `regressed: false`면 직전 판정을 지키고, true면 하락을 반영한다. 확인 호출이 실패하면 직전 판정을 지킨다. 결과는 `round.regressionChecks`(`{criterionId, from, to, regressed}`), 모델의 원 판정은 `round.rawAssessments`. 예전의 판정 잠금(`assessmentRatchet.js`)은 삭제됐고, 그래서 보드의 `▼`가 다시 나온다.
 3. **미션 생성** — `buildMissionPrompt`가 기준별 판정과 선생님의 `missionSeed`를 주고, **AI가 기준을 골라** 서로 다른 행동의 미션 3개를 만든다(각 미션에 `criterionId`). 무조건 unmet부터 고르지 않고, 고치면 가장 좋아지고 실행하기 쉬운 곳부터. 모자란 기준이 3개보다 적으면 한 기준의 다른 곳이나 충족한 기준의 심화를 섞을 수 있다. **모두 met이면 같은 호출에서 심화 미션**을 낸다. 이전 회차 미션은 넘기지 않는다. 글다듬기(맞춤법) 미션은 없앴다. `attachMissionIds`가 `criterionId`를 저장용 `rubricIds`/`criterionIds` 배열로 바꾼다(보드·옛 라운드가 이 모양을 읽음).
-   - `validateMissionResult`: 형식(개수·id 빈 값/중복·모르는 기준·빈 제목/설명/확인 기준)과 잘한 점(met 기준을 가리키거나, met이 없으면 `effort`). 제목 `-기` 목록·설명 동작 목록·인용 검사는 뺐다(측정에서 오탐 주원인).
-   - **보류 2건** — `lib/coaching.js` 상단 상수로 바꾼다. 사용자가 비교(`docs/feedback-redesign-holds.html`)를 보고 고르면 안 쓰는 쪽을 지운다.
-     - `ALL_MET_MISSIONS` — 모두 met일 때 미션 개수. `'A'` 3개 고정(현재) / `'B'` 0~3개.
-     - `MISSION_CHECKS` — `'C'` 형식·무결성만 / `'B'` C + 예시 문장(`예를 들어` 등)·사실 지어내기 요구·막연한 표현(`자세히 써` 등) 금지, 걸리면 재시도(현재).
+   - `validateMissionResult`: 형식(개수 3개·id 빈 값/중복·모르는 기준·빈 제목/설명/확인 기준), 잘한 점(met 기준을 가리키거나, met이 없으면 `effort`), 예시 문장(`예를 들어` 등)·사실 지어내기 요구·막연한 표현(`자세히 써` 등). 걸리면 재시도. 제목 `-기` 목록·설명 동작 목록·인용 검사는 뺐다(측정에서 오탐 주원인).
+   - 모두 met이어도 미션은 3개다. 2026-10-29 보류 2건을 이렇게 정했다(비교: `docs/feedback-redesign-holds.html`).
 
 ### 라운드 저장 (`lib/interviewRound.js`)
 
@@ -229,7 +227,7 @@ npm run smoke -- --runs 3            # 같은 글을 3번 돌려 판정 흔들�
 npm run smoke -- --unit g6s2-unit6   # 한 단원만
 ```
 
-사람이 안 봐도 되는 실패는 자동으로 걸러 낸다: `evaluator: 'teacher'` 기준이 응답에 섞였는지(**방화벽이 실제로 막는지** — 유닛 테스트는 프롬프트에 안 들어가는 것까지만 본다), 조언용 기준이 판정에서 빠지지 않았는지, 미션이 정확히 3개인지(모두 met이고 `--all-met B`면 0~3개), 재시도를 몇 번 했는지. `--all-met A|B`·`--checks B|C`로 보류 2건의 조합을 고른다. 두 회차(미션 → 고친 글 → done 판정)까지 보려면 `scripts/compare-feedback-holds-rounds.js`, 비교 페이지는 `scripts/analyze-feedback-holds.js`. 결과는 `.smoke-results/`에 남는다.
+사람이 안 봐도 되는 실패는 자동으로 걸러 낸다: `evaluator: 'teacher'` 기준이 응답에 섞였는지(**방화벽이 실제로 막는지** — 유닛 테스트는 프롬프트에 안 들어가는 것까지만 본다), 조언용 기준이 판정에서 빠지지 않았는지, 미션이 정확히 3개인지, 재시도를 몇 번 했는지. 결과는 `.smoke-results/`에 남는다.
 
 **글도 의도한 판정도 저장소가 지어낸 것이다.** 여기서 맞는다는 건 "모델이 글을 의도대로 읽었다"는 뜻이지 선생님이 검증한 정답과 맞다는 뜻이 아니다. 실제 학생 글이 생기면 그걸로 다시 돌려야 한다.
 
