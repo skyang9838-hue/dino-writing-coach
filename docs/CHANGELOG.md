@@ -715,3 +715,8 @@ PROJECT_STATUS의 "다음 할 일" 두 개를 함께 처리했다. 둘 다 같�
 - 사용자가 지금 기본값대로 확정했다: ① 모두 met이어도 미션 3개 고정(A), ② 미션 핵심 검사(B: 베낄 예시 문장·사실 지어내기 요구·막연한 표현이면 재시도). 근거는 `docs/feedback-redesign-holds.html`(네 조합 모두 실패·재시도 0, 시간 비슷, 형식만 검사(C)에서 막연한 미션 2개가 새어 나옴).
 - 안 쓰는 쪽을 지웠다: `ALL_MET_MISSIONS`·`MISSION_CHECKS` 상수와 0~3개·형식만 분기, 스모크의 `--all-met`·`--checks`, 비교용 `scripts/analyze-feedback-holds.js`·`scripts/compare-feedback-holds-rounds.js`. 운영 동작은 그대로다.
 - 검증: test 254 통과 · lint 오류 0
+## 2026-10-29 — 문단 나누기도 고친 글로 친다
+
+- 10/20 수업 점검의 남은 결정. 줄바꿈이 생기거나 없어진 글(문단 나누기·합치기)은 이제 "안 고친 글"로 막히지 않는다. 띄어쓰기 수·빈 줄 수·앞뒤 공백만 바꾼 글은 그대로 막힌다. `lib/feedback.js` `isUnchangedWriting` 한 곳 (학생 화면·서버가 같이 씀).
+- 같은 점검의 나머지 두 결정은 코드 변경 없음: 채점기준은 그대로 둔다, 코칭 못 받은 8명은 시간이 모자랐던 것(600자 목표 유지).
+- 검증: test 254 통과 · lint 오류 0
