@@ -2,7 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { requestCoaching, saveDraft } from '../lib/actions.js'
-import { UNCHANGED_WRITING_MESSAGE, getLastCoachedWriting, getMissionPick, isUnchangedWriting } from '../lib/feedback.js'
+import {
+  LIST_STYLE_MESSAGE,
+  UNCHANGED_WRITING_MESSAGE,
+  getLastCoachedWriting,
+  getMissionPick,
+  isListStyleWriting,
+  isUnchangedWriting,
+} from '../lib/feedback.js'
 import { getMascotState } from '../lib/mascot.js'
 import { RevisionHistory } from './RevisionHistory.jsx'
 import { DinoIcon } from './DinoIcon.jsx'
@@ -245,7 +252,8 @@ export function WritingScreen({ submissionId, studentName, activity, initial }) 
 
             {/* 코칭 버튼 위의 안내 줄(오류 등)은 이 칸 안, 버튼 바로 위에 둔다. */}
             <div className="coach-button-wrap">
-              {isUnchanged && <p className="feedback-mission-hint">{UNCHANGED_WRITING_MESSAGE}</p>}
+              {isListStyleWriting(writing) && <p className="feedback-mission-hint">{LIST_STYLE_MESSAGE}</p>}
+              {isUnchanged &&<p className="feedback-mission-hint">{UNCHANGED_WRITING_MESSAGE}</p>}
               {error && <p className="error-message">{error.message}</p>}
               <button
                 className={`coach-button ${isCoaching ? 'loading' : ''}`}
